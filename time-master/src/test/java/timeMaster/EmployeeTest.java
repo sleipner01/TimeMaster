@@ -15,7 +15,6 @@ public class EmployeeTest {
         employee = new Employee(testName);
     }
 
-
     @Test
     public void nameTest() {
         assertTrue(employee.getName().equals(testName));

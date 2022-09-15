@@ -15,6 +15,10 @@ public class Employee {
         return !this.workdays.contains(workday);
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public void addWorkday(Workday workday) {
         if (this.isWorkdayValid(workday)) {
            this.workdays.add(workday); 
@@ -22,6 +26,16 @@ public class Employee {
         else {
             throw new IllegalArgumentException("Workday is already added.");
         }
-        
     }
+
+    public ArrayList<Workday> getWorkdays() {
+        return new ArrayList<>(this.workdays);
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
+
+    
 }

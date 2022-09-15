@@ -14,7 +14,24 @@ public class Workday {
         this.timeIn = timeIn;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public LocalTime getTimeIn() {
+        return timeIn;
+    }
+
+    public LocalTime getTimeOut() {
+        return timeOut;
+    }
+
     public void setTimeOut(LocalTime timeOut) {
         this.timeOut = timeOut;
+    }
+
+    @Override
+    public String toString() {
+        return this.getDate().toString() + ";" + this.getTimeIn() + this.getTimeOut();
     }
 }

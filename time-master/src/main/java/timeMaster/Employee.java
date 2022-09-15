@@ -1,5 +1,6 @@
 package timeMaster;
 
+import java.sql.Array;
 import java.util.ArrayList;
 
 public class Employee {
@@ -22,6 +23,9 @@ public class Employee {
         else {
             throw new IllegalArgumentException("Workday is already added.");
         }
-        
+    }
+
+    public ArrayList<Workday> getWorkdays() {
+        return new ArrayList<>(this.workdays);
     }
 }

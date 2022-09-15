@@ -11,7 +11,17 @@ public class Employee {
         this.name = name;
     }
 
+    private Boolean isWorkdayValid(Workday workday) {
+        return !this.workdays.contains(workday);
+    }
+
     public void addWorkday(Workday workday) {
-        this.workdays.add(workday);
+        if (this.isWorkdayValid(workday)) {
+           this.workdays.add(workday); 
+        }
+        else {
+            throw new IllegalArgumentException("Workday is already added.");
+        }
+        
     }
 }

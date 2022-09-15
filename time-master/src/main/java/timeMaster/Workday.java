@@ -13,4 +13,8 @@ public class Workday {
         this.date = date;
         this.timeIn = timeIn;
     }
+
+    public void setTimeOut(LocalTime timeOut) {
+        this.timeOut = timeOut;
+    }
 }

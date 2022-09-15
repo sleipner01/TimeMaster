@@ -1,0 +1,11 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - init: sdk use java 17.0.1.hs-adpt
+    command: cd time-master; mvn compile
+
+ports:
+  # used by virtual desktop and vnc, supports JavaFX
+  - port: 6080
+

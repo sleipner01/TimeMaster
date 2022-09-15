@@ -10,4 +10,8 @@ public class Employee {
     public Employee(String name) {
         this.name = name;
     }
+
+    public void addWorkday(Workday workday) {
+        this.workdays.add(workday);
+    }
 }

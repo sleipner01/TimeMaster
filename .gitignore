@@ -1,2 +1,4 @@
 .DS_Store
 .vscode
+# ignore maven build folder
+time-master/target/

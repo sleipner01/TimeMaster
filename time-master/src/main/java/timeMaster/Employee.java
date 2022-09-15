@@ -1,6 +1,5 @@
 package timeMaster;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class Employee {
@@ -16,6 +15,10 @@ public class Employee {
         return !this.workdays.contains(workday);
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public void addWorkday(Workday workday) {
         if (this.isWorkdayValid(workday)) {
            this.workdays.add(workday); 
@@ -28,4 +31,11 @@ public class Employee {
     public ArrayList<Workday> getWorkdays() {
         return new ArrayList<>(this.workdays);
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
+
+    
 }

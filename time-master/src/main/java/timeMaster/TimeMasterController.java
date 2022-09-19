@@ -16,68 +16,82 @@ public class TimeMasterController {
 
     private Employee chosenEmployee;
     private Workday chosenWorkday;
-    private Path saveDirPath = Paths.get(System.getProperty("user.dir"), "lagring");
-    private TimeMasterFileHandler timeMasterFileHandler = new TimeMasterFileHandler(saveDirPath);
+    private Path saveDirPath;
+    private TimeMasterFileHandler timeMasterFileHandler;
+    private ArrayList<Employee> employees;
 
-    @FXML MenuButton chooseEmployee;
-    @FXML DatePicker chooseDate;
-    @FXML TextField inputHr, inputMin;
+    @FXML private MenuButton chooseEmployeeButton;
+    @FXML private DatePicker chooseDateButton;
+    @FXML private TextField inputHour, inputMinutes;
 
-    
-    private ArrayList<Employee> employees = new ArrayList<>();
+    // Kalles når appen starter
+    @FXML private void initialize() {
+        this.saveDirPath = Paths.get(System.getProperty("user.dir"), "lagring");
+        System.out.println(saveDirPath);
+        this.timeMasterFileHandler = new TimeMasterFileHandler(saveDirPath);
 
-    @FXML void initialize(){ //Kalles når appen starter
-        this.chooseDate.setValue(LocalDate.now());
+        this.employees = new ArrayList<>();
+        this.chooseDateButton.setValue(LocalDate.now());
+
         this.readEmployees();
         this.updateEmployeeMenu();
     }
 
-    @FXML void handleRegisterTime() {
+    @FXML private void handleRegisterTime() {
         try {
-            LocalDate date = chooseDate.getValue();
-            LocalTime chosenTime = LocalTime.of(Integer.parseInt(this.inputHr.getText()), Integer.parseInt(this.inputMin.getText()));
+            LocalDate date = chooseDateButton.getValue();
+            LocalTime chosenTime = LocalTime.of(Integer.parseInt(this.inputHour.getText()),
+                                   Integer.parseInt(this.inputMinutes.getText()));
+
             if (this.chosenEmployee.getWorkdays().stream().anyMatch(e -> e.getDate().equals(date))) {
                 this.chosenWorkday = this.chosenEmployee.getDate(date);
-                this.chosenWorkday.setTimeOut(chosenTime); 
-                this.saveEmployees();
-            }
-            else {
-                this.chosenEmployee.addWorkday(new Workday(date, chosenTime)); 
-                this.saveEmployees();
-            }
-            this.inputHr.clear();
-            this.inputMin.clear();
-        } catch (Exception e) {
+                this.chosenWorkday.setTimeOut(chosenTime);
+            } 
+            else this.chosenEmployee.addWorkday(new Workday(date, chosenTime));
+            
+            this.saveEmployees();
+
+            this.clearInputHour();
+            this.clearInputMinutes();
+
+        }
+        catch (Exception e) {
             // TODO: handle exception
+            e.printStackTrace();
         }
     }
-    
 
-
-    private void saveEmployees () {
-        //Lagre alle ansatte
-        this.timeMasterFileHandler.writeEmployees(this.employees);
+    private void clearInputs() {
+        this.clearInputHour();
+        this.clearInputMinutes();
     }
+    private void clearInputHour() { this.inputHour.clear(); }
+    private void clearInputMinutes() { this.inputMinutes.clear(); }
 
-    private void readEmployees () {
-        //Les inn alle ansatte
-        this.employees = this.timeMasterFileHandler.readEmployees();
-
-    }
+    // Lagre alle ansatte
+    private void saveEmployees() { this.timeMasterFileHandler.writeEmployees(this.employees); }
+    // Les inn alle ansatte
+    private void readEmployees() { this.employees = this.timeMasterFileHandler.readEmployees(); }
 
     private void updateEmployeeMenu() {
-        this.chooseEmployee.getItems().clear();
-        for (int i = 0; i < this.employees.size(); i++){
+        this.chooseEmployeeButton.getItems().clear();
+        for (int i = 0; i < this.employees.size(); i++) {
             int employeeIndex = i;
-            MenuItem menuItem = new MenuItem(this.employees.get(i).getName());
-            menuItem.setOnAction((a)->{ // Ta ActionEventet "a" som input til lambda-uttrykket selv om vi ikke bruker det
-                this.chosenEmployee = employees.get(employeeIndex); 
-                this.chooseEmployee.setText(this.chosenEmployee.getName());
-            });
-            this.chooseEmployee.getItems().add(menuItem); //Legger til i ansattmenyen
+            MenuItem menuItem = new MenuItem(this.employees.get(employeeIndex).getName());
+
+            // Ta ActionEventet "a" som input til lambda-uttrykket selv om vi ikke bruker det
+            menuItem.setOnAction( a -> setChosenEmployee(employeeIndex) );
+            
+            // Legger til i ansattmenyen
+            this.chooseEmployeeButton.getItems().add(menuItem); 
         }
     }
 
+    private Employee getEmployee(int index) { return employees.get(index); }
 
+    private void setChosenEmployee(int index) {
+        this.chosenEmployee = this.getEmployee(index);
+        this.chooseEmployeeButton.setText(this.chosenEmployee.getName());
+    }
 
 }

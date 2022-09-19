@@ -17,7 +17,7 @@
       <DatePicker fx:id="chooseDate" />
       <TextField fx:id="inputHr" promptText="Hour"/>
       <TextField fx:id="inputMin" promptText="Min"/>
-      <Button fx:id="btnRegisterTime" text="Register Time"/>
+      <Button fx:id="btnRegisterTime" text="Register Time" onAction="#handleRegisterTime"/>
    </children>
    </VBox>
 

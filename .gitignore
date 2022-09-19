@@ -2,3 +2,4 @@
 .vscode
 # ignore maven build folder
 time-master/target/
+time-master/lagring/

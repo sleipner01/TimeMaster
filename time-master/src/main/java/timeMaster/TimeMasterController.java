@@ -77,7 +77,7 @@ public class TimeMasterController {
         this.chooseEmployeeButton.getItems().clear();
         for (int i = 0; i < this.employees.size(); i++) {
             int employeeIndex = i;
-            MenuItem menuItem = new MenuItem(this.employees.get(employeeIndex).getName());
+            MenuItem menuItem = new MenuItem(this.getEmployee(employeeIndex).getName());
 
             // Ta ActionEventet "a" som input til lambda-uttrykket selv om vi ikke bruker det
             menuItem.setOnAction( a -> setChosenEmployee(employeeIndex) );

@@ -1,5 +1,6 @@
 package timeMaster;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Employee {
@@ -30,6 +31,10 @@ public class Employee {
 
     public ArrayList<Workday> getWorkdays() {
         return new ArrayList<>(this.workdays);
+    }
+
+    public Workday getDate(LocalDate date) {
+        return this.workdays.stream().filter(e -> e.getDate().equals(date)).findAny().get();
     }
 
     @Override

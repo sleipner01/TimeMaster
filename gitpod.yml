@@ -6,6 +6,8 @@ tasks:
     command: cd time-master; mvn compile
 
 ports:
-  # used by virtual desktop and vnc, supports JavaFX
-  - port: 6080
+  - name: Time Master App
+    description: Time Master Web Server
+    port: 6080
+    onOpen: open-browser
 

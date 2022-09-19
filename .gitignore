@@ -1,4 +1,14 @@
+# MacOS files
 .DS_Store
+
+# Local VSCode settings
 .vscode
+
 # ignore maven build folder
 time-master/target/
+
+# Application save-files
+time-master/lagring/
+
+# Log files
+*.log

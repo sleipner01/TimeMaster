@@ -6,8 +6,8 @@ tasks:
     command: cd time-master; mvn compile
 
 ports:
-  - name: Web App
-    description: The main application web server
-    port: 8080
+  - name: Time Master App
+    description: Time Master Web Server
+    port: 6080
     onOpen: open-browser
 

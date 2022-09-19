@@ -9,3 +9,6 @@ time-master/target/
 
 # Application save-files
 time-master/lagring/
+
+# Log files
+*.log

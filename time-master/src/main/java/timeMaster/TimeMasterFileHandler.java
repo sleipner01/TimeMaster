@@ -87,8 +87,6 @@ public class TimeMasterFileHandler {
                     workday.setTimeOut(LocalTime.parse(timeOut));
                 }
 
-
-
                 Employee employee = employees.stream().filter(e ->  e.getId().equals(employeeId)).findFirst().get();
                 employee.addWorkday(workday);
             }

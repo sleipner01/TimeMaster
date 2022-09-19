@@ -1,5 +1,7 @@
 package timeMaster;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -11,17 +13,27 @@ import javafx.scene.control.MenuItem;
 public class TimeMasterController {
 
     private Employee chosenEmployee;
-    private TimeMasterFileHandler timeMasterFileHandler = new TimeMasterFileHandler(System.getProperty("user.dir") + "\\lagring\\");
+    private Path saveDirPath = Paths.get(System.getProperty("user.dir"), "lagring");
+    private TimeMasterFileHandler timeMasterFileHandler = new TimeMasterFileHandler(saveDirPath);
 
     @FXML MenuButton chooseEmployee;
     @FXML DatePicker chooseDate;
+
     
     private ArrayList<Employee> employees = new ArrayList<>();
 
     @FXML void initialize(){ //Kalles når appen starter
         this.chooseDate.setValue(LocalDate.now());
         this.readEmployees();
-        updateEmployeeMenu();
+        this.updateEmployeeMenu();
+    }
+
+    @FXML void handleRegisterTime() {
+        try {
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 
     private void saveEmployees () {
@@ -42,9 +54,12 @@ public class TimeMasterController {
             MenuItem menuItem = new MenuItem(this.employees.get(i).getName());
             menuItem.setOnAction((a)->{ // Ta ActionEventet "a" som input til lambda-uttrykket selv om vi ikke bruker det
                 this.chosenEmployee = employees.get(employeeIndex); 
+                this.chooseEmployee.setText(this.chosenEmployee.getName());
             });
+            this.chooseEmployee.getItems().add(menuItem); //Legger til i ansattmenyen
         }
-
     }
+
+
 
 }

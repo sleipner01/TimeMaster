@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -15,17 +17,17 @@ public class TimeMasterFileHandler {
     private String filenameEmployees;
     private String filenameWorkdays;
 
-    public TimeMasterFileHandler(String saveDirectory) {
-        this.saveDirectory = saveDirectory;
-        this.filenameEmployees = saveDirectory + "employees.csv";
-        this.filenameWorkdays = saveDirectory + "workdays.csv";
+    public TimeMasterFileHandler(Path saveDirectory) {
+        this.saveDirectory = saveDirectory.toString();
+        this.filenameEmployees = Paths.get(this.saveDirectory, "employees.csv").toString();
+        this.filenameWorkdays = Paths.get(this.saveDirectory, "workdays.csv").toString();
     }
 
     public void writeEmployees(ArrayList<Employee> employees) {
         try (PrintWriter writerEmployees = new PrintWriter(filenameEmployees)) {
             try (PrintWriter writerWorkdays = new PrintWriter(filenameWorkdays)) {
-                writerEmployees.println("id;name;birthday;salary");
-                writerWorkdays.println("employeeId;date;timeIn;timeOut;comment");
+                writerEmployees.println("id;name");
+                writerWorkdays.println("employeeId;date;timeIn;timeOut");
 
                 for (int i = 0; i < employees.size(); i++) {
                     Employee employee = employees.get(i);

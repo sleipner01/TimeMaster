@@ -12,60 +12,72 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TimeMasterFileHandler {
-    
+
+
+    private final String seperator = ",";
+    private final String fileType = ".csv";
+    private final String employeesFileName = "employees" + fileType;
+    private final String workdaysFileName = "workdays" + fileType;
+
     private String saveDirectory;
-    private String filenameEmployees;
-    private String filenameWorkdays;
+    private String employeesFilePath;
+    private String workdaysFilePath;
 
     public TimeMasterFileHandler(Path saveDirectory) {
         this.saveDirectory = saveDirectory.toString();
-        this.filenameEmployees = Paths.get(this.saveDirectory, "employees.csv").toString();
-        this.filenameWorkdays = Paths.get(this.saveDirectory, "workdays.csv").toString();
+        this.employeesFilePath = Paths.get(this.saveDirectory, employeesFileName).toString();
+        this.workdaysFilePath = Paths.get(this.saveDirectory, workdaysFileName).toString();
     }
 
     public void writeEmployees(ArrayList<Employee> employees) {
-        try (PrintWriter writerEmployees = new PrintWriter(filenameEmployees)) {
-            try (PrintWriter writerWorkdays = new PrintWriter(filenameWorkdays)) {
-                writerEmployees.println("id;name");
-                writerWorkdays.println("employeeId;date;timeIn;timeOut");
+        try {
+            PrintWriter writerEmployees = new PrintWriter(employeesFilePath);
+            PrintWriter writerWorkdays = new PrintWriter(workdaysFilePath);
 
-                for (int i = 0; i < employees.size(); i++) {
-                    Employee employee = employees.get(i);
-                    writerEmployees.println(i + ";" + employee.toString());
-                    
-                    for (Workday workday : employee.getWorkdays()) {
-                        writerWorkdays.println(i + ";" + workday.toString());
-                    }
-                }
-            } catch (IOException e) {
-                System.out.println("Filen " + filenameWorkdays + " kunne ikke oprettes");
+            writerEmployees.println("id" + seperator + "name");
+            writerWorkdays.println("employeeId" + seperator + "date" + seperator + "timeIn" + seperator + "timeOut");
+
+            for (int i = 0; i < employees.size(); i++) {
+                Employee employee = employees.get(i);
+                writerEmployees.println(employee.toString());
+
+                employee.getWorkdays().forEach(workday -> writerWorkdays.println(employee.getId() + seperator + workday.toString()));
             }
-        } catch (IOException e) {
-            System.out.println("Filen " + filenameEmployees + " kunne ikke oprettes");
+
+            writerEmployees.close();
+            writerWorkdays.close();
         } 
+        catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("One or more files could not be created");
+        }
     }
 
     public ArrayList<Employee> readEmployees() {
+
         ArrayList<Employee> employees = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new File(filenameEmployees))) {
+
+        try (Scanner scanner = new Scanner(new File(employeesFilePath))) {
             scanner.nextLine();
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                String[] parts = line.split(";");
+                String[] parts = line.split(seperator.toString());
+                String id = parts[0];
                 String name = parts[1];
-                employees.add(new Employee(name));
+                employees.add(new Employee(id, name));
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("Fil finnes ikke");
+        } 
+        catch (FileNotFoundException e) {
+            System.out.println("The file wasn't found on path: " + employeesFilePath);
         }
 
-        try (Scanner scanner = new Scanner(new File(filenameWorkdays))) {
+        try (Scanner scanner = new Scanner(new File(workdaysFilePath))) {
             scanner.nextLine();
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                String[] parts = line.split(";");
+                String[] parts = line.split(seperator);
 
-                int employeeId = Integer.parseInt(parts[0]);
+                String employeeId = parts[0];
                 LocalDate date = LocalDate.parse(parts[1]);
                 LocalTime timeIn = LocalTime.parse(parts[2]);
                 String timeOut = parts[3];
@@ -75,12 +87,14 @@ public class TimeMasterFileHandler {
                     workday.setTimeOut(LocalTime.parse(timeOut));
                 }
 
-                Employee employee = employees.get(employeeId);
+                Employee employee = employees.stream().filter(e ->  e.getId().equals(employeeId)).findFirst().get();
                 employee.addWorkday(workday);
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("Fil finnes ikke");
+        } 
+        catch (FileNotFoundException e) {
+            System.out.println("The file wasn't found on path: " + workdaysFilePath);
         }
+
         return new ArrayList<>(employees);
     }
 

@@ -1,12 +1,14 @@
 package timeMaster;
 
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 
 public class WorkdayTest {
     
@@ -17,13 +19,14 @@ public class WorkdayTest {
 
     Workday testWorkday;
 
-    @Before
+    @BeforeEach
     public void createWorkday() {
         testWorkday = new Workday(testDate, testTimeIn);
     }
 
     // TODO: finish test
     @Test
+    @DisplayName("Test ")
     public void setTimeOutTest() {
         assertTrue(true);
     } 

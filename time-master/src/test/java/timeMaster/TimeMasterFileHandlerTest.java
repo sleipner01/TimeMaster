@@ -2,16 +2,10 @@ package timeMaster;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -27,9 +21,9 @@ public class TimeMasterFileHandlerTest {
     @BeforeEach
     public void setup() {
         employees = new ArrayList<Employee>();
-        Employee emp1 = new Employee("Anna");
-        Employee emp2 = new Employee("Bernt");
-        Employee emp3 = new Employee("Claus");
+        Employee emp1 = new Employee("0", "Anna");
+        Employee emp2 = new Employee("1", "Bernt");
+        Employee emp3 = new Employee("2", "Claus");
         employees.add(emp1);
         employees.add(emp2);
         employees.add(emp3);

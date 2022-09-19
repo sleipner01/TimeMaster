@@ -8,16 +8,18 @@ import org.junit.jupiter.api.Test;
 public class EmployeeTest {
     
     String testName = "testName";
-    Employee employee;
+    Employee employee1;
+    Employee employee2;
 
     @BeforeEach
     public void createEmployee() {
-        employee = new Employee(testName);
+        employee1 = new Employee("0", testName);
+        employee2 = new Employee("1", testName);
     }
 
     @Test
     public void nameTest() {
-        assertTrue(employee.getName().equals(testName));
+        assertTrue(employee1.getName().equals(testName));
     } 
 
     // TODO: finish test
@@ -29,7 +31,7 @@ public class EmployeeTest {
     // TODO: finish test
     @Test
     public void getWorkdaysTest() {
-        assertTrue(employee.getName().equals(testName));
+        assertTrue(employee1.getName().equals(testName));
     } 
 
 }

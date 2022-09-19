@@ -32,6 +32,6 @@ public class Workday {
 
     @Override
     public String toString() {
-        return this.getDate().toString() + ";" + this.getTimeIn() + ";" + this.getTimeOut();
+        return this.getDate().toString() + "," + this.getTimeIn() + "," + this.getTimeOut();
     }
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TimeMasterFileHandler {
-    
+
     private final String employeesFileName = "employees.csv";
     private final String workdaysFileName = "workdays.csv";
     private final String seperator = ",";
@@ -28,25 +28,27 @@ public class TimeMasterFileHandler {
     }
 
     public void writeEmployees(ArrayList<Employee> employees) {
-        try (PrintWriter writerEmployees = new PrintWriter(employeesFilePath)) {
-            try (PrintWriter writerWorkdays = new PrintWriter(workdaysFilePath)) {
-                writerEmployees.println("id" + seperator + "name");
-                writerWorkdays.println("employeeId" + seperator + "date" + seperator + "timeIn" + seperator + "timeOut");
+        try {
+            PrintWriter writerEmployees = new PrintWriter(employeesFilePath);
+            PrintWriter writerWorkdays = new PrintWriter(workdaysFilePath);
 
-                for (int i = 0; i < employees.size(); i++) {
-                    Employee employee = employees.get(i);
-                    writerEmployees.println(i + seperator + employee.toString());
-                    
-                    for (Workday workday : employee.getWorkdays()) {
-                        writerWorkdays.println(i + seperator + workday.toString());
-                    }
-                }
-            } catch (IOException e) {
-                System.out.println("Filen " + workdaysFilePath + " kunne ikke oprettes");
+            writerEmployees.println("id" + seperator + "name");
+            writerWorkdays.println("employeeId" + seperator + "date" + seperator + "timeIn" + seperator + "timeOut");
+
+            for (int i = 0; i < employees.size(); i++) {
+                Employee employee = employees.get(i);
+                writerEmployees.println(employee.toString());
+
+                employee.getWorkdays().forEach(workday -> writerWorkdays.println(employee.getId() + seperator + workday.toString()));
             }
-        } catch (IOException e) {
-            System.out.println("Filen " + employeesFilePath + " kunne ikke oprettes");
+
+            writerEmployees.close();
+            writerWorkdays.close();
         } 
+        catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("One or more files could not be created");
+        }
     }
 
     public ArrayList<Employee> readEmployees() {
@@ -56,8 +58,9 @@ public class TimeMasterFileHandler {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split(seperator.toString());
+                String id = parts[0];
                 String name = parts[1];
-                employees.add(new Employee(name));
+                employees.add(new Employee(id, name));
             }
         } 
         catch (FileNotFoundException e) {

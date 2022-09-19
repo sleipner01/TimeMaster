@@ -6,6 +6,7 @@
   <groupId>timeMaster</groupId>
   <artifactId>time-master</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
   <name>time-master</name>
   <url>https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2227/gr2227</url>

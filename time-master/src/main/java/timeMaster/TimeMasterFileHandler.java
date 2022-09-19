@@ -13,9 +13,11 @@ import java.util.Scanner;
 
 public class TimeMasterFileHandler {
 
-    private final String employeesFileName = "employees.csv";
-    private final String workdaysFileName = "workdays.csv";
+
     private final String seperator = ",";
+    private final String fileType = ".csv";
+    private final String employeesFileName = "employees" + fileType;
+    private final String workdaysFileName = "workdays" + fileType;
 
     private String saveDirectory;
     private String employeesFilePath;
@@ -52,7 +54,9 @@ public class TimeMasterFileHandler {
     }
 
     public ArrayList<Employee> readEmployees() {
+
         ArrayList<Employee> employees = new ArrayList<>();
+
         try (Scanner scanner = new Scanner(new File(employeesFilePath))) {
             scanner.nextLine();
             while (scanner.hasNextLine()) {
@@ -73,7 +77,7 @@ public class TimeMasterFileHandler {
                 String line = scanner.nextLine();
                 String[] parts = line.split(seperator);
 
-                int employeeId = Integer.parseInt(parts[0]);
+                String employeeId = parts[0];
                 LocalDate date = LocalDate.parse(parts[1]);
                 LocalTime timeIn = LocalTime.parse(parts[2]);
                 String timeOut = parts[3];
@@ -83,7 +87,9 @@ public class TimeMasterFileHandler {
                     workday.setTimeOut(LocalTime.parse(timeOut));
                 }
 
-                Employee employee = employees.get(employeeId);
+
+
+                Employee employee = employees.stream().filter(e ->  e.getId().equals(employeeId)).findFirst().get();
                 employee.addWorkday(workday);
             }
         } 

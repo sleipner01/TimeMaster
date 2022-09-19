@@ -14,17 +14,11 @@ public class Workday {
         this.timeIn = timeIn;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
+    public LocalDate getDate() { return date; }
 
-    public LocalTime getTimeIn() {
-        return timeIn;
-    }
+    public LocalTime getTimeIn() { return timeIn; }
 
-    public LocalTime getTimeOut() {
-        return timeOut;
-    }
+    public LocalTime getTimeOut() { return timeOut; }
 
     public void setTimeOut(LocalTime timeOut) {
         this.timeOut = timeOut;

@@ -2,6 +2,7 @@ package timeMaster;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
@@ -12,23 +13,32 @@ import org.junit.jupiter.api.DisplayName;
 
 public class WorkdayTest {
     
-    // TODO: create mock values
-    LocalDate testDate;
-    LocalTime testTimeIn;
-    LocalTime testTimeOut;
+    LocalDate testDate = LocalDate.parse("2022-09-19");
+    LocalTime testTimeIn = LocalTime.parse("01:02");
+    LocalTime testTimeOut = LocalTime.parse("06:00");
 
-    Workday testWorkday;
+    Workday workday;
 
     @BeforeEach
     public void createWorkday() {
-        testWorkday = new Workday(testDate, testTimeIn);
+        workday = new Workday(testDate, testTimeIn);
     }
 
-    // TODO: finish test
     @Test
-    @DisplayName("Test ")
+    public void testGetDate() {
+        assertEquals(testDate, workday.getDate());
+    }
+
+    @Test
+    public void testGetTimeIn() {
+        assertEquals(testTimeIn, workday.getTimeIn());
+    }
+
+    @Test
+    @DisplayName("Test setTimeOut()")
     public void setTimeOutTest() {
-        assertTrue(true);
+        workday.setTimeOut(testTimeOut);
+        assertEquals(testTimeOut, workday.getTimeOut());
     } 
     
 }

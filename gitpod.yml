@@ -5,7 +5,9 @@ tasks:
   - init: sdk use java 17.0.3.hs-adpt
     command: cd time-master; mvn compile
 
-  - command: export DEV_ENVIRONMENT_HOST=`gp url 6080`, java <application-entry>
+  - command: mvn package && mvn exec:java"
+
+  # - command: export DEV_ENVIRONMENT_HOST=`gp url 6080`, java <application-entry>
 
 ports:
   - port: 6080

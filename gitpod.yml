@@ -2,7 +2,7 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: sdk use java java 17.0.3-ms
+  - init: sdk use java java 17.0.4-tem
     command: cd time-master; mvn compile
 
 ports:

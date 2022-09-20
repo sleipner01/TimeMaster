@@ -2,8 +2,10 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: sdk use java 17.0.1.hs-adpt
+  - init: sdk use java 17.0.3.ms
     command: cd time-master; mvn compile
+
+  - command: export DEV_ENVIRONMENT_HOST=`gp url 6080`, java <application-entry>
 
 ports:
   - name: Time Master App

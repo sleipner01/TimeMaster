@@ -12,6 +12,8 @@ Programmet er bygget med Maven slik at man enkelt kan kjøre programmet med `mvn
 ## Gitpod
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2227/gr2227)
 
+1. Åpne en Gitpod instanse av kodelageret. Terminalen blir automatisk satt til time-master mappen.
+2. Kjør `mvn javafx:run` i terminalen, eventuelt `mvn clean javafx:run`.
 ## Utviklerinstallasjon
 
 1. `git clone https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2227/gr2227.git`

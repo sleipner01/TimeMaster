@@ -29,6 +29,7 @@ public class TimeMasterFileHandler {
         this.workdaysFilePath = Paths.get(this.saveDirectory, workdaysFileName).toString();
     }
 
+    // Using two printWriters to write EmployeeObject-data in one file, and Workday-data in another, connected with the Employee's id
     public void writeEmployees(ArrayList<Employee> employees) {
         try {
             PrintWriter writerEmployees = new PrintWriter(employeesFilePath);
@@ -53,6 +54,7 @@ public class TimeMasterFileHandler {
         }
     }
 
+    // This method reads the employee-file, to recoved the ids. The id-s are then used to connect related Workday-data
     public ArrayList<Employee> readEmployees() {
 
         ArrayList<Employee> employees = new ArrayList<>();

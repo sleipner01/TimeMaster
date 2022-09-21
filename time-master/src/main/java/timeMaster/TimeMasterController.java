@@ -24,7 +24,6 @@ public class TimeMasterController {
     @FXML private DatePicker chooseDateButton;
     @FXML private TextField inputHour, inputMinutes;
 
-    // Kalles når appen starter
     @FXML private void initialize() {
         this.saveDirPath = Paths.get(System.getProperty("user.dir"), "lagring");
         System.out.println(saveDirPath);
@@ -37,6 +36,7 @@ public class TimeMasterController {
         this.updateEmployeeMenu();
     }
 
+    // Using values from chooseDateButton, inputHour and inputMinutes, to create a Workday object for the user
     @FXML private void handleRegisterTime() {
         try {
             LocalDate date = chooseDateButton.getValue();

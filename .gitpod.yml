@@ -8,23 +8,7 @@ tasks:
 
 # List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
 ports:
-  - port: 6080
+  - name: Time Master App
+    description: Time Master Web Server
+    port: 6080
     onOpen: open-preview
-    
-# image:
-#   file: .gitpod.Dockerfile
-
-# tasks:
-#   - init: sdk use java 17.0.3.hs-adpt
-#     command: cd time-master; mvn compile
-
-#   - command: export DEV_ENVIRONMENT_HOST=`gp url 6080`, java <application-entry>
-
-# ports:
-#   - port: 6080
-
-# ports:
-#   - name: Time Master App
-#     description: Time Master Web Server
-#     port: 6080
-#     onOpen: open-browser

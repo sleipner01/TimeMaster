@@ -13,7 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 
 public class TimeMasterFileHandlerTest {
     
-    private Path saveDirPath = Paths.get(System.getProperty("user.dir"), "lagring");
+    private Path saveDirPath = Paths.get(System.getProperty("user.dir"), "timeMasterSaveFiles");
     private TimeMasterFileHandler timeMasterFileHandler = new TimeMasterFileHandler(saveDirPath);
     private ArrayList<Employee> employees;
     

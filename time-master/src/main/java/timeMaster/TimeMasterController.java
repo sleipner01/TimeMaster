@@ -25,7 +25,7 @@ public class TimeMasterController {
     @FXML private TextField inputHour, inputMinutes;
 
     @FXML private void initialize() {
-        this.saveDirPath = Paths.get(System.getProperty("user.dir"), "lagring");
+        this.saveDirPath = Paths.get(System.getProperty("user.dir"), "timeMasterSaveFiles");
         System.out.println(saveDirPath);
         this.timeMasterFileHandler = new TimeMasterFileHandler(saveDirPath);
 

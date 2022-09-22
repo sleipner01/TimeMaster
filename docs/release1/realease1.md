@@ -20,7 +20,9 @@ I Release-1 har vi:
 ### Målet for release 1
 Vi fokuserte på å lage grunnfunksjonaliteten til programmet for å ha et godt utgangspunkt å bygge videre på. Det gjør det lettere å fordele arbeidsoppgaver som ikke skaper merge-konflikter. Programmet består nå av et enkelt brukergrensesnitt der det er mulig å velge ansatt og registrere tidspunkt den ansatte har kommet på jobb. 
 
-Når appen starter leser den inn fra filene over ansatte og registrerte arbeidsdager. 
-Hver gang et nytt registrert tidspunkt blir lagt til lagres det til fil.
+### Fillagring
+Når appen starter leser den inn fra filene over ansatte og registrerte arbeidsdager. Foreløpig er de ansatte hardkodet i employees.csv fila. Hver gang et nytt registrert tidspunkt blir lagt til lagres det til fil.
 
-Testene sjekker blant annet at det fungerer å lese og skrive til fil.
+### Testing
+Vi har laget en test til hver klasse utenom kontrolleren. Det blir først når layout og design av brukergrensesnitt er ferdig at det blir relevant å teste koblingen mellom brukergrensesnittet og programmet.
+Noen tester sjekker enkel funksjonalitet, men stort sett sjekker testene den avanserte funksjonaliteten, som betinger at at denkle funksjonaliteten funker som den skal. De viktigste testene vi har foreløøpig sjekker at det fungerer å lese og skrive til fil.

@@ -16,9 +16,8 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<java.version>17</java.version>
 	</properties>
-
-	<dependencies>
-
+  <dependencies>
+    
 		<!-- JavaFX -->
 		<dependency>
 			<groupId>org.openjfx</groupId>
@@ -71,6 +70,31 @@
 					<argLine>--enable-preview</argLine>
 				</configuration>
 			</plugin>
+
+     <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.6</version>
+                    <executions>
+                        <execution>
+                            <id>jacoco-prepare-agent</id>
+                            <phase>process-test-classes</phase>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                            <configuration>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>jacoco-report</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report-aggregate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
 
 			<!-- JUnit -->
 			<plugin>

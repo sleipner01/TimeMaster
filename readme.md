@@ -1,6 +1,6 @@
 # Time Master
 
-Velkommen til kodelageret til Time Master. For detaljert beskrivelse av applikasjonen, les [Time Master Application](time-master/src/main/java/timeMaster/README.md)
+Velkommen til kodelageret til Time Master. For detaljert beskrivelse av applikasjonen, les [Time Master Application](time-master/README.md)
 
 ## Kodingsprosjektet
 

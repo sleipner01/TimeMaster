@@ -30,7 +30,6 @@
 			<version>19</version>
 		</dependency>
 
-
 		<!-- JUnit -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>

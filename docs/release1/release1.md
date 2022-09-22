@@ -25,3 +25,8 @@ Når appen starter leser den inn fra filene over ansatte og registrerte arbeidsd
 ### Testing
 Vi har laget en test til hver klasse utenom kontrolleren. Det blir først når layout og design av brukergrensesnitt er ferdig at det blir relevant å teste koblingen mellom brukergrensesnittet og programmet.
 Noen tester sjekker enkel funksjonalitet, men stort sett sjekker testene den avanserte funksjonaliteten, som betinger at at denkle funksjonaliteten funker som den skal. De viktigste testene vi har foreløøpig sjekker at det fungerer å lese og skrive til fil.
+
+For å kjøre testene kan du bruke kommandoen
+```mvn test```
+
+Denne vil kjøre alle testene og vise resultatet i terminalen. I tillegg vil det genereres en rapport over testdekningsgrad som legges i `target/site/jacoco/index.html`, og kan åpnes i en nettleser.

@@ -1,0 +1,20 @@
+{
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch TimeMaster Application",
+            "request": "launch",
+            "mainClass": "timeMaster.fxui/timeMaster.fxui.App",
+            "vmArgs": "--add-opens timeMaster.fxui/timeMaster.fxui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED",
+            "projectName": "fxui"
+        }
+    ]
+}

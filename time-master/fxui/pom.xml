@@ -13,6 +13,13 @@
 
 	<dependencies>
 
+		<!-- TimeMaster -->
+		<dependency>
+			<groupId>gr2227.timeMaster</groupId>
+			<artifactId>core</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
 		<!-- JavaFX -->
 		<dependency>
 			<groupId>org.openjfx</groupId>

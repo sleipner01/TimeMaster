@@ -1,4 +1,3 @@
-/Users/magnusbyrkjeland/NTNU/gitProjects/IT1901/gr2227/time-master/src/test/java/timeMaster/AppTest.java
-/Users/magnusbyrkjeland/NTNU/gitProjects/IT1901/gr2227/time-master/src/test/java/timeMaster/WorkdayTest.java
-/Users/magnusbyrkjeland/NTNU/gitProjects/IT1901/gr2227/time-master/src/test/java/timeMaster/TimeMasterFileHandlerTest.java
-/Users/magnusbyrkjeland/NTNU/gitProjects/IT1901/gr2227/time-master/src/test/java/timeMaster/EmployeeTest.java
+/Users/magnusbyrkjeland/NTNU/gitProjects/IT1901/gr2227/time-master/core/src/test/java/timeMaster/core/EmployeeTest.java
+/Users/magnusbyrkjeland/NTNU/gitProjects/IT1901/gr2227/time-master/core/src/test/java/timeMaster/core/TimeMasterFileHandlerTest.java
+/Users/magnusbyrkjeland/NTNU/gitProjects/IT1901/gr2227/time-master/core/src/test/java/timeMaster/core/WorkdayTest.java

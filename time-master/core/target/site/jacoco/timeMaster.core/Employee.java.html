@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Employee.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">timeMaster.core</a> &gt; <span class="el_source">Employee.java</span></div><h1>Employee.java</h1><pre class="source lang-java linenums">package timeMaster.core;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Employee {
+    
+    private String id;
+    private String name;
+<span class="pc" id="L11">    private ArrayList&lt;Workday&gt; workdays = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L13">    public Employee(String name) {</span>
+<span class="nc" id="L14">        this.id = generateId();</span>
+<span class="nc" id="L15">        this.name = name;</span>
+<span class="nc" id="L16">    }</span>
+
+    // Only for filewriters/readers
+<span class="fc" id="L19">    public Employee(String id, String name) {</span>
+<span class="fc" id="L20">        this.id = id;</span>
+<span class="fc" id="L21">        this.name = name;</span>
+<span class="fc" id="L22">    }</span>
+
+    private String generateId() {
+        // TODO: create hashseed for ids
+<span class="nc" id="L26">        return &quot;&quot; + new Random().nextInt();</span>
+    }
+
+    private Boolean isWorkdayValid(Workday workday) {
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        return !this.workdays.contains(workday);</span>
+    }
+
+<span class="fc" id="L33">    public String getId() { return this.id; }</span>
+
+<span class="fc" id="L35">    public String getName() { return this.name; }</span>
+
+    public void addWorkday(Workday workday) {
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (!this.isWorkdayValid(workday)) throw new IllegalArgumentException(&quot;Workday is already added.&quot;);</span>
+<span class="fc" id="L39">        this.workdays.add(workday); </span>
+<span class="fc" id="L40">    }</span>
+
+    public ArrayList&lt;Workday&gt; getWorkdays() {
+<span class="fc" id="L43">        return new ArrayList&lt;&gt;(this.workdays);</span>
+    }
+
+    public Workday getDate(LocalDate date) {
+<span class="nc" id="L47">        return this.workdays.stream().filter(e -&gt; e.getDate().equals(date)).findAny().get();</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L52">        return this.id + &quot;,&quot; + this.getName();</span>
+    }
+
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

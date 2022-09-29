@@ -29,7 +29,7 @@ import timeMaster.core.TimeMasterFileHandler;
     @FXML private TextField inputHour, inputMinutes;
 
     @FXML private void initialize() {
-<span class="nc" id="L32">        this.saveDirPath = Paths.get(System.getProperty(&quot;user.dir&quot;), &quot;timeMasterSaveFiles&quot;);</span>
+<span class="nc" id="L32">        this.saveDirPath = Paths.get(System.getProperty(&quot;user.dir&quot;), &quot;/time-master/core/timeMasterSaveFiles&quot;);</span>
 <span class="nc" id="L33">        System.out.println(saveDirPath);</span>
 <span class="nc" id="L34">        this.timeMasterFileHandler = new TimeMasterFileHandler(saveDirPath);</span>
 

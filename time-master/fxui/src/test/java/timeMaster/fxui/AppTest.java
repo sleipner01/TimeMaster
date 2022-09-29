@@ -1,4 +1,4 @@
-package timeMaster;
+package timeMaster.fxui;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

@@ -1,4 +1,0 @@
---patch-module
-timeMaster.core=_
---add-reads
-timeMaster.core=ALL-UNNAMED

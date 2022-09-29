@@ -1,4 +1,4 @@
-package timeMaster;
+package timeMaster.core;
 
 import org.junit.jupiter.api.Test;
 

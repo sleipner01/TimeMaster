@@ -1,4 +1,4 @@
-package timeMaster;
+package timeMaster.core;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

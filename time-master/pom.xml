@@ -81,7 +81,7 @@
                     <!-- Default configuration for running -->
                     <!-- Usage: mvn javafx:run -->
                     <configuration>
-                        <mainClass>timeMaster/timeMaster.App</mainClass>
+                        <mainClass>timeMaster.fxui/timeMaster.fxui.App</mainClass>
                     </configuration>
                 </plugin>
             </plugins>

@@ -47,11 +47,11 @@ public class TimeMasterFileHandler {
 
 <span class="fc" id="L48">            writerEmployees.close();</span>
 <span class="fc" id="L49">            writerWorkdays.close();</span>
-        } 
+<span class="fc" id="L50">        } </span>
 <span class="nc" id="L51">        catch (IOException e) {</span>
 <span class="nc" id="L52">            e.printStackTrace();</span>
 <span class="nc" id="L53">            System.out.println(&quot;One or more files could not be created&quot;);</span>
-<span class="fc" id="L54">        }</span>
+        }
 <span class="fc" id="L55">    }</span>
 
     // This method reads the employee-file, to recoved the ids. The id-s are then used to connect related Workday-data
@@ -67,11 +67,11 @@ public class TimeMasterFileHandler {
 <span class="fc" id="L67">                String id = parts[0];</span>
 <span class="fc" id="L68">                String name = parts[1];</span>
 <span class="fc" id="L69">                employees.add(new Employee(id, name));</span>
-<span class="fc" id="L70">            }</span>
+            }
         } 
 <span class="nc" id="L72">        catch (FileNotFoundException e) {</span>
 <span class="nc" id="L73">            System.out.println(&quot;The file wasn't found on path: &quot; + employeesFilePath);</span>
-<span class="fc" id="L74">        }</span>
+        }
 
 <span class="fc" id="L76">        try (Scanner scanner = new Scanner(new File(workdaysFilePath))) {</span>
 <span class="fc" id="L77">            scanner.nextLine();</span>
@@ -91,11 +91,11 @@ public class TimeMasterFileHandler {
 
 <span class="nc" id="L92">                Employee employee = employees.stream().filter(e -&gt;  e.getId().equals(employeeId)).findFirst().get();</span>
 <span class="nc" id="L93">                employee.addWorkday(workday);</span>
-<span class="nc" id="L94">            }</span>
+            }
         } 
 <span class="nc" id="L96">        catch (FileNotFoundException e) {</span>
 <span class="nc" id="L97">            System.out.println(&quot;The file wasn't found on path: &quot; + workdaysFilePath);</span>
-<span class="fc" id="L98">        }</span>
+        }
 
 <span class="fc" id="L100">        return new ArrayList&lt;&gt;(employees);</span>
     }

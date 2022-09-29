@@ -20,6 +20,7 @@ public class TimeMasterFileHandlerTest {
 
     @BeforeEach
     public void setup() {
+        System.out.println(saveDirPath);
         employees = new ArrayList<Employee>();
         Employee emp1 = new Employee("0", "Anna");
         Employee emp2 = new Employee("1", "Bernt");

@@ -37,6 +37,13 @@
 			<version>5.9.0</version>
 		</dependency>
 
+    			<!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
+    			<dependency>
+      				<groupId>com.github.spotbugs</groupId>
+      				<artifactId>spotbugs</artifactId>
+      				<version>4.7.2</version>
+    			</dependency>
+
 	</dependencies>
 
 	<build>
@@ -110,6 +117,7 @@
   				<artifactId>maven-site-plugin</artifactId>
   				<version>3.7.1</version>
 			</plugin>
+
 		</plugins>
 	</build>
 
@@ -127,6 +135,13 @@
                </reports>
               </reportSet>
           	 </reportSets>
+			</plugin>
+		
+
+		<plugin>
+  				<groupId>com.github.spotbugs</groupId>
+  				<artifactId>spotbugs-maven-plugin</artifactId>
+  				<version>4.7.1.1</version>
 			</plugin>
 		</plugins>
 	</reporting>

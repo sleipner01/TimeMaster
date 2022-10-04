@@ -10,7 +10,7 @@ Programmet er bygget med Maven slik at man enkelt kan kjøre programmet med `mvn
 
 Testene kan kjøres med `mvn test`. Da genereres en rapport over testdekningsgrad som legges i `target/site/jacoco/index.html`, og kan åpnes i en nettleser.
 
-Etter kjøring av programmet og testene kan en rapport over kodekvaliteten lages med `mvn site`. Denne finnes i `target/site/checkstyle.html`
+Etter kjøring av programmet og testene kan en rapport over kodekvaliteten lages med `mvn site`. Denne finnes i `target/site/checkstyle.html`. En rapport over bugs blir også laget samtidig, og kan finnes i `target/site/spotbugs.html`.
 
 
 ## Gitpod

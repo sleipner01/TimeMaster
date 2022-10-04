@@ -80,17 +80,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- JavaFX -->
-            <dependency>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-controls</artifactId>
-                <version>19</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-fxml</artifactId>
-                <version>19</version>
-            </dependency>
 
             <!-- JUnit -->
             <dependency>

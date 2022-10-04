@@ -1,4 +1,4 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-core,timeMaster.core,Employee,40,65,0,4,6,13,4,9,4,7
-core,timeMaster.core,TimeMasterFileHandler,99,164,3,5,18,34,4,5,2,3
-core,timeMaster.core,Workday,19,22,0,0,1,9,1,5,1,5
+core,timeMaster.core,Employee,36,58,0,4,6,13,4,9,4,7
+core,timeMaster.core,TimeMasterFileHandler,83,157,3,5,19,37,4,5,2,3
+core,timeMaster.core,Workday,9,22,0,0,1,9,1,5,1,5

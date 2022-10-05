@@ -16,8 +16,10 @@ En commit kan:
 - referere til en issue eller merge request
 - beskrive innholdet mer detaljert, men ikke hvordan det funker (dette gjøres i dokumentasjon)
 
-![Eksempel på commits](bilder/commit.png)
+<img src="/docs/bilder/commit.png" width="500px"/>
+
 Eksempel på en god og en dårlig commit.
+
 
 ## issues
 

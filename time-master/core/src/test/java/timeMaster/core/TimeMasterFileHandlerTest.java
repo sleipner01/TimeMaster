@@ -1,4 +1,4 @@
-package timeMaster;
+package timeMaster.core;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,13 +13,14 @@ import org.junit.jupiter.api.DisplayName;
 
 public class TimeMasterFileHandlerTest {
     
-    private Path saveDirPath = Paths.get(System.getProperty("user.dir"), "timeMasterSaveFiles");
+    private Path saveDirPath = Paths.get(System.getProperty("user.dir"), "timeMasterSaveFilesTest");
     private TimeMasterFileHandler timeMasterFileHandler = new TimeMasterFileHandler(saveDirPath);
     private ArrayList<Employee> employees;
     
 
     @BeforeEach
     public void setup() {
+        System.out.println(saveDirPath);
         employees = new ArrayList<Employee>();
         Employee emp1 = new Employee("0", "Anna");
         Employee emp2 = new Employee("1", "Bernt");
@@ -27,6 +28,7 @@ public class TimeMasterFileHandlerTest {
         employees.add(emp1);
         employees.add(emp2);
         employees.add(emp3);
+        System.out.println();
     }
 
     @Test

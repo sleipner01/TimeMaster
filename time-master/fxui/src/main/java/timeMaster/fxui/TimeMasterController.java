@@ -1,4 +1,4 @@
-package timeMaster;
+package timeMaster.fxui;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,6 +11,10 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+
+import timeMaster.core.Employee;
+import timeMaster.core.Workday;
+import timeMaster.core.TimeMasterFileHandler;
 
 public class TimeMasterController {
 
@@ -25,7 +29,8 @@ public class TimeMasterController {
     @FXML private TextField inputHour, inputMinutes;
 
     @FXML private void initialize() {
-        this.saveDirPath = Paths.get(System.getProperty("user.dir"), "timeMasterSaveFiles");
+        this.saveDirPath = Paths.get(System.getProperty("user.dir"), "../core/timeMasterSaveFiles");
+        System.out.println(saveDirPath);
         System.out.println(saveDirPath);
         this.timeMasterFileHandler = new TimeMasterFileHandler(saveDirPath);
 

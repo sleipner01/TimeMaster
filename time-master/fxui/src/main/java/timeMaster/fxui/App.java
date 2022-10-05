@@ -1,4 +1,4 @@
-package timeMaster;
+package timeMaster.fxui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

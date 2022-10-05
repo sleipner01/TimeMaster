@@ -1,4 +1,4 @@
-package timeMaster;
+package timeMaster.core;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

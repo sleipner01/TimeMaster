@@ -6,7 +6,6 @@
 
 # ignore maven build folder
 time-master/*/target/
-time-master/target/
 
 # Application save-files
 time-master/lagring/

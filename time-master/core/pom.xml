@@ -10,6 +10,9 @@
 	</parent>
 
 	<artifactId>core</artifactId>
+	<name>Core</name>
+	<description>Modules contining core files for the application</description>
+	<packaging>jar</packaging>
 
 	<dependencies>
 

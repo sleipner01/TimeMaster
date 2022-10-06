@@ -10,7 +10,9 @@
 	</parent>
 
 	<artifactId>fxui</artifactId>
-	<!-- <packaging>jar</packaging> -->
+	<name>FXUI</name>
+	<description>Module containing applicationfiles for the user interface</description>
+	<packaging>jar</packaging>
 
 	<dependencies>
 		<!-- TimeMaster -->

@@ -1,0 +1,59 @@
+@startuml Time Master 
+
+class Employee{
+    -String id 
+    -String name
+    -ArrayList workdays
+
+    +String getId()
+    +String getName()
+}
+
+
+class TimeMasterFileHandler{
+    - String saveDirectory
+    - String employeesFilePath
+    - String workdaysFilePath
+}
+
+class Workday{
+    date : LocalDate
+    timeIn : LocalTime
+    timeOut : LocalTime
+
+    LocalDate getDate()
+    LocalTime getTimeIn()
+    LocalTime getTimeOut()
+
+}
+
+class App {
+    start()
+}
+
+class TimeMasterController {
+    - Employee chosenEmployee
+    - Workday chosenWorkday
+    - Path saveDirPath
+    - TimeMasterFileHandler timeMasterFileHandler
+    - ArrayList<Employee> employees
+
+    - void initialize()
+    - void handleRegisterTime()
+    - void clearInputs()
+    - void saveEmployees()
+    - void readEmployees()
+    - void updateEmployeeMenu()
+}
+
+Employee -->  "workdays : * " Workday : " workday"
+
+Employee --> TimeMasterFileHandler :" workdays" 
+
+App -- TimeMasterController : " initilize"
+
+TimeMasterController --> Employee : handel input
+
+
+
+@enduml

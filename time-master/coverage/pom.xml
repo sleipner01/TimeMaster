@@ -10,11 +10,12 @@
 	</parent>
 
     <artifactId>coverage</artifactId>
-    <name>coverage</name>
+    <name>Coverage</name>
     <description>Compute aggregated test code coverage</description>
+    <packaging>rar</packaging>
 
     <properties>
-    <maven.deploy.skip>true</maven.deploy.skip>
+      <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
   <dependencies>

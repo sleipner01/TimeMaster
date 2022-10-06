@@ -22,6 +22,7 @@
     <modules>
         <module>core</module>
         <module>fxui</module>
+        <module>coverage</module>
     </modules>
 
     <build>

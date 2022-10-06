@@ -1,0 +1,10 @@
+@startuml Time Master
+
+actor Magnus
+
+Magnus --> TimeMaster : velg ansatt 
+TimeMaster --> workdays.csv : registrer tid 
+workdays.csv --> TimeMaster : vis registrert tid
+TimeMaster --> Magnus : vis registrert tid
+
+@enduml

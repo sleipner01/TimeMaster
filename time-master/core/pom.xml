@@ -27,6 +27,7 @@
 			<!-- Maven -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
 			</plugin>
 
 			<plugin>
@@ -41,12 +42,6 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
-			</plugin>
-
-			<!-- JUnit -->
-			<plugin>
-				<groupId>org.openjfx</groupId>
-				<artifactId>javafx-maven-plugin</artifactId>
 			</plugin>
 
 		</plugins>

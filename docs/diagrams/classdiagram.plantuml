@@ -17,9 +17,9 @@ class TimeMasterFileHandler{
 }
 
 class Workday{
-    date : LocalDate
-    timeIn : LocalTime
-    timeOut : LocalTime
+   - date : LocalDate
+   - timeIn : LocalTime
+   - timeOut : LocalTime
 
     LocalDate getDate()
     LocalTime getTimeIn()

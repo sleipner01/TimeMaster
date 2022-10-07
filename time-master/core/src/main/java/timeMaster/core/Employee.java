@@ -1,6 +1,7 @@
 package timeMaster.core;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -9,6 +10,7 @@ public class Employee {
     private String id;
     private String name;
     private ArrayList<Workday> workdays = new ArrayList<>();
+    private boolean atWork;
 
     public Employee(String name) {
         this.id = generateId();
@@ -27,13 +29,27 @@ public class Employee {
         return !this.workdays.contains(workday);
     }
 
+    public void checkIn(LocalDate date, LocalTime time) {
+        if(isAtWork()) throw new IllegalStateException(this.toString() + " is already at work!");
+        this.workdays.add(0, new Workday(date, time));
+        this.atWork = true;
+    }
+
+    public void checkOut(LocalTime time) {
+        if(!isAtWork()) throw new IllegalStateException(this.toString() + " is not at work!");
+        this.workdays.get(0).setTimeOut(time);
+        this.atWork = false;
+    }
+
     public String getId() { return this.id; }
 
     public String getName() { return this.name; }
 
+    public boolean isAtWork() { return this.atWork; }
+
     public void addWorkday(Workday workday) {
         if (!this.isWorkdayValid(workday)) throw new IllegalArgumentException("Workday is already added.");
-        this.workdays.add(workday); 
+        this.workdays.add(0, workday);
     }
 
     public ArrayList<Workday> getWorkdays() {

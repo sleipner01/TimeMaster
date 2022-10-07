@@ -71,18 +71,16 @@ public class TimeMasterController {
 
     @FXML private void autoClockInOut() {
         try {
-            // LocalDate date = chooseDateButton.getValue();
-            // LocalTime chosenTime = LocalTime.of(Integer.parseInt(this.inputHour.getText()),
-            //                        Integer.parseInt(this.inputMinutes.getText()));
+            LocalDate date = LocalDate.now();
+            LocalTime chosenTime = LocalTime.now();
 
-            // if (this.chosenEmployee.getWorkdays().stream().anyMatch(e -> e.getDate().equals(date))) {
-            //     this.chosenWorkday = this.chosenEmployee.getDate(date);
-            //     this.chosenWorkday.setTimeOut(chosenTime);
-            // } 
-            // else this.chosenEmployee.addWorkday(new Workday(date, chosenTime));
+            if (this.chosenEmployee.getWorkdays().stream().anyMatch(e -> e.getDate().equals(date))) {
+                this.chosenWorkday = this.chosenEmployee.getDate(date);
+                this.chosenWorkday.setTimeOut(chosenTime);
+            } 
+            else this.chosenEmployee.addWorkday(new Workday(date, chosenTime));
             
-            // this.saveEmployees();
-            System.out.println("Under development");
+            this.saveEmployees();
         }
         catch (Exception e) {
             // TODO: handle exception

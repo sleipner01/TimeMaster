@@ -2,7 +2,7 @@ package timeMaster.core;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.UUID;
 
 public class Employee {
     
@@ -21,10 +21,7 @@ public class Employee {
         this.name = name;
     }
 
-    private String generateId() {
-        // TODO: create hashseed for ids
-        return "" + new Random().nextInt();
-    }
+    private String generateId() { return UUID.randomUUID().toString(); }
 
     private Boolean isWorkdayValid(Workday workday) {
         return !this.workdays.contains(workday);
@@ -51,6 +48,5 @@ public class Employee {
     public String toString() {
         return this.id + "," + this.getName();
     }
-
     
 }

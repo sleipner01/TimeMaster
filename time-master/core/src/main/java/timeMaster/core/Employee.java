@@ -29,16 +29,25 @@ public class Employee {
         return !this.workdays.contains(workday);
     }
 
+    private boolean isValidWorkday(LocalDate date, LocalTime time) {
+        // TODO: Check if any other workday in the close timespan conflicts with this timestamp.
+
+        return true;
+    }
+
     public void checkIn(LocalDate date, LocalTime time) {
         if(isAtWork()) throw new IllegalStateException(this.toString() + " is already at work!");
-        this.workdays.add(0, new Workday(date, time));
+        if(!isValidWorkday(date, time)) throw new IllegalArgumentException("This timestamp comes in conflict with another workday");
+        this.workdays.add(new Workday(date, time));
         this.atWork = true;
+        System.out.println(this.toString() + " checked in at: " + date + " " + time);
     }
 
     public void checkOut(LocalTime time) {
         if(!isAtWork()) throw new IllegalStateException(this.toString() + " is not at work!");
-        this.workdays.get(0).setTimeOut(time);
+        this.workdays.get(workdays.size()-1).setTimeOut(time);
         this.atWork = false;
+        System.out.println(this.toString() + " checked out at: " + time);
     }
 
     public String getId() { return this.id; }
@@ -48,8 +57,8 @@ public class Employee {
     public boolean isAtWork() { return this.atWork; }
 
     public void addWorkday(Workday workday) {
-        if (!this.isWorkdayValid(workday)) throw new IllegalArgumentException("Workday is already added.");
-        this.workdays.add(0, workday);
+        if(!this.isWorkdayValid(workday)) throw new IllegalArgumentException("Workday is already added.");
+        this.workdays.add(workday);
     }
 
     public ArrayList<Workday> getWorkdays() {

@@ -42,10 +42,14 @@ public class TimeMasterController {
 
         this.readEmployees();
         this.updateEmployeeMenu();
+
+        // TODO: keep fields disabled until you choose an employee
     }
 
     // Using values from chooseDateButton, inputHour and inputMinutes, to create a Workday object for the user
     @FXML private void handleRegisterTime() {
+
+        // TODO: Change to new system
         try {
             LocalDate date = chooseDateButton.getValue();
             LocalTime chosenTime = LocalTime.of(Integer.parseInt(this.inputHour.getText()),
@@ -71,14 +75,18 @@ public class TimeMasterController {
 
     @FXML private void autoClockInOut() {
         try {
-            LocalDate date = LocalDate.now();
-            LocalTime chosenTime = LocalTime.now();
 
-            if (this.chosenEmployee.getWorkdays().stream().anyMatch(e -> e.getDate().equals(date))) {
-                this.chosenWorkday = this.chosenEmployee.getDate(date);
-                this.chosenWorkday.setTimeOut(chosenTime);
-            } 
-            else this.chosenEmployee.addWorkday(new Workday(date, chosenTime));
+            LocalDate date = LocalDate.now();
+            LocalTime time = LocalTime.now();
+
+            if(!this.chosenEmployee.isAtWork()) {
+                this.chosenEmployee.checkIn(date, time);
+                autoRegisterTimeButton.setText("Check out");
+            }
+            else {
+                this.chosenEmployee.checkOut(time);
+                autoRegisterTimeButton.setText("Check in");
+            }
             
             this.saveEmployees();
         }

@@ -10,7 +10,9 @@
 	</parent>
 
 	<artifactId>fxui</artifactId>
-	<!-- <packaging>jar</packaging> -->
+	<name>FXUI</name>
+	<description>Module containing applicationfiles for the user interface</description>
+	<packaging>jar</packaging>
 
 	<dependencies>
 		<!-- TimeMaster -->
@@ -43,10 +45,7 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -67,6 +66,12 @@
 				<configuration>
 					<mainClass>timeMaster.fxui/timeMaster.fxui.App</mainClass>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.7</version>
 			</plugin>
 		</plugins>
 	</build>

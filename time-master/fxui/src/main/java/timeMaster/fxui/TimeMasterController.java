@@ -26,7 +26,8 @@ public class TimeMasterController {
 
     @FXML private MenuButton chooseEmployeeButton;
     @FXML private DatePicker chooseDateButton;
-    @FXML private TextField inputHour, inputMinutes;
+    @FXML private TextField inputHour, inputMinutes, newEmployeeName;
+    
 
     @FXML private void initialize() {
         this.saveDirPath = Paths.get(System.getProperty("user.dir"), "../core/timeMasterSaveFiles");
@@ -99,4 +100,22 @@ public class TimeMasterController {
         this.chooseEmployeeButton.setText(this.chosenEmployee.getName());
     }
 
+    //creates new employee based on input 
+    private void createEmployee(String name){
+        if(name.equals("") ){
+            throw new IllegalArgumentException("Input required, please enter name");
+        }
+        this.employees.add(new Employee(name));
+        this.saveEmployees();
+    }
+
+
+
+    //TODO: check input, handle execption when empty, and validate name
+     
+    @FXML private void handleCreateEmployee(){
+        String name = newEmployeeName.getText();
+        createEmployee(name);
+        updateEmployeeMenu();
+    }
 }

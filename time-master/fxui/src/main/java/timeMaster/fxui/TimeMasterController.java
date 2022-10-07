@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -25,6 +26,7 @@ public class TimeMasterController {
     private ArrayList<Employee> employees;
 
     @FXML private MenuButton chooseEmployeeButton;
+    @FXML private Button autoRegisterTimeButton;
     @FXML private DatePicker chooseDateButton;
     @FXML private TextField inputHour, inputMinutes;
 
@@ -59,6 +61,27 @@ public class TimeMasterController {
             this.clearInputHour();
             this.clearInputMinutes();
 
+        }
+        catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+    }
+
+    @FXML private void autoClockInOut() {
+        try {
+            // LocalDate date = chooseDateButton.getValue();
+            // LocalTime chosenTime = LocalTime.of(Integer.parseInt(this.inputHour.getText()),
+            //                        Integer.parseInt(this.inputMinutes.getText()));
+
+            // if (this.chosenEmployee.getWorkdays().stream().anyMatch(e -> e.getDate().equals(date))) {
+            //     this.chosenWorkday = this.chosenEmployee.getDate(date);
+            //     this.chosenWorkday.setTimeOut(chosenTime);
+            // } 
+            // else this.chosenEmployee.addWorkday(new Workday(date, chosenTime));
+            
+            // this.saveEmployees();
+            System.out.println("Under development");
         }
         catch (Exception e) {
             // TODO: handle exception

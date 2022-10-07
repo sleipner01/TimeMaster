@@ -1,32 +1,31 @@
 # Release 1
-I Release-1 har vi:
-- satt opp prosjektet med maven
-- satt opp prosjektet til bruk med Java-versjon 17+
-- satt opp mulighet for bruk av Gitpod
-- laget 5 klasser som dannes basisfunksjonaliteten til applikasjonen
-- laget et enkelt brukergrensesnitt
-- laget et enkelt fillagringssystem med CSV-filer
-- laget noen tester som hovedsaklig tester den mest avanserte logikken i klassene.
+We have 
+- set up the project with maven 
+- set up the to be compatible with Java-version 17+
+- enable the use of GitPod
+- made 5 classes which supplies the most basic functionalities to the app
+- made a simple user interface 
+- enable file-saving with CSV-files
+- made some test, which tests the most advanced logic in the classes
 
+### Classes
+- Workday | Logic that deals with working hours
+- Employee | Logic that deals with employees, and relating Workday-objects
+- TimeMasterFileHandler | Logic that deals with writing to and from file
+- App | Logic that launches the program
+- TimeMasterController | Logic which connects user input to the program
 
-### Klasser
-- Workday | Inneholder logikken rundt arbeidstid
-- Employee | Inneholder logikken rundt ansatte, og holder styr på relaterte Workday-objekter
-- TimeMasterFileHandler | Inneholder logikken for å skrive til og lese fra fil.
-- App | Inneholder logikken for oppstart av programmet
-- TimeMasterController | Inneholder logikken som kobler sammen brukerinput med programmet.
+### Goal for release 1
+Our focus was to make a foundation that we would be able to develop more later on. This made it easier to distribute tasks that won't cause merge conlifts. As of now the app consists of a simple user interface, where the user is able to choose an employee and register the time it arrived at work. 
 
-### Målet for release 1
-Vi fokuserte på å lage grunnfunksjonaliteten til programmet for å ha et godt utgangspunkt å bygge videre på. Det gjør det lettere å fordele arbeidsoppgaver som ikke skaper merge-konflikter. Programmet består nå av et enkelt brukergrensesnitt der det er mulig å velge ansatt og registrere tidspunkt den ansatte har kommet på jobb. 
-
-### Fillagring
-Når appen starter leser den inn fra filene over ansatte og registrerte arbeidsdager. Foreløpig er de ansatte hardkodet i employees.csv fila. Hver gang et nytt registrert tidspunkt blir lagt til lagres det til fil.
+### Fil-saving
+The app reads from the file containing employees and hours worked when it launches. The employees are as of now hardcoded in employees.csv-file. Each time we register work time, it is saved to file.
 
 ### Testing
-Vi har laget en test til hver klasse utenom kontrolleren. Det blir først når layout og design av brukergrensesnitt er ferdig at det blir relevant å teste koblingen mellom brukergrensesnittet og programmet.
-Noen tester sjekker enkel funksjonalitet, men stort sett sjekker testene den avanserte funksjonaliteten, som betinger at at denkle funksjonaliteten funker som den skal. De viktigste testene vi har foreløøpig sjekker at det fungerer å lese og skrive til fil.
+There is a test for each class, except the controller. The connection between the UI and the program won't be necessary to test before layout and design are finished.  
+Some of the tests check the simple functionality, but our main focus has been advanced functionality, which depends on the simple functionality to work as intended. As of now, the most important test is the one that checks reading and writing to file. 
 
-For å kjøre testene kan du bruke kommandoen
+To run test, use:
 ```mvn test```
 
-Denne vil kjøre alle testene og vise resultatet i terminalen. I tillegg vil det genereres en rapport over testdekningsgrad som legges i `target/site/jacoco/index.html`, og kan åpnes i en nettleser.
+It will run all tests, and show the result in the Terminal, in addition to supplying a report with testcoverage. Testcoverage can be fund in: `target/site/jacoco/index.html`, and can be opened in a browser.

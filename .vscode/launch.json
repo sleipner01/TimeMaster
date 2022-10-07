@@ -4,6 +4,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Employee",
+            "request": "launch",
+            "mainClass": "timeMaster.core/timeMaster.core.Employee",
+            "projectName": "core"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"

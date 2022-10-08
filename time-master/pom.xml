@@ -117,7 +117,26 @@
                     </executions>
                 </plugin>
 
-            </plugins>
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>4.7.2.1</version>
+                    <configuration>
+                        <xmlOutput>false</xmlOutput>
+                        <!--<excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>-->
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>spotbugs-spotbugs</id>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>spotbugs</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+		</plugins>
+
         </pluginManagement>
     </build>
 
@@ -146,11 +165,11 @@
                 </configuration>
             </plugin> -->
 
-		    <plugin>
+		    <!-- <plugin>
   				<groupId>com.github.spotbugs</groupId>
   				<artifactId>spotbugs-maven-plugin</artifactId>
-  				<version>4.7.1.1</version>
-			</plugin>
-		</plugins>
+  				<version>4.7.2.1</version>
+			</plugin> -->
+        </plugins>
 	</reporting>
 </project>

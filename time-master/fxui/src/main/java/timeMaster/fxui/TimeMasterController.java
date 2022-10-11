@@ -34,7 +34,7 @@ public class TimeMasterController {
     @FXML private TextField inputHour, inputMinutes, newEmployeeName;
     @FXML private VBox autoCheckInOutBox, manualCheckInOutBox;
     @FXML private Circle statusIndicator;
-    @FXML private Text statusText;
+    @FXML private Text statusText, clockInInfo;
     
 
     @FXML private void initialize() {
@@ -122,6 +122,7 @@ public class TimeMasterController {
         setStatusIndicator();
         setStatusText();
         setTimeRegisterButtons();
+        setClockInInfoLabel();
     }
 
     // private void setEmployeeOff() {
@@ -144,6 +145,11 @@ public class TimeMasterController {
 
         if(chosenEmployee.isAtWork()) autoRegisterTimeButton.setText("Check out");
         else autoRegisterTimeButton.setText("Check in");
+    }
+
+    private void setClockInInfoLabel() {
+        if(chosenEmployee.isAtWork()) clockInInfo.setText("Clocked in at: " + chosenEmployee.getLatestClockIn());
+        else clockInInfo.setText(null);
     }
  
     private void clearTimeInputs() {

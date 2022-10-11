@@ -65,6 +65,12 @@ public class Employee {
         return new ArrayList<>(this.workdays);
     }
 
+    public String getLatestClockIn() {
+        ArrayList<Workday> workdays = this.getWorkdays();
+        Workday latest = workdays.get(workdays.size()-1);
+        return latest.getDate().toString() + " " + latest.getTimeIn().toString();
+    }
+
     public Workday getDate(LocalDate date) {
         return this.workdays.stream().filter(e -> e.getDate().equals(date)).findAny().get();
     }

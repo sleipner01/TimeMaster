@@ -1,43 +1,46 @@
 # git guidelines
 
-Retningslinjer for felles standard for commits, issues, branching og merge requests.
+Guidelines and standard for commits, issues, branching og merge requests.
 
 ## commits
 
-En commit skal:
+A commit shall:
 
-- beskrive kort hva den inneholder
-- kun beskrive innhold den relaterer til
-- skrives på engelsk
+- contain a short description of it's content
+- describe what content it's related to 
+- written in english 
 
-En commit kan:
+A commit can:
 
-- beskrive hvorfor endringene er gjort
-- referere til en issue eller merge request
-- beskrive innholdet mer detaljert, men ikke hvordan det funker (dette gjøres i dokumentasjon)
+- describe why the changes has been done
+- refer to an issue or merge request 
+- describe the content in more detail, but not its functionality 
+
 
 <img src="/docs/bilder/commit.png" width="500px"/>
 
-Eksempel på en god og en dårlig commit.
+Example on a good and a bad commit.
 
 
 ## issues
 
-En issue skal:
+An issue shall:
 
-- beskrive en arbeidsoppgave som skal utføres
-- være relevant til prosjektet
-- knyttes til en milepæl
-- merkes med en tagg
+- describe the task on hand
+- be relevant to the project
+- be tied to an milestone
+- be marked with a tag
+
 
 ## branching
 
-Alt arbeid som utføres på prosjektet skal utføres på en branch som ikke er `master` branchen. Dette er for å sørge for at innholdet på `master` til en hver tid fungerer.
+All work shall be done on a seperate branch, "master" shall not be used. This ensures a working "master" at all times. 
 
-Arbeid som utføres på en branch skal være innen for samme område. Det vil si at man ikke skal arbeide med to urelaterte arbeidsoppgaver på samme branch.
+The work done on a branch shall be within the same task/area. This means that if we change tasks, we change branches. 
 
 ## merge requests
 
-Når arbeid på en branch er ferdig, skal dette flettes inn med `master`. Dette gjøres ved å sammenlikne branchen med `master` og rette opp eventuelle konflikter.
+When the work is completed, the branch is to be merged into "master". They will be compared, and merge conflicts are to be resolved. 
 
-Når den er klar til å flettes skal det opprettes en merge request som skal bli sett over og godkjent av en annen på gruppen før den flettes inn i `master`.
+A merge request is set up, and another member of the team shall look at it and approve the merge request.
+

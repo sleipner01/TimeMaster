@@ -1,13 +1,15 @@
 # Time Master
 
-Time Master er en timeregistreringsapp. Den skal gjøre det enkelt for ansatte å registrere vaktstart og vaktslutt, samt. lagre informasjonen digitalt og lett tilgjengelig for bedriften.
+Time Master is an app which keeps track of the employees hours. Its purpose is to make it easier for employees to register when their shift starts and ends. It saves the information digitally, and is therefore easy to access for both employees and employer. 
 
-Ansatte har mulighet til å se historien over vaktene sine. Hvis noe har blitt lagt inn feil kan ansatte selv gå inn og rette opp feilen.
+Employees have the opportunity to look at their previous hours. If there is something wrong with them, the employee is able to edit them.
+
 
 ### Scenario
-Magnus kommer på jobb klokken ti for å starte på lunsjskiftet sitt. Han var ute på skjæra kvelden før, men i godt humør. Han registerer oppmøte ved å legge til timen og minuttet han ankom jobb og deretter klikke på registrer time. Magnus er en arbeidsom kar, og holder ut lenge. Når kundene har forlatt lokalet, tar Magnus seg en stengepils mens han rydder opp. Før han drar registerer han timen og minuttet han forlater arbeidsplassen. 
+Magnus arrives at his place of work around ten, he works at a restaurant. Magnus registers at what hour and minute he arrives, by using the Time Master App. He fills out the corresponding fields and clicks on the “Check in” button. Magnus is a hard working guy, and he keeps at it for a long time. He treats himself to a “stengepils” after all the customers have left. After he has cleaned up and drunk his beer, he clocks out in the same manner as he clocked in. 
 
-Dagen etter er Magnus på jobb igjen, i like godt humør. Det er snart lønning så Magnus sjekker hvor mange timer han har jobbet. Han oppdager at han var litt vel bedugget da han registerte timene dagen i forveien. Heldigvis kan han gå inn å redigere i ettertid, alt ordnet seg og Magnus fikk betalt sånn at han kunne kjøpe ny båt. 
+Magnus is back at work the day after. Payday is coming up soon and he wants to check how many hours he has worked. He discovers that he might have been a bit “skeiv i skøytene” when he left work yesterday, because his hours from yesterday are completely off. Luckily, Magnus is able to edit his hours. Magnus got paid what he had earned, and was finally able to buy the boat he wanted. 
+ 
 
 <img src="/docs/bilder/magnus.jpg" />
 <img src="/docs/bilder/appen.jpg" />

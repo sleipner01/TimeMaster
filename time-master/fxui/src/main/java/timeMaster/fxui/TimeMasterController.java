@@ -26,7 +26,7 @@ public class TimeMasterController {
     private ArrayList<Employee> employees;
 
     @FXML private MenuButton chooseEmployeeButton;
-    @FXML private Button autoRegisterTimeButton;
+    @FXML private Button registerTimeButton, autoRegisterTimeButton;
     @FXML private DatePicker chooseDateButton;
     @FXML private TextField inputHour, inputMinutes, newEmployeeName;
     
@@ -49,22 +49,23 @@ public class TimeMasterController {
     // Using values from chooseDateButton, inputHour and inputMinutes, to create a Workday object for the user
     @FXML private void handleRegisterTime() {
 
-        // TODO: Change to new system
         try {
             LocalDate date = chooseDateButton.getValue();
             LocalTime chosenTime = LocalTime.of(Integer.parseInt(this.inputHour.getText()),
                                    Integer.parseInt(this.inputMinutes.getText()));
 
-            if (this.chosenEmployee.getWorkdays().stream().anyMatch(e -> e.getDate().equals(date))) {
-                this.chosenWorkday = this.chosenEmployee.getDate(date);
-                this.chosenWorkday.setTimeOut(chosenTime);
-            } 
-            else this.chosenEmployee.addWorkday(new Workday(date, chosenTime));
+            if(!this.chosenEmployee.isAtWork()) {
+                this.chosenEmployee.checkIn(date, chosenTime);
+                registerTimeButton.setText("Check out");
+            }
+            else {
+                this.chosenEmployee.checkOut(chosenTime);
+                registerTimeButton.setText("Check in");
+            }
             
             this.saveEmployees();
 
-            this.clearInputHour();
-            this.clearInputMinutes();
+            this.clearTimeInputs();
 
         }
         catch (Exception e) {
@@ -96,7 +97,17 @@ public class TimeMasterController {
         }
     }
 
-    private void clearInputs() {
+    private void setTimeRegisterInputs() {
+        if(chosenEmployee == null) {
+            //Disable
+        }
+        if(chosenEmployee.isAtWork()) {
+            
+        }
+
+    }
+
+    private void clearTimeInputs() {
         this.clearInputHour();
         this.clearInputMinutes();
     }

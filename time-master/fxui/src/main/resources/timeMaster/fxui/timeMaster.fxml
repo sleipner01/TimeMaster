@@ -10,22 +10,92 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<HBox alignment="CENTER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="timeMaster.fxui.TimeMasterController">
+<HBox alignment="CENTER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="timeMaster.fxui.TimeMasterController">
    <TabPane prefHeight="400.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE">
      <tabs>
        <Tab text="Stamp in">
          <content>
            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
-                     <VBox>
+                     <VBox layoutY="4.0">
                         <children>
+                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Employee">
+                              <font>
+                                 <Font size="21.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="10.0" />
+                              </VBox.margin>
+                           </Text>
                            <MenuButton fx:id="chooseEmployeeButton" text="Choose Employee" />
-                           <DatePicker fx:id="chooseDateButton" />
-                           <TextField fx:id="inputHour" promptText="Hour" />
-                           <TextField fx:id="inputMinutes" promptText="Min" />
-                           <Button fx:id="registerTimeButton" onAction="#handleRegisterTime" text="Check in" />
+                        </children>
+                        <padding>
+                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        </padding>
+                     </VBox>
+                     <VBox fx:id="autoCheckInOutBox" disable="true" layoutY="81.0">
+                        <children>
+                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Auto">
+                              <font>
+                                 <Font size="16.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="6.0" />
+                              </VBox.margin>
+                           </Text>
                            <Button fx:id="autoRegisterTimeButton" onAction="#autoClockInOut" text="Check in" />
+                        </children>
+                        <padding>
+                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        </padding>
+                     </VBox>
+                     <VBox fx:id="manuallCheckInOutBox" disable="true" layoutY="152.0" AnchorPane.topAnchor="152.0">
+                        <children>
+                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Manual">
+                              <font>
+                                 <Font size="16.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="6.0" />
+                              </VBox.margin>
+                           </Text>
+                           <DatePicker fx:id="chooseDateButton" />
+                           <TextField fx:id="inputHour" promptText="Hour: 0-23" />
+                           <TextField fx:id="inputMinutes" promptText="Min: 0-59" />
+                           <Button fx:id="registerTimeButton" onAction="#handleRegisterTime" text="Check in" />
+                        </children>
+                        <padding>
+                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        </padding>
+                     </VBox>
+                     <VBox alignment="TOP_RIGHT" layoutX="258.0" layoutY="4.0" prefHeight="77.0" prefWidth="142.0">
+                        <children>
+                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Status" underline="true">
+                              <font>
+                                 <Font size="21.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="4.0" />
+                              </VBox.margin>
+                           </Text>
+                           <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                              <children>
+                                 <Text fx:id="statusText" strokeType="OUTSIDE" strokeWidth="0.0" text="Status">
+                                    <font>
+                                       <Font size="16.0" />
+                                    </font>
+                                 </Text>
+                                 <Circle fx:id="statusIndicator" fill="#727272" radius="9.0" stroke="BLACK" strokeType="INSIDE">
+                                    <HBox.margin>
+                                       <Insets left="10.0" />
+                                    </HBox.margin>
+                                 </Circle>
+                              </children>
+                           </HBox>
                         </children>
                         <padding>
                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -47,7 +117,7 @@
                      <VBox>
                         <children>
                            <TextField fx:id="newEmployeeName" promptText="Name..." />
-                           <Button fx:id="addNewEmployeeButton" onAction="#handleCreateEmployee" mnemonicParsing="false" text="Add Employee" />
+                           <Button fx:id="addNewEmployeeButton" mnemonicParsing="false" onAction="#handleCreateEmployee" text="Add Employee" />
                         </children>
                         <padding>
                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

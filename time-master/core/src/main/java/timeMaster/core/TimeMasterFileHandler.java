@@ -47,8 +47,7 @@ public class TimeMasterFileHandler {
 
             writerEmployees.close();
             writerWorkdays.close();
-        } 
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             System.out.println("One or more files could not be created");
         }
@@ -68,8 +67,7 @@ public class TimeMasterFileHandler {
                 String name = parts[1];
                 employees.add(new Employee(id, name));
             }
-        } 
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("The file wasn't found on path: " + employeesFilePath);
         }
 
@@ -92,8 +90,7 @@ public class TimeMasterFileHandler {
                 Employee employee = employees.stream().filter(e ->  e.getId().equals(employeeId)).findFirst().get();
                 employee.addWorkday(workday);
             }
-        } 
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("The file wasn't found on path: " + workdaysFilePath);
         }
 

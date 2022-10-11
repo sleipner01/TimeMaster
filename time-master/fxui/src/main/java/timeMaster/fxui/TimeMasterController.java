@@ -12,15 +12,18 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import timeMaster.core.Employee;
-import timeMaster.core.Workday;
+// import timeMaster.core.Workday;
 import timeMaster.core.TimeMasterFileHandler;
 
 public class TimeMasterController {
 
     private Employee chosenEmployee;
-    private Workday chosenWorkday;
+    // private Workday chosenWorkday;
     private Path saveDirPath;
     private TimeMasterFileHandler timeMasterFileHandler;
     private ArrayList<Employee> employees;
@@ -29,6 +32,9 @@ public class TimeMasterController {
     @FXML private Button registerTimeButton, autoRegisterTimeButton;
     @FXML private DatePicker chooseDateButton;
     @FXML private TextField inputHour, inputMinutes, newEmployeeName;
+    @FXML private VBox autoCheckInOutBox, manualCheckInOutBox;
+    @FXML private Circle statusIndicator;
+    @FXML private Text statusText;
     
 
     @FXML private void initialize() {
@@ -66,6 +72,7 @@ public class TimeMasterController {
             this.saveEmployees();
 
             this.clearTimeInputs();
+            this.setTimeRegisterInputs();
 
         }
         catch (Exception e) {
@@ -90,6 +97,7 @@ public class TimeMasterController {
             }
             
             this.saveEmployees();
+            setTimeRegisterInputs();
         }
         catch (Exception e) {
             // TODO: handle exception
@@ -99,14 +107,45 @@ public class TimeMasterController {
 
     private void setTimeRegisterInputs() {
         if(chosenEmployee == null) {
-            //Disable
+            autoCheckInOutBox.setDisable(true);
+            manualCheckInOutBox.setDisable(true);
         }
-        if(chosenEmployee.isAtWork()) {
-            
+        else {
+            autoCheckInOutBox.setDisable(false);
+            manualCheckInOutBox.setDisable(false);
         }
+        setEmployeeStatus();
 
     }
 
+    private void setEmployeeStatus() {
+        setStatusIndicator();
+        setStatusText();
+        setTimeRegisterButtons();
+    }
+
+    // private void setEmployeeOff() {
+
+    // }
+
+    private void setStatusIndicator() {
+        if(chosenEmployee.isAtWork()) statusIndicator.setFill(Color.GREEN);
+        else statusIndicator.setFill(Color.GRAY);
+    }
+
+    private void setStatusText() {
+        if(chosenEmployee.isAtWork()) statusText.setText("Active");
+        else statusText.setText("Off");
+    }
+
+    private void setTimeRegisterButtons() {
+        if(chosenEmployee.isAtWork()) registerTimeButton.setText("Check out");
+        else registerTimeButton.setText("Check in");
+
+        if(chosenEmployee.isAtWork()) autoRegisterTimeButton.setText("Check out");
+        else autoRegisterTimeButton.setText("Check in");
+    }
+ 
     private void clearTimeInputs() {
         this.clearInputHour();
         this.clearInputMinutes();
@@ -138,6 +177,7 @@ public class TimeMasterController {
     private void setChosenEmployee(int index) {
         this.chosenEmployee = this.getEmployee(index);
         this.chooseEmployeeButton.setText(this.chosenEmployee.getName());
+        this.setTimeRegisterInputs();
     }
 
     //creates new employee based on input 

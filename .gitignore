@@ -10,6 +10,8 @@ time-master/target/
 
 # Application save-files
 time-master/lagring/
+time-master/timeMasterSaveFiles/
+time-master/timeMasterSaveFilesTest/
 
 # Log files
 *.log

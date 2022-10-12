@@ -22,6 +22,7 @@
     <modules>
         <module>core</module>
         <module>fxui</module>
+        <module>coverage</module>
     </modules>
 
     <build>
@@ -73,6 +74,48 @@
                     <version>3.0.0-M5</version>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                     <version>3.7.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <configuration>
+                        <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>9.0</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <configLocation>google_checks.xml</configLocation>
+                        <encoding>UTF-8</encoding>
+                        <consoleOutput>true</consoleOutput>
+                        <failsOnError>true</failsOnError>
+                        <linkXRef>false</linkXRef>
+                    </configuration>
+                    <executions>
+                        <execution>
+                        <id>checkstyle-check</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        </execution>
+                    </executions>
+                </plugin>
 
             </plugins>
         </pluginManagement>
@@ -89,4 +132,25 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+	<reporting>
+		<plugins>           
+            
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+          		<artifactId>maven-checkstyle-plugin</artifactId>
+          		<version>3.2.0</version>
+          		<configuration>
+                    <configLocation>timeMaster.buildTools/timeMaster.buildTools.checkstyle.xml</configLocation>
+                    <headerLocation>timeMaster.buildTools/timeMaster.buildTools.LICENSE.txt</headerLocation>
+                </configuration>
+            </plugin> -->
+
+		    <plugin>
+  				<groupId>com.github.spotbugs</groupId>
+  				<artifactId>spotbugs-maven-plugin</artifactId>
+  				<version>4.7.1.1</version>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>

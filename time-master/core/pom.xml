@@ -10,6 +10,9 @@
 	</parent>
 
 	<artifactId>core</artifactId>
+	<name>Core</name>
+	<description>Modules contining core files for the application</description>
+	<packaging>jar</packaging>
 
 	<dependencies>
 
@@ -27,13 +30,8 @@
 			<!-- Maven -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
 			</plugin>
-
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-			</plugin>
-
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -43,12 +41,12 @@
 				<artifactId>maven-failsafe-plugin</artifactId>
 			</plugin>
 
-			<!-- JUnit -->
+			<!-- Jacoco -->
 			<plugin>
-				<groupId>org.openjfx</groupId>
-				<artifactId>javafx-maven-plugin</artifactId>
+				<groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.7</version>
 			</plugin>
-
 		</plugins>
 	</build>
 </project>

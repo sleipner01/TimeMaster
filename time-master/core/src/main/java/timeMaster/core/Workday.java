@@ -9,6 +9,8 @@ public class Workday {
     private LocalTime timeIn;
     private LocalTime timeOut;
 
+    public Workday() {}
+
     public Workday(LocalDate date, LocalTime timeIn) {
         this.date = date;
         this.timeIn = timeIn;

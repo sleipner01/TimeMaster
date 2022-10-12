@@ -10,6 +10,8 @@ public class Employee {
     private String name;
     private ArrayList<Workday> workdays = new ArrayList<>();
 
+    public Employee() {}
+
     public Employee(String name) {
         this.id = generateId();
         this.name = name;

@@ -9,11 +9,7 @@ public class Workday {
     private LocalTime timeIn;
     private LocalTime timeOut;
 
-    public Workday() {
-        this.date = LocalDate.EPOCH;
-        this.timeIn = LocalTime.MIDNIGHT;
-        this.timeOut = LocalTime.MIDNIGHT;
-    }
+    public Workday() {}
 
     public Workday(LocalDate date, LocalTime timeIn) {
         this.date = date;

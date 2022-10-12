@@ -9,7 +9,7 @@ time-master/*/target/
 time-master/target/
 
 # Application save-files
-time-master/core/timeMasterSaveFiles/
+time-master/core/timeMasterSaveFiles/*.json
 
 # Log files
 *.log

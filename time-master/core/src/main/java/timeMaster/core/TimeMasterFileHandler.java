@@ -11,11 +11,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-
 public class TimeMasterFileHandler {
-
 
     private final String seperator = ",";
     private final String fileType = ".csv";
@@ -37,8 +33,6 @@ public class TimeMasterFileHandler {
         try {
             PrintWriter writerEmployees = new PrintWriter(employeesFilePath);
             PrintWriter writerWorkdays = new PrintWriter(workdaysFilePath);
-
-            ObjectMapper objectMapper = new ObjectMapper();
 
             writerEmployees.println("id" + seperator + "name");
             writerWorkdays.println("employeeId" + seperator + "date" + seperator + "timeIn" + seperator + "timeOut");

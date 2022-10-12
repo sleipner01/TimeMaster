@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import timeMaster.core.Employee;
 import timeMaster.core.Workday;
 import timeMaster.core.TimeMasterFileHandler;
+import timeMaster.core.TimeMasterJsonParser;
 
 public class TimeMasterController {
 
@@ -22,6 +23,7 @@ public class TimeMasterController {
     private Workday chosenWorkday;
     private Path saveDirPath;
     private TimeMasterFileHandler timeMasterFileHandler;
+    private TimeMasterJsonParser jsonParser;
     private ArrayList<Employee> employees;
 
     @FXML private MenuButton chooseEmployeeButton;
@@ -30,15 +32,17 @@ public class TimeMasterController {
     
 
     @FXML private void initialize() {
-        this.saveDirPath = Paths.get(System.getProperty("user.dir"), "../core/timeMasterSaveFiles");
+        this.saveDirPath = Paths.get(System.getProperty("user.dir"), "time-master/core/timeMasterSaveFiles");
         System.out.println(saveDirPath);
         System.out.println(saveDirPath);
         this.timeMasterFileHandler = new TimeMasterFileHandler(saveDirPath);
+        this.jsonParser = new TimeMasterJsonParser(saveDirPath);
 
         this.employees = new ArrayList<>();
         this.chooseDateButton.setValue(LocalDate.now());
 
         this.readEmployees();
+        // this.saveEmployees();
         this.updateEmployeeMenu();
     }
 
@@ -75,15 +79,22 @@ public class TimeMasterController {
     private void clearInputMinutes() { this.inputMinutes.clear(); }
 
     // Lagre alle ansatte
-    private void saveEmployees() { this.timeMasterFileHandler.writeEmployees(this.employees); }
+    private void saveEmployees() { 
+        // this.timeMasterFileHandler.writeEmployees(this.employees);
+        this.jsonParser.write(this.employees);
+    }
     // Les inn alle ansatte
-    private void readEmployees() { this.employees = this.timeMasterFileHandler.readEmployees(); }
+    private void readEmployees() { 
+        // this.employees = this.timeMasterFileHandler.readEmployees();
+        this.jsonParser.read();
+    }
 
     private void updateEmployeeMenu() {
         this.chooseEmployeeButton.getItems().clear();
         for (int i = 0; i < this.employees.size(); i++) {
-            int employeeIndex = i;
-            MenuItem menuItem = new MenuItem(this.getEmployee(employeeIndex).getName());
+            var employeeIndex = i;
+            MenuItem menuItem = new MenuItem(getEmployee(employeeIndex).getName());
+            System.out.println(getEmployee(employeeIndex).getName());
 
             // Ta ActionEventet "a" som input til lambda-uttrykket selv om vi ikke bruker det
             menuItem.setOnAction( a -> setChosenEmployee(employeeIndex) );
@@ -96,7 +107,7 @@ public class TimeMasterController {
     private Employee getEmployee(int index) { return employees.get(index); }
 
     private void setChosenEmployee(int index) {
-        this.chosenEmployee = this.getEmployee(index);
+        this.chosenEmployee = getEmployee(index);
         this.chooseEmployeeButton.setText(this.chosenEmployee.getName());
     }
 

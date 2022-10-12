@@ -38,7 +38,7 @@ public class Employee {
     }
 
     public void addWorkday(Workday workday) {
-        if (!this.isWorkdayValid(workday)) {
+        if (this.isWorkdayValid(workday)) {
             this.workdays.add(workday);   
         } else {
             throw new IllegalArgumentException("Workday is already added.");

@@ -10,8 +10,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import timeMaster.core.TimeMasterFileHandler;
 import timeMaster.core.Employee;
+import timeMaster.core.TimeMasterFileHandler;
 import timeMaster.core.Workday;
 
 public class TimeMasterController {

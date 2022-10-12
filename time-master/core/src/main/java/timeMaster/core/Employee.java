@@ -23,19 +23,29 @@ public class Employee {
         this.name = name;
     }
 
-    private String generateId() { return UUID.randomUUID().toString(); }
+    private String generateId() { 
+        return UUID.randomUUID().toString(); 
+    }
 
     private Boolean isWorkdayValid(Workday workday) {
         return !this.workdays.contains(workday);
     }
 
-    public String getId() { return this.id; }
+    public String getId() { 
+        return this.id; 
+    }
 
-    public String getName() { return this.name; }
+    public String getName() { 
+        return this.name; 
+    }
 
     public void addWorkday(Workday workday) {
-        if (!this.isWorkdayValid(workday)) throw new IllegalArgumentException("Workday is already added.");
-        this.workdays.add(workday); 
+        if (this.isWorkdayValid(workday)) {
+            this.workdays.add(workday);   
+        } else {
+            throw new IllegalArgumentException("Workday is already added.");
+        }
+        
     }
 
     public ArrayList<Workday> getWorkdays() {

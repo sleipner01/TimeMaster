@@ -5,17 +5,15 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-
 import timeMaster.core.Employee;
-import timeMaster.core.Workday;
 import timeMaster.core.TimeMasterFileHandler;
 import timeMaster.core.TimeMasterJsonParser;
+import timeMaster.core.Workday;
 
 public class TimeMasterController {
 
@@ -28,8 +26,9 @@ public class TimeMasterController {
 
     @FXML private MenuButton chooseEmployeeButton;
     @FXML private DatePicker chooseDateButton;
-    @FXML private TextField inputHour, inputMinutes, newEmployeeName;
-    
+    @FXML private TextField inputHour;
+    @FXML private TextField inputMinutes;
+    @FXML private TextField newEmployeeName;
 
     @FXML private void initialize() {
         this.saveDirPath = Paths.get(System.getProperty("user.dir"), "time-master/core/timeMasterSaveFiles");
@@ -56,16 +55,14 @@ public class TimeMasterController {
             if (this.chosenEmployee.getWorkdays().stream().anyMatch(e -> e.getDate().equals(date))) {
                 this.chosenWorkday = this.chosenEmployee.getDate(date);
                 this.chosenWorkday.setTimeOut(chosenTime);
-            } 
-            else this.chosenEmployee.addWorkday(new Workday(date, chosenTime));
-            
+            } else {
+                this.chosenEmployee.addWorkday(new Workday(date, chosenTime));
+            }
             this.saveEmployees();
 
             this.clearInputHour();
             this.clearInputMinutes();
-
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
         }
@@ -75,8 +72,14 @@ public class TimeMasterController {
         this.clearInputHour();
         this.clearInputMinutes();
     }
-    private void clearInputHour() { this.inputHour.clear(); }
-    private void clearInputMinutes() { this.inputMinutes.clear(); }
+
+    private void clearInputHour() { 
+        this.inputHour.clear(); 
+    }
+
+    private void clearInputMinutes() { 
+        this.inputMinutes.clear(); 
+    }
 
     // Lagre alle ansatte
     private void saveEmployees() { 
@@ -97,14 +100,16 @@ public class TimeMasterController {
             System.out.println(getEmployee(employeeIndex).getName());
 
             // Ta ActionEventet "a" som input til lambda-uttrykket selv om vi ikke bruker det
-            menuItem.setOnAction( a -> setChosenEmployee(employeeIndex) );
+            menuItem.setOnAction(a -> setChosenEmployee(employeeIndex));
             
             // Legger til i ansattmenyen
             this.chooseEmployeeButton.getItems().add(menuItem); 
         }
     }
 
-    private Employee getEmployee(int index) { return employees.get(index); }
+    private Employee getEmployee(int index) { 
+        return employees.get(index); 
+    }
 
     private void setChosenEmployee(int index) {
         this.chosenEmployee = getEmployee(index);
@@ -112,8 +117,8 @@ public class TimeMasterController {
     }
 
     //creates new employee based on input 
-    private void createEmployee(String name){
-        if(name.equals("") ){
+    private void createEmployee(String name) {
+        if (name.equals("")) {
             throw new IllegalArgumentException("Input required, please enter name");
         }
         this.employees.add(new Employee(name));
@@ -124,7 +129,7 @@ public class TimeMasterController {
 
     //TODO: check input, handle execption when empty, and validate name
      
-    @FXML private void handleCreateEmployee(){
+    @FXML private void handleCreateEmployee() {
         String name = newEmployeeName.getText();
         createEmployee(name);
         updateEmployeeMenu();

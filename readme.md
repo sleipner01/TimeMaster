@@ -8,9 +8,9 @@ Kodingsprosjektet ligger i undermappen `time-master` som man kan navigere til me
 
 Programmet er bygget med Maven slik at man enkelt kan kjøre programmet med `mvn javafx:run`.
 
-Testene kan kjøres med `mvn test`. Da genereres en rapport over testdekningsgrad som legges i `target/site/jacoco/index.html`, og kan åpnes i en nettleser.
+Testene kan kjøres med `mvn test`. Da genereres en rapport over testdekningsgrad som legges i `coverage/target/site/jacoco-aggregate/index.html`, og kan åpnes i en nettleser.
 
-Etter kjøring av programmet og testene kan en rapport over kodekvaliteten lages med `mvn site`. Denne finnes i `target/site/checkstyle.html`. En rapport over bugs blir også laget samtidig, og kan finnes i `target/site/spotbugs.html`.
+Etter kjøring av programmet og testene kan en rapport over kodekvaliteten lages med `mvn site`. Denne finnes i `target/site/checkstyle-aggregate.html`. En rapport over bugs blir også laget samtidig, og kan finnes for modulene core og fxui i `core/target/site/spotbugs.html` og `fxui/target/site/spotbugs.html`.
 
 
 ## Gitpod

@@ -10,6 +10,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import timeMaster.mixin.MixIn;
+
 public class TimeMasterJsonParser {
 
     final ObjectMapper mapper;
@@ -19,6 +21,7 @@ public class TimeMasterJsonParser {
     public TimeMasterJsonParser(Path dir) {
         this.mapper = new ObjectMapper();
         this.mapper.configure(Feature.AUTO_CLOSE_SOURCE, true);
+        this.mapper.addMixIn(Employee.class, MixIn.class);
         this.mapper.registerModule(new JavaTimeModule());
         this.filePath = Paths.get(dir.toString(), fileName).toString();
     }

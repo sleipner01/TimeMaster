@@ -12,6 +12,8 @@ public class Employee {
     private ArrayList<Workday> workdays = new ArrayList<>();
     private boolean atWork;
 
+    public Employee() {}
+
     public Employee(String name) {
         this.id = generateId();
         this.name = name;
@@ -23,7 +25,9 @@ public class Employee {
         this.name = name;
     }
 
-    private String generateId() { return UUID.randomUUID().toString(); }
+    private String generateId() { 
+        return UUID.randomUUID().toString(); 
+    }
 
     private Boolean isWorkdayValid(Workday workday) {
         return !this.workdays.contains(workday);

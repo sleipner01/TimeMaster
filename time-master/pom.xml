@@ -154,16 +154,11 @@
 
 	<reporting>
 		<plugins>           
-            
-			<!-- <plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
           		<artifactId>maven-checkstyle-plugin</artifactId>
           		<version>3.2.0</version>
-          		<configuration>
-                    <configLocation>timeMaster.buildTools/timeMaster.buildTools.checkstyle.xml</configLocation>
-                    <headerLocation>timeMaster.buildTools/timeMaster.buildTools.LICENSE.txt</headerLocation>
-                </configuration>
-            </plugin> -->
+            </plugin>
 
 		    <!-- <plugin>
   				<groupId>com.github.spotbugs</groupId>

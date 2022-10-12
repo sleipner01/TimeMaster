@@ -11,7 +11,6 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import timeMaster.core.Employee;
-import timeMaster.core.TimeMasterFileHandler;
 import timeMaster.core.TimeMasterJsonParser;
 import timeMaster.core.Workday;
 
@@ -20,7 +19,6 @@ public class TimeMasterController {
     private Employee chosenEmployee;
     private Workday chosenWorkday;
     private Path saveDirPath;
-    private TimeMasterFileHandler timeMasterFileHandler;
     private TimeMasterJsonParser jsonParser;
     private ArrayList<Employee> employees;
 
@@ -33,15 +31,12 @@ public class TimeMasterController {
     @FXML private void initialize() {
         this.saveDirPath = Paths.get(System.getProperty("user.dir"), "../core/timeMasterSaveFiles");
         System.out.println(saveDirPath);
-        System.out.println(saveDirPath);
-        this.timeMasterFileHandler = new TimeMasterFileHandler(saveDirPath);
         this.jsonParser = new TimeMasterJsonParser(saveDirPath);
 
-        this.employees = new ArrayList<>();
+        this.readEmployees();
+
         this.chooseDateButton.setValue(LocalDate.now());
 
-        this.readEmployees();
-        // this.saveEmployees();
         this.updateEmployeeMenu();
     }
 
@@ -60,59 +55,40 @@ public class TimeMasterController {
             }
             this.saveEmployees();
 
-            this.clearInputHour();
-            this.clearInputMinutes();
+            this.inputHour.clear();
+            this.inputMinutes.clear();
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
         }
     }
 
-    private void clearInputs() {
-        this.clearInputHour();
-        this.clearInputMinutes();
-    }
-
-    private void clearInputHour() { 
-        this.inputHour.clear(); 
-    }
-
-    private void clearInputMinutes() { 
-        this.inputMinutes.clear(); 
-    }
-
     // Lagre alle ansatte
     private void saveEmployees() { 
-        // this.timeMasterFileHandler.writeEmployees(this.employees);
         this.jsonParser.write(this.employees);
     }
     // Les inn alle ansatte
     private void readEmployees() { 
-        // this.employees = this.timeMasterFileHandler.readEmployees();
-        this.jsonParser.read();
+        this.employees = this.jsonParser.read();
     }
 
     private void updateEmployeeMenu() {
         this.chooseEmployeeButton.getItems().clear();
         for (int i = 0; i < this.employees.size(); i++) {
-            var employeeIndex = i;
-            MenuItem menuItem = new MenuItem(getEmployee(employeeIndex).getName());
-            System.out.println(getEmployee(employeeIndex).getName());
+            MenuItem menuItem = new MenuItem(this.employees.get(i).getName());
+            System.out.println(this.employees.get(i).getName());
 
             // Ta ActionEventet "a" som input til lambda-uttrykket selv om vi ikke bruker det
-            menuItem.setOnAction(a -> setChosenEmployee(employeeIndex));
+            final int index = i;
+            menuItem.setOnAction(a -> setChosenEmployee(index));
             
             // Legger til i ansattmenyen
             this.chooseEmployeeButton.getItems().add(menuItem); 
         }
     }
 
-    private Employee getEmployee(int index) { 
-        return employees.get(index); 
-    }
-
     private void setChosenEmployee(int index) {
-        this.chosenEmployee = getEmployee(index);
+        this.chosenEmployee = this.employees.get(index);
         this.chooseEmployeeButton.setText(this.chosenEmployee.getName());
     }
 
@@ -125,13 +101,11 @@ public class TimeMasterController {
         this.saveEmployees();
     }
 
-
-
     //TODO: check input, handle execption when empty, and validate name
-     
     @FXML private void handleCreateEmployee() {
         String name = newEmployeeName.getText();
         createEmployee(name);
+        newEmployeeName.clear();
         updateEmployeeMenu();
     }
 }

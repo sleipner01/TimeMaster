@@ -31,7 +31,7 @@ public class TimeMasterController {
     @FXML private TextField newEmployeeName;
 
     @FXML private void initialize() {
-        this.saveDirPath = Paths.get(System.getProperty("user.dir"), "time-master/core/timeMasterSaveFiles");
+        this.saveDirPath = Paths.get(System.getProperty("user.dir"), "../core/timeMasterSaveFiles");
         System.out.println(saveDirPath);
         System.out.println(saveDirPath);
         this.timeMasterFileHandler = new TimeMasterFileHandler(saveDirPath);

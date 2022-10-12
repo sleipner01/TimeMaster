@@ -5,11 +5,13 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+
 import timeMaster.core.Employee;
 import timeMaster.core.TimeMasterJsonParser;
 import timeMaster.core.Workday;
@@ -28,24 +30,23 @@ public class TimeMasterController {
     @FXML private TextField inputMinutes;
     @FXML private TextField newEmployeeName;
 
-    @FXML private void initialize() {
+    @FXML
+    private void initialize() {
         this.saveDirPath = Paths.get(System.getProperty("user.dir"), "../core/timeMasterSaveFiles");
-        System.out.println(saveDirPath);
         this.jsonParser = new TimeMasterJsonParser(saveDirPath);
-
-        this.readEmployees();
-
         this.chooseDateButton.setValue(LocalDate.now());
 
+        this.readEmployees();
         this.updateEmployeeMenu();
     }
 
     // Using values from chooseDateButton, inputHour and inputMinutes, to create a Workday object for the user
-    @FXML private void handleRegisterTime() {
+    @FXML
+    private void handleRegisterTime() {
         try {
             LocalDate date = chooseDateButton.getValue();
             LocalTime chosenTime = LocalTime.of(Integer.parseInt(this.inputHour.getText()),
-                                   Integer.parseInt(this.inputMinutes.getText()));
+                    Integer.parseInt(this.inputMinutes.getText()));
 
             if (this.chosenEmployee.getWorkdays().stream().anyMatch(e -> e.getDate().equals(date))) {
                 this.chosenWorkday = this.chosenEmployee.getDate(date);
@@ -64,11 +65,12 @@ public class TimeMasterController {
     }
 
     // Lagre alle ansatte
-    private void saveEmployees() { 
+    private void saveEmployees() {
         this.jsonParser.write(this.employees);
     }
+
     // Les inn alle ansatte
-    private void readEmployees() { 
+    private void readEmployees() {
         this.employees = this.jsonParser.read();
     }
 
@@ -81,9 +83,9 @@ public class TimeMasterController {
             // Ta ActionEventet "a" som input til lambda-uttrykket selv om vi ikke bruker det
             final int index = i;
             menuItem.setOnAction(a -> setChosenEmployee(index));
-            
+
             // Legger til i ansattmenyen
-            this.chooseEmployeeButton.getItems().add(menuItem); 
+            this.chooseEmployeeButton.getItems().add(menuItem);
         }
     }
 
@@ -92,7 +94,7 @@ public class TimeMasterController {
         this.chooseEmployeeButton.setText(this.chosenEmployee.getName());
     }
 
-    //creates new employee based on input 
+    // creates new employee based on input
     private void createEmployee(String name) {
         if (name.equals("")) {
             throw new IllegalArgumentException("Input required, please enter name");
@@ -101,8 +103,9 @@ public class TimeMasterController {
         this.saveEmployees();
     }
 
-    //TODO: check input, handle execption when empty, and validate name
-    @FXML private void handleCreateEmployee() {
+    // TODO: check input, handle execption when empty, and validate name
+    @FXML
+    private void handleCreateEmployee() {
         String name = newEmployeeName.getText();
         createEmployee(name);
         newEmployeeName.clear();

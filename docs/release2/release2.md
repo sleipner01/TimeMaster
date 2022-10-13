@@ -22,10 +22,5 @@ Checkstyle and Spotbugs checks the code-quality. These are made when running ```
 `core/target/site/spotbugs.html` and `fxui/target/site/spotbugs.html`.
 
 ### Testing
-There is a test for each class, except the controller. The connection between the UI and the program won't be necessary to test before layout and design are finished.  
-Some of the tests check the simple functionality, but our main focus has been advanced functionality, which depends on the simple functionality to work as intended. As of now, the most important test is the one that checks reading and writing to file. 
-
-To run test, navigate to the ```time-master``` directory and use:
-```mvn test```
-
-It will run all tests, and show the result in the Terminal, in addition to supplying a report with testcoverage. Testcoverage can be fund in: `coverage/target/site/jacoco-aggregate/index.html`, and can be opened in a browser.
+We have made sure to have a pretty good test coverage of all our classes, and we have tried to test expected cases to most of our methods. To run the tests, navigate to the `time-master` directory and use ```mvn test```
+It will run all tests, and show the result in the Terminal, in addition to supplying a report with testcoverage. This report can be found in: `coverage/target/site/jacoco-aggregate/index.html`, and can be opened in a browser. It is an aggregated report for all our classes.

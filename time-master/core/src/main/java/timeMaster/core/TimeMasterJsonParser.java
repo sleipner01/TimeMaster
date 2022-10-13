@@ -1,16 +1,14 @@
 package timeMaster.core;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import timeMaster.mixin.MixIn;
 
 public class TimeMasterJsonParser {
@@ -37,20 +35,19 @@ public class TimeMasterJsonParser {
   
   public ArrayList<Employee> read() {
     var employees = new ArrayList<Employee>();
-    if(new File(filePath).length() == 0) {
+    if (new File(filePath).length() == 0) {
       System.out.println("Savefile is empty");
       return new ArrayList<>();
-    }
+    } 
     try {
       employees = this.mapper.readValue(
-      new File(filePath),
-      new TypeReference<ArrayList<Employee>>() {
-      });
+        new File(filePath),
+        new TypeReference<ArrayList<Employee>>() {
+        });
       
     } catch (Exception e) {
       e.printStackTrace();
     }
-    
     return employees;
   }
   

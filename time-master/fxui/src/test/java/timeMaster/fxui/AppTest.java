@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import org.testfx.framework.junit5.ApplicationTest;
@@ -84,6 +85,26 @@ public class AppTest extends ApplicationTest {
     }
     return employeeNames;
   }
+
+  @Test
+  public void testAutoStampIn() {
+    // Adding an employee
+    String testName = "Test";
+    clickOn(LabeledMatchers.hasText("Add New Employee"));
+    clickOn("#newEmployeeName").write(testName);
+    clickOn("#addNewEmployeeButton");
+    clickOn(LabeledMatchers.hasText("Stamp In"));
+
+    clickOn("#newEmployeeName").write(testName);
+    clickOn("#chooseEmployeeButton");
+    clickOn(LabeledMatchers.hasText(testName));
+    clickOn("#autoRegisterTimeButton");
+
+    Text status = lookup("#statusText").query();
+    String statusText = status.getText();
+    assertTrue(statusText.equals("Active"));
+  }
+
 
 
 

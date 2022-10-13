@@ -1,0 +1,10 @@
+@startuml Time Master
+
+actor User
+
+User --> TimeMaster : Inserts name and clicks add new emloyee
+TimeMaster --> employees.json: handleCreateEmployee()
+employees.json --> TimeMaster : handleCreateEmployee()
+TimeMaster --> User : 
+
+@enduml

@@ -7,11 +7,13 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -72,8 +74,8 @@ public class TimeMasterController {
 
         }
         catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
+            displayError(e.getMessage());
         }
     }
 
@@ -96,8 +98,8 @@ public class TimeMasterController {
             setTimeRegisterInputs();
         }
         catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
+            displayError(e.getMessage());
         }
     }
 
@@ -205,4 +207,13 @@ public class TimeMasterController {
         newEmployeeName.clear();
         updateEmployeeMenu();
     }
+
+    private void displayError(String errorMessage) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("The program ecountered a problem!");
+        alert.setContentText(errorMessage);
+        alert.showAndWait();
+    }
+
 }

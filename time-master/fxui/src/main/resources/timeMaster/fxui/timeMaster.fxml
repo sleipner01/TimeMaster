@@ -17,7 +17,7 @@
 <HBox alignment="CENTER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="timeMaster.fxui.TimeMasterController">
    <TabPane prefHeight="400.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE">
      <tabs>
-       <Tab text="Stamp in">
+       <Tab text="Stamp In">
          <content>
            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
@@ -106,7 +106,7 @@
                </AnchorPane>
          </content>
        </Tab>
-       <Tab text="Check hours worked">
+       <Tab text="Check Hours Worked">
          <content>
            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>

@@ -9,12 +9,24 @@ class Employee{
     +String getName()
 }
 
+class TimeMaster {
+  - Employee chosenEmployee;
+  - Path saveDirPath;
+  - TimeMasterJsonParser jsonParser;
+  - ArrayList<Employee> employees;
 
-class TimeMasterFileHandler{
-    - String saveDirectory
-    - String employeesFilePath
-    - String workdaysFilePath
+  + void saveEmployees()
+  + void readEmployees()
 }
+
+class TimeMasterJsonParser{
+    final ObjectMapper mapper
+    final String filePath
+
+    + void write(ArrayList<Employee> employees)
+    + ArrayList<Employee> read()
+}
+
 
 class Workday{
    - date : LocalDate
@@ -46,14 +58,17 @@ class TimeMasterController {
     - void updateEmployeeMenu()
 }
 
-Employee -->  "workdays : * " Workday : " workday"
-
-Employee --> TimeMasterFileHandler :" workdays" 
-
 App -- TimeMasterController : " initilize"
 
-TimeMasterController --> Employee : handel input
+TimeMasterController --> TimeMaster : handel input
 
+TimeMaster --> TimeMasterJsonParser : read and write to Json 
+
+TimeMaster --> Employee
+
+TimeMasterJsonParser -- "*" Employee 
+
+Employee --> "*" Workday 
 
 
 @enduml

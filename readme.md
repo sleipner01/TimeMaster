@@ -1,31 +1,54 @@
 # Time Master
 
-Velkommen til kodelageret til Time Master. For detaljert beskrivelse av applikasjonen, les [Time Master Application](time-master/README.md)
+Welcome to the Time Master repo. For detailed description about the application, please visit [Time Master Application](time-master/README.md).
 
-## Kodingsprosjektet
+<hr>
 
-Kodingsprosjektet ligger i undermappen `time-master` som man kan navigere til med å bruke `cd time-master`. Der ligger også domenelogikken, persistens, og brukergrensesnittet til programmet.
+## The Project Structure
 
-Programmet er bygget med Maven slik at man enkelt kan kjøre programmet med `mvn javafx:run`.
+### Project folder
+The project files lies in the `time-master`-directory. Navigate to it using ```cd time-master``` in the terminal. All of the main-logic, persistency and user-interface is in this folder.
 
-Testene kan kjøres med `mvn test`. Da genereres en rapport over testdekningsgrad som legges i `coverage/target/site/jacoco-aggregate/index.html`, og kan åpnes i en nettleser.
+### Documentaion
+Documentation for the different releases can be found in the ```docs```-directory. 
 
-Etter kjøring av programmet og testene kan en rapport over kodekvaliteten lages med `mvn site`. Denne finnes i `target/site/checkstyle-aggregate.html`. En rapport over bugs blir også laget samtidig, og kan finnes for modulene core og fxui i `core/target/site/spotbugs.html` og `fxui/target/site/spotbugs.html`.
+<hr>
 
-
-## Gitpod
+## Cloning the project
+### Gitpod
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2227/gr2227)
+<br>
+The project is set up for Gitpod.
 
-1. Åpne en Gitpod instanse av kodelageret. Terminalen blir automatisk satt til time-master mappen
-2. `cd fxui`
-3. Kjør `mvn javafx:run` i terminalen, eventuelt `mvn clean javafx:run`.
-## Utviklerinstallasjon
+1. Use the button above, or the main button in Gitlab to open an instance of the repo.
+2. When the instance is ready, the terminal is automatically initialized in the ´´´time-master``-directory.
+3. Maven dependencies should already have been installed.
+4. Navigate to ```fxui```-directory with: `cd fxui`
+5. Execute `mvn clean javafx:run` in the terminal.
+### Developer installation
 
-1. `git clone https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2227/gr2227.git`
-2. åpne mappen som et Maven prosjekt i din IDE.
-3. `cd time-master/fxui`
-4. Installer modulene ved å kjøre `mvn install`
-5. Kjør appen med `mvn javafx:run`
+1. In the terminal, excute: `git clone https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2227/gr2227.git`
+2. Open the folder as a mven project in your preffered IDE.
+3. Navigate to the ```time-master```-directory with: `cd time-master`
+4. Execute ```mvn clean install```
+5. Navigate to ```fxui```-directory with: `cd fxui`
+6. Run the application with: `mvn clean javafx:run`
+
+<hr>
+
+## Integrations
+
+The application is built to support and run with `javafx:run`. See [developer installation](./readme.md#developer-installation) above for detailed description on how to run the application.
+
+### Testing
+
+The test can be run with `mvn test` from the `time-master`-directory. This will generate a report with testcoverage. The report is stored as an index.html file at [`time-master/coverage/target/site/jacoco-aggregate/index.html`](time-master/coverage/target/site/jacoco-aggregate/), and can be opened in the browser.
+
+### Code Quality
+
+After running the application and test, a report over the code quality can be made with `mvn site`. It can be found at [`time-master/coverage/target/site/checkstyle-aggregate.html`](time-master/coverage/target/site/).
+A report over detected bugs is made as well. It can be found at each of the modules in `time-master/{module}/target/site/spotbugs.html`.
+
 
 <!-- ## Git conventions
 

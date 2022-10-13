@@ -18,27 +18,25 @@ import org.testfx.framework.junit5.ApplicationTest;
  */
 public class AppTest extends ApplicationTest {
 
-    private Parent root;
-    private TimeMasterController controller;
+  private Parent root;
+  private TimeMasterController controller;
 
-    @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("timeMaster.fxml"));
-        root = fxmlLoader.load();
-        controller = fxmlLoader.getController();
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
+  @Override
+  public void start(Stage stage) throws IOException {
+    FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("timeMaster.fxml"));
+    root = fxmlLoader.load();
+    controller = fxmlLoader.getController();
+    stage.setScene(new Scene(root));
+    stage.show();
+  }
 
-    public Parent getRootNode() {
-        return root;
-    }
+  public Parent getRootNode() {
+    return root;
+  }
 
-
-    @Test
-    public void test() {
-        assertTrue(true);
-    }
+  @Test
+  public void test() {
+    assertTrue(true);
+  }
 
 }
-

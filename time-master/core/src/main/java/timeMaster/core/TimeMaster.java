@@ -18,8 +18,13 @@ public class TimeMaster {
     this.jsonParser = new TimeMasterJsonParser(saveDirPath, fileName);
   }
   
-  public LocalDate getCurrentDate() { return LocalDate.now(); }
-  public LocalTime getCurrentTime() { return LocalTime.now(); }
+  public LocalDate getCurrentDate() { 
+    return LocalDate.now(); 
+  }
+
+  public LocalTime getCurrentTime() { 
+    return LocalTime.now(); 
+  }
   
   public void setChosenEmployee(int index) throws Exception {
     this.chosenEmployee = this.employees.get(index);
@@ -29,12 +34,15 @@ public class TimeMaster {
     return this.chosenEmployee;
   }
   
-  public ArrayList<Employee> getEmployees() { return new ArrayList<>(this.employees); }
+  public ArrayList<Employee> getEmployees() { 
+    return new ArrayList<>(this.employees); 
+  }
   
   public void createEmployee(String name) throws IllegalArgumentException {
     // TODO: Validate name with Regex. Maybe split into first and sur name
-    if (name.equals("")) throw new IllegalArgumentException("Input required, please enter name");
-    
+    if (name.equals("")) {
+      throw new IllegalArgumentException("Input required, please enter name");
+    }
     this.employees.add(new Employee(name));
     this.saveEmployees();
   }
@@ -50,14 +58,17 @@ public class TimeMaster {
   // If the employee is clocked in the Workday will be finished with the specified timestamp.
   // Returns true if the employee is at work after successfull execution.
   public boolean clockEmployeeInOut(LocalDate dateInput, LocalTime timeInput) throws IllegalStateException {
-    if(this.chosenEmployee == null) throw new IllegalStateException("No employee is selected");
-    
+    if (this.chosenEmployee == null) {
+      throw new IllegalStateException("No employee is selected");
+    }
     LocalDate date = dateInput;
     LocalTime time = timeInput;
     
-    if(!this.getChosenEmployee().isAtWork()) this.getChosenEmployee().checkIn(date, time);
-    else this.getChosenEmployee().checkOut(time);
-    
+    if (!this.getChosenEmployee().isAtWork()) {
+      this.getChosenEmployee().checkIn(date, time);
+    } else { 
+      this.getChosenEmployee().checkOut(time);
+    }
     this.saveEmployees();
     return this.getChosenEmployee().isAtWork();
   }
@@ -65,14 +76,17 @@ public class TimeMaster {
   // If the employee is clocked in the Workday will be finished with the specified timestamp.
   // Returns true if the employee is at work after successfull execution.
   public boolean autoClockEmployeeInOut() throws IllegalStateException {
-    if(this.chosenEmployee == null) throw new IllegalStateException("No employee is selected");
-    
+    if (this.chosenEmployee == null) {
+      throw new IllegalStateException("No employee is selected");
+    }
     LocalDate date = this.getCurrentDate();
     LocalTime time = this.getCurrentTime();
     
-    if(!this.getChosenEmployee().isAtWork()) this.getChosenEmployee().checkIn(date, time);
-    else this.getChosenEmployee().checkOut(time);
-    
+    if (!this.getChosenEmployee().isAtWork()) { 
+      this.getChosenEmployee().checkIn(date, time);
+    } else { 
+      this.getChosenEmployee().checkOut(time);
+    }
     this.saveEmployees();
     return this.getChosenEmployee().isAtWork();
   }

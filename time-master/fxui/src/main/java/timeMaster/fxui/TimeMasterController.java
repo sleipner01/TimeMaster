@@ -119,12 +119,9 @@ public class TimeMasterController {
     }
  
     private void clearTimeInputs() {
-        this.clearInputHour();
-        this.clearInputMinutes();
+        this.inputHour.clear();
+        this.inputMinutes.clear();
     }
-
-    private void clearInputHour() { this.inputHour.clear(); }
-    private void clearInputMinutes() { this.inputMinutes.clear(); }
 
     private void updateEmployeeMenu() {
         this.chooseEmployeeButton.getItems().clear();
@@ -154,9 +151,10 @@ public class TimeMasterController {
         }
     }
 
-    private void createEmployee(String name) {
+    
+    @FXML private void handleCreateEmployee() {
         try {
-            timeMaster.createEmployee(name);
+            timeMaster.createEmployee(newEmployeeName.getText());
         }
         catch(IllegalArgumentException e) {
             displayError(e.getMessage());
@@ -165,11 +163,6 @@ public class TimeMasterController {
             e.printStackTrace();
             displayError(e.getMessage());
         }
-    }
-
-    @FXML
-    private void handleCreateEmployee() {
-        createEmployee(newEmployeeName.getText());
         newEmployeeName.clear();
         updateEmployeeMenu();
     }

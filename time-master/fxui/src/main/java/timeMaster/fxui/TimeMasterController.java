@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -125,7 +126,7 @@ public class TimeMasterController {
 
     //DONE
     private void setClockInInfoLabel() {
-        if(timeMaster.getChosenEmployee().isAtWork()) clockInInfo.setText("Clocked in at: " + chosenEmployee.getLatestClockIn());
+        if(timeMaster.getChosenEmployee().isAtWork()) clockInInfo.setText("Clocked in at: " + timeMaster.getChosenEmployee().getLatestClockIn());
         else clockInInfo.setText(null);
     }
  
@@ -151,11 +152,12 @@ public class TimeMasterController {
 
     private void updateEmployeeMenu() {
         this.chooseEmployeeButton.getItems().clear();
-        for (int i = 0; i < this.employees.size(); i++) {
-            MenuItem menuItem = new MenuItem(this.employees.get(i).getName());
-            System.out.println(this.employees.get(i).getName());
+        ArrayList<Employee> employees = timeMaster.getEmployees();
+        for (int i = 0; i < employees.size(); i++) {
+            MenuItem menuItem = new MenuItem(employees.get(i).getName());
+            System.out.println(employees.get(i).getName());
 
-            // Ta ActionEventet "a" som input til lambda-uttrykket selv om vi ikke bruker det
+            // ActionEvent a will not be used
             final int index = i;
             menuItem.setOnAction(a -> setChosenEmployee(index));
 
@@ -171,13 +173,17 @@ public class TimeMasterController {
         this.setTimeRegisterInputs();
     }
 
-    // creates new employee based on input
     private void createEmployee(String name) {
-        if (name.equals("")) {
-            throw new IllegalArgumentException("Input required, please enter name");
+        try {
+            timeMaster.createEmployee(name);
         }
-        this.employees.add(new Employee(name));
-        this.saveEmployees();
+        catch(IllegalArgumentException e) {
+            displayError(e.getMessage());
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            displayError(e.getMessage());
+        }
     }
 
     // TODO: check input, handle execption when empty, and validate name

@@ -30,6 +30,15 @@ public class TimeMaster {
         return this.chosenEmployee;
     }
 
+    public ArrayList<Employee> getEmployees() { return new ArrayList<>(this.employees); }
+
+    public void createEmployee(String name) throws IllegalArgumentException {
+        if (name.equals("")) throw new IllegalArgumentException("Input required, please enter name");
+        
+        this.employees.add(new Employee(name));
+        this.saveEmployees();
+    }
+
     public void saveEmployees() {
         this.jsonParser.write(this.employees);
     }

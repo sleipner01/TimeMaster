@@ -20,11 +20,10 @@ public class EmployeeTest {
     Workday workday1;
     Workday workday2;
 
-    // TODO: Remove id-s when employee class ID function is done
     @BeforeEach
     public void createEmployee() {
-        employee1 = new Employee("0", testName);
-        employee2 = new Employee("1", testName);
+        employee1 = new Employee(testName);
+        employee2 = new Employee(testName);
 
     }
 

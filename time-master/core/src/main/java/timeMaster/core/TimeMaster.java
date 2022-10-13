@@ -22,7 +22,7 @@ public class TimeMaster {
     public LocalDate getCurrentDate() { return LocalDate.now(); }
     public LocalTime getCurrentTime() { return LocalTime.now(); }
  
-    public void setChosenEmployee(int index) {
+    public void setChosenEmployee(int index) throws Exception {
         this.chosenEmployee = this.employees.get(index);
     }
 
@@ -33,6 +33,7 @@ public class TimeMaster {
     public ArrayList<Employee> getEmployees() { return new ArrayList<>(this.employees); }
 
     public void createEmployee(String name) throws IllegalArgumentException {
+        // TODO: Validate name with Regex. Maybe split into first and sur name
         if (name.equals("")) throw new IllegalArgumentException("Input required, please enter name");
         
         this.employees.add(new Employee(name));
@@ -47,6 +48,7 @@ public class TimeMaster {
         this.employees = this.jsonParser.read();
     }
 
+    // If the employee is clocked in the Workday will be finished with the specified timestamp.
     // Returns true if the employee is at work after successfull execution.
     public boolean clockEmployeeInOut(LocalDate dateInput, LocalTime timeInput) throws IllegalStateException {
         if(this.chosenEmployee == null) throw new IllegalStateException("No employee is selected");
@@ -61,6 +63,7 @@ public class TimeMaster {
         return this.getChosenEmployee().isAtWork();
     }
 
+    // If the employee is clocked in the Workday will be finished with the specified timestamp.
     // Returns true if the employee is at work after successfull execution.
     public boolean autoClockEmployeeInOut() throws IllegalStateException {
         if(this.chosenEmployee == null) throw new IllegalStateException("No employee is selected");
@@ -70,7 +73,6 @@ public class TimeMaster {
 
         if(!this.getChosenEmployee().isAtWork()) this.getChosenEmployee().checkIn(date, time);
         else this.getChosenEmployee().checkOut(time);
-        
         
         this.saveEmployees();
         return this.getChosenEmployee().isAtWork();

@@ -1,11 +1,7 @@
 package timeMaster.fxui;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -19,10 +15,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+
 import timeMaster.core.Employee;
 import timeMaster.core.TimeMaster;
-import timeMaster.core.TimeMasterJsonParser;
-// import timeMaster.core.Workday;
 
 public class TimeMasterController {
 
@@ -37,19 +32,15 @@ public class TimeMasterController {
     @FXML private Text statusText, clockInInfo;
     
 
-    //DONE
     @FXML private void initialize() {
         this.timeMaster = new TimeMaster();
-
         this.chooseDateButton.setValue(timeMaster.getCurrentDate());
         timeMaster.readEmployees();
         this.updateEmployeeMenu();
     }
 
-    //DONE
-    // Using values from chooseDateButton, inputHour and inputMinutes, to create a Workday object for the user
-    @FXML private void handleRegisterTime() {
 
+    @FXML private void handleRegisterTime() {
         try {
             timeMaster.clockEmployeeInOut(chooseDateButton.getValue(),
             LocalTime.of(Integer.parseInt(this.inputHour.getText()),
@@ -67,7 +58,6 @@ public class TimeMasterController {
         }
     }
 
-    //DONE
     @FXML private void autoClockInOut() {
         try {
             timeMaster.autoClockEmployeeInOut();
@@ -82,7 +72,6 @@ public class TimeMasterController {
         }
     }
 
-    //DONE
     private void setTimeRegisterInputs() {
         if(timeMaster.getChosenEmployee() == null) {
             autoCheckInOutBox.setDisable(true);
@@ -95,7 +84,6 @@ public class TimeMasterController {
         setEmployeeStatus();
     }
 
-    //DONE
     private void setEmployeeStatus() {
         setStatusIndicator();
         setStatusText();
@@ -103,30 +91,30 @@ public class TimeMasterController {
         setClockInInfoLabel();
     }
 
-    //DONE
     private void setStatusIndicator() {
         if(timeMaster.getChosenEmployee().isAtWork()) statusIndicator.setFill(Color.GREEN);
         else statusIndicator.setFill(Color.GRAY);
     }
 
-    //DONE
     private void setStatusText() {
         if(timeMaster.getChosenEmployee().isAtWork()) statusText.setText("Active");
         else statusText.setText("Off");
     }
 
-    //DONE
     private void setTimeRegisterButtons() {
-        if(timeMaster.getChosenEmployee().isAtWork()) registerTimeButton.setText("Check out");
-        else registerTimeButton.setText("Check in");
-
-        if(timeMaster.getChosenEmployee().isAtWork()) autoRegisterTimeButton.setText("Check out");
-        else autoRegisterTimeButton.setText("Check in");
+        if(timeMaster.getChosenEmployee().isAtWork()) {
+            registerTimeButton.setText("Check out");
+            autoRegisterTimeButton.setText("Check out");
+        } 
+        else {
+            registerTimeButton.setText("Check in");
+            autoRegisterTimeButton.setText("Check in");
+        }
     }
 
-    //DONE
     private void setClockInInfoLabel() {
-        if(timeMaster.getChosenEmployee().isAtWork()) clockInInfo.setText("Clocked in at: " + timeMaster.getChosenEmployee().getLatestClockIn());
+        if(timeMaster.getChosenEmployee().isAtWork()) 
+            clockInInfo.setText("Clocked in at: " + timeMaster.getChosenEmployee().getLatestClockIn());
         else clockInInfo.setText(null);
     }
  
@@ -137,18 +125,6 @@ public class TimeMasterController {
 
     private void clearInputHour() { this.inputHour.clear(); }
     private void clearInputMinutes() { this.inputMinutes.clear(); }
-
-    // Done
-    // Lagre alle ansatte
-    private void saveEmployees() {
-        timeMaster.saveEmployees();
-    }
-
-    // Done
-    // Les inn alle ansatte
-    private void readEmployees() {
-        timeMaster.readEmployees();
-    }
 
     private void updateEmployeeMenu() {
         this.chooseEmployeeButton.getItems().clear();
@@ -161,16 +137,21 @@ public class TimeMasterController {
             final int index = i;
             menuItem.setOnAction(a -> setChosenEmployee(index));
 
-            // Legger til i ansattmenyen
+            // Adding to employee-menu
             this.chooseEmployeeButton.getItems().add(menuItem);
         }
     }
 
-    //DONE
     private void setChosenEmployee(int index) {
-        timeMaster.setChosenEmployee(index);
-        this.chooseEmployeeButton.setText(timeMaster.getChosenEmployee().getName());
-        this.setTimeRegisterInputs();
+        try {
+            timeMaster.setChosenEmployee(index);
+            this.chooseEmployeeButton.setText(timeMaster.getChosenEmployee().getName());
+            this.setTimeRegisterInputs();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            displayError(e.getMessage());
+        }
     }
 
     private void createEmployee(String name) {
@@ -186,11 +167,9 @@ public class TimeMasterController {
         }
     }
 
-    // TODO: check input, handle execption when empty, and validate name
     @FXML
     private void handleCreateEmployee() {
-        String name = newEmployeeName.getText();
-        createEmployee(name);
+        createEmployee(newEmployeeName.getText());
         newEmployeeName.clear();
         updateEmployeeMenu();
     }

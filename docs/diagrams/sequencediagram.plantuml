@@ -1,8 +1,8 @@
 @startuml Time Master
 
-actor Magnus
+actor User
 
-Magnus --> TimeMaster : velg ansatt 
+User --> TimeMaster : handleCreateEmployee()
 TimeMaster --> workdays.csv : registrer tid 
 workdays.csv --> TimeMaster : vis registrert tid
 TimeMaster --> Magnus : vis registrert tid

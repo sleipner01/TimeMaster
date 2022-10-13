@@ -40,28 +40,42 @@ public class Employee {
   }
   
   public void checkIn(LocalDate date, LocalTime time) {
-    if(isAtWork()) throw new IllegalStateException(this.toString() + " is already at work!");
-    if(!isValidWorkday(date, time)) throw new IllegalArgumentException("This timestamp comes in conflict with another workday");
+    if (isAtWork()) { 
+      throw new IllegalStateException(this.toString() + " is already at work!");
+    }
+    if (!isValidWorkday(date, time)) {
+      throw new IllegalArgumentException("This timestamp comes in conflict with another workday");
+    }
     this.workdays.add(new Workday(date, time));
     this.atWork = true;
     System.out.println(this.toString() + " checked in at: " + date + " " + time);
   }
   
   public void checkOut(LocalTime time) {
-    if(!isAtWork()) throw new IllegalStateException(this.toString() + " is not at work!");
-    this.workdays.get(workdays.size()-1).setTimeOut(time);
+    if (!isAtWork()) { 
+      throw new IllegalStateException(this.toString() + " is not at work!");
+    }
+    this.workdays.get(workdays.size() - 1).setTimeOut(time);
     this.atWork = false;
     System.out.println(this.toString() + " checked out at: " + time);
   }
   
-  public String getId() { return this.id; }
+  public String getId() { 
+    return this.id; 
+  }
   
-  public String getName() { return this.name; }
+  public String getName() { 
+    return this.name; 
+  }
   
-  public boolean isAtWork() { return this.atWork; }
+  public boolean isAtWork() { 
+    return this.atWork; 
+  }
   
   public void addWorkday(Workday workday) {
-    if(!this.isWorkdayValid(workday)) throw new IllegalArgumentException("Workday is already added.");
+    if (!this.isWorkdayValid(workday)) { 
+      throw new IllegalArgumentException("Workday is already added.");
+    }
     this.workdays.add(workday);
   }
   
@@ -71,7 +85,7 @@ public class Employee {
   
   public String getLatestClockIn() {
     ArrayList<Workday> workdays = this.getWorkdays();
-    Workday latest = workdays.get(workdays.size()-1);
+    Workday latest = workdays.get(workdays.size() - 1);
     return latest.getDate().toString() + " " + latest.getTimeIn().toString();
   }
   

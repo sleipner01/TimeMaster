@@ -33,7 +33,7 @@ public class TimeMasterController {
   
   
   @FXML private void initialize() {
-    this.timeMaster = new TimeMaster();
+    this.timeMaster = new TimeMaster("employees.json");
     this.chooseDateButton.setValue(timeMaster.getCurrentDate());
     timeMaster.readEmployees();
     this.updateEmployeeMenu();

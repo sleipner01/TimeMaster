@@ -9,14 +9,13 @@ import java.util.ArrayList;
 public class TimeMaster {
   
   private Employee chosenEmployee;
-  // private Workday chosenWorkday;
   private Path saveDirPath;
   private TimeMasterJsonParser jsonParser;
-  private ArrayList<Employee> employees;
+  private ArrayList<Employee> employees = new ArrayList<>();
   
-  public TimeMaster() {
+  public TimeMaster(String fileName) {
     this.saveDirPath = Paths.get(System.getProperty("user.dir"), "../core/timeMasterSaveFiles");
-    this.jsonParser = new TimeMasterJsonParser(saveDirPath, "employees.json");
+    this.jsonParser = new TimeMasterJsonParser(saveDirPath, fileName);
   }
   
   public LocalDate getCurrentDate() { return LocalDate.now(); }

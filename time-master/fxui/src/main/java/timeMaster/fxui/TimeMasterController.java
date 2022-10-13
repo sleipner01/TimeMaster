@@ -39,7 +39,7 @@ public class TimeMasterController {
 
     @FXML private void initialize() {
         this.saveDirPath = Paths.get(System.getProperty("user.dir"), "../core/timeMasterSaveFiles");
-        this.jsonParser = new TimeMasterJsonParser(saveDirPath);
+        this.jsonParser = new TimeMasterJsonParser(saveDirPath, "employees.json");
         this.chooseDateButton.setValue(LocalDate.now());
 
         this.readEmployees();

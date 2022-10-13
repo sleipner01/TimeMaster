@@ -1,5 +1,7 @@
 package timeMaster.core;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -40,6 +42,32 @@ public class EmployeeTest {
     @Test
     public void idTest() {
         assertNotEquals(employee1.getId(), employee2.getId());
+    }
+
+    @Test
+    public void checkInTest() {
+        employee1.checkIn(LocalDate.parse("1970-01-01"), LocalTime.parse("00:00"));
+        assertTrue(employee1.isAtWork());
+    }
+
+    @Test
+    public void checkOutTest() {
+        employee1.checkIn(LocalDate.parse("1970-01-01"), LocalTime.parse("00:00"));
+        employee1.checkOut(LocalTime.parse("12:00"));
+        assertFalse(employee1.isAtWork());
+    }
+
+    @Test
+    public void getDateTest() {
+        employee1.checkIn(LocalDate.parse("1970-01-01"), LocalTime.parse("00:00"));
+        assertEquals("1970-01-01", 
+        employee1.getDate(LocalDate.parse("1970-01-01")).getDate().toString());
+    }
+
+    @Test
+    public void getLatestClockInTest() {
+        employee1.checkIn(LocalDate.parse("1970-01-01"), LocalTime.parse("00:00"));
+        assertEquals("1970-01-01 00:00", employee1.getLatestClockIn());
     }
 
     @Test

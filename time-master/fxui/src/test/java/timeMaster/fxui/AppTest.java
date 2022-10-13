@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import org.assertj.core.api.Assertions;
 import org.assertj.core.internal.Strings;
+import org.hamcrest.beans.HasProperty;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,10 +20,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.LabeledMatchers;
 
@@ -71,7 +73,6 @@ public class AppTest extends ApplicationTest {
     clickOn(LabeledMatchers.hasText("Stamp In"));
 
     ArrayList<String> names = getEmployees();
-    System.out.println(names);
     assertTrue(names.contains(testName));
   }
 
@@ -89,7 +90,7 @@ public class AppTest extends ApplicationTest {
   @Test
   public void testAutoStampIn() {
     // Adding an employee
-    String testName = "Test";
+    String testName = "Test2";
     clickOn(LabeledMatchers.hasText("Add New Employee"));
     clickOn("#newEmployeeName").write(testName);
     clickOn("#addNewEmployeeButton");
@@ -101,8 +102,7 @@ public class AppTest extends ApplicationTest {
     clickOn("#autoRegisterTimeButton");
 
     Text status = lookup("#statusText").query();
-    String statusText = status.getText();
-    assertTrue(statusText.equals("Active"));
+    FxAssert.verifyThat(status, s -> s.getText().equals("Active"));
   }
 
 

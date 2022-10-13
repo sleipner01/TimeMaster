@@ -2,9 +2,9 @@
 
 actor User
 
-User --> TimeMaster : handleCreateEmployee()
-TimeMaster --> workdays.csv : registrer tid 
-workdays.csv --> TimeMaster : vis registrert tid
-TimeMaster --> Magnus : vis registrert tid
+User --> TimeMaster : Inserts name and clicks add new emloyee
+TimeMaster --> employees.json: handleCreateEmployee()
+employees.json --> TimeMaster : handleCreateEmployee()
+TimeMaster --> User : 
 
 @enduml

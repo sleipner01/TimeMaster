@@ -14,44 +14,44 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import timeMaster.mixin.MixIn;
 
 public class TimeMasterJsonParser {
-
-    final ObjectMapper mapper;
-    final String filePath;
-
-    public TimeMasterJsonParser(Path dir, String fileName) {
-        this.mapper = new ObjectMapper();
-        this.mapper.configure(Feature.AUTO_CLOSE_SOURCE, true);
-        this.mapper.addMixIn(Employee.class, MixIn.class);
-        this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        this.mapper.registerModule(new JavaTimeModule());
-        this.filePath = Paths.get(dir.toString(), fileName).toString();
+  
+  final ObjectMapper mapper;
+  final String filePath;
+  
+  public TimeMasterJsonParser(Path dir, String fileName) {
+    this.mapper = new ObjectMapper();
+    this.mapper.configure(Feature.AUTO_CLOSE_SOURCE, true);
+    this.mapper.addMixIn(Employee.class, MixIn.class);
+    this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+    this.mapper.registerModule(new JavaTimeModule());
+    this.filePath = Paths.get(dir.toString(), fileName).toString();
+  }
+  
+  public void write(ArrayList<Employee> employees) {
+    try {
+      this.mapper.writeValue(new File(filePath), employees);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-
-    public void write(ArrayList<Employee> employees) {
-        try {
-            this.mapper.writeValue(new File(filePath), employees);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+  }
+  
+  public ArrayList<Employee> read() {
+    var employees = new ArrayList<Employee>();
+    if(new File(filePath).length() == 0) {
+      System.out.println("Savefile is empty");
+      return new ArrayList<>();
     }
-
-    public ArrayList<Employee> read() {
-        var employees = new ArrayList<Employee>();
-        if(new File(filePath).length() == 0) {
-            System.out.println("Savefile is empty");
-            return new ArrayList<>();
-        }
-        try {
-            employees = this.mapper.readValue(
-                    new File(filePath),
-                    new TypeReference<ArrayList<Employee>>() {
-                    });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return employees;
+    try {
+      employees = this.mapper.readValue(
+      new File(filePath),
+      new TypeReference<ArrayList<Employee>>() {
+      });
+      
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-
+    
+    return employees;
+  }
+  
 }

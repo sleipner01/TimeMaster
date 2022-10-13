@@ -24,3 +24,13 @@ Checkstyle and Spotbugs checks the code-quality. These are made when running ```
 ### Testing
 We have made sure to have a pretty good test coverage of all our classes, and we have tried to test expected cases to most of our methods. To run the tests, navigate to the `time-master` directory and use ```mvn test```
 It will run all tests, and show the result in the Terminal, in addition to supplying a report with testcoverage. This report can be found in: `coverage/target/site/jacoco-aggregate/index.html`, and can be opened in a browser. It is an aggregated report for all our classes.
+
+
+### Architecture 
+
+Time Master-App consists of multiple classes. 
+The class named TimeMaster is the main class, which is responsible for most of the functionality.
+The class TimeMasterController decides what TimeMaster is supposed to do, based on user input, in UI. It links Employees and Workdays together 
+The class TimeMAsterJsonParser reads and writes user input to Json. This is the functionality that makes it possible to save user input. The file format for the Json file is described in [json.md](json.md).
+<img src="/docs/img/class.png" width="250px"/>
+<img src="/docs/img/sequence.png" width="250px"/>

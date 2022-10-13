@@ -17,9 +17,8 @@ public class TimeMasterJsonParser {
 
     final ObjectMapper mapper;
     final String filePath;
-    final String fileName = "employees.json";
 
-    public TimeMasterJsonParser(Path dir) {
+    public TimeMasterJsonParser(Path dir, String fileName) {
         this.mapper = new ObjectMapper();
         this.mapper.configure(Feature.AUTO_CLOSE_SOURCE, true);
         this.mapper.addMixIn(Employee.class, MixIn.class);

@@ -39,5 +39,15 @@ public class WorkdayTest {
         workday.setTimeOut(testTimeOut);
         assertEquals(testTimeOut, workday.getTimeOut());
     } 
+
+    @Test
+    @DisplayName("Test toString")
+    public void testToString() {
+        String expectedStringNotTimeOut = testDate.toString() + "," + testTimeIn + "," + null;
+        String expectedStringTimeOut = testDate.toString() + "," + testTimeIn + "," + testTimeOut;
+        assertEquals(expectedStringNotTimeOut, workday.toString());
+        workday.setTimeOut(testTimeOut);
+        assertEquals(expectedStringTimeOut, workday.toString());
+    }
     
 }

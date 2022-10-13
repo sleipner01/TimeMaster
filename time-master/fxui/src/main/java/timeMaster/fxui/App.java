@@ -9,18 +9,18 @@ import javafx.stage.Stage;
 
 
 public class App extends Application {
-
-    @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("timeMaster.fxml"));
-        Parent parent = fxmlLoader.load();
-        Scene scene = new Scene(parent);
-        scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public static void main(String[] args) {
-        launch();
-    }
+  
+  @Override
+  public void start(Stage stage) throws IOException {
+    FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("timeMaster.fxml"));
+    Parent parent = fxmlLoader.load();
+    Scene scene = new Scene(parent);
+    scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
+    stage.setScene(scene);
+    stage.show();
+  }
+  
+  public static void main(String[] args) {
+    launch();
+  }
 }

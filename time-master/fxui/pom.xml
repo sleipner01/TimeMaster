@@ -4,22 +4,23 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>gr2227.timeMaster</groupId>
+		<groupId>com.gr2227.timemaster</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>fxui</artifactId>
 	<name>FXUI</name>
+	<version>${project.parent.version}</version>
 	<description>Module containing applicationfiles for the user interface</description>
 	<packaging>jar</packaging>
 
 	<dependencies>
 		<!-- TimeMaster -->
 		<dependency>
-			<groupId>gr2227.timeMaster</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>core</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<!-- JavaFX -->
 		<dependency>

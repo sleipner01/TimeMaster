@@ -1,10 +1,10 @@
-module timeMaster.core {
+module it1901.groups2022.gr2227.timemaster.core {
 
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jsr310;
-    requires timeMaster.mixin;
-    opens timeMaster.core;
+    requires it1901.groups2022.gr2227.timemaster.mixin;
+    opens it1901.groups2022.gr2227.timemaster.core;
     
-    exports timeMaster.core;
+    exports it1901.groups2022.gr2227.timemaster.core;
 }

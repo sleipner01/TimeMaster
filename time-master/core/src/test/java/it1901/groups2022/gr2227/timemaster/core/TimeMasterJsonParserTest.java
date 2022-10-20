@@ -1,4 +1,4 @@
-package timeMaster.core;
+package it1901.groups2022.gr2227.timemaster.core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import it1901.groups2022.gr2227.timemaster.core.Employee;
+import it1901.groups2022.gr2227.timemaster.core.TimeMasterJsonParser;
 
 
 public class TimeMasterJsonParserTest {

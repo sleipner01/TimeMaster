@@ -1,4 +1,4 @@
-package timeMaster.core;
+package it1901.groups2022.gr2227.timemaster.core;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,6 +13,8 @@ import java.time.LocalTime;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import it1901.groups2022.gr2227.timemaster.core.TimeMaster;
 
 public class TimeMasterTest {
     

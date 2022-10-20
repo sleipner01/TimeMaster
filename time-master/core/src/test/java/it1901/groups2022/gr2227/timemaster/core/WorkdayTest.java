@@ -1,6 +1,8 @@
-package timeMaster.core;
+package it1901.groups2022.gr2227.timemaster.core;
 
 import org.junit.jupiter.api.Test;
+
+import it1901.groups2022.gr2227.timemaster.core.Workday;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

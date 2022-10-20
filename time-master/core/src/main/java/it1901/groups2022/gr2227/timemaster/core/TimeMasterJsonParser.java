@@ -1,4 +1,4 @@
-package timeMaster.core;
+package it1901.groups2022.gr2227.timemaster.core;
 
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.core.type.TypeReference;

@@ -1,4 +1,4 @@
-package it1901.groups2022.gr2227.timemaster.fxui;
+package no.it1901.groups2022.gr2227.timemaster.fxui;
 
 import java.io.IOException;
 import javafx.application.Application;

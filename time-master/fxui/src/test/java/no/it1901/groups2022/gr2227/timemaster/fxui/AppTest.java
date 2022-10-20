@@ -121,10 +121,4 @@ public class AppTest extends ApplicationTest {
     FxAssert.verifyThat(status, s -> s.getText().equals("Active"));
   }
 
-
-
-
-
-
-
 }

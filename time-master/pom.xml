@@ -3,183 +3,180 @@
 <!-- ParentPOM -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>no.it1901.groups2022.gr2227.timemaster</groupId>
-    <artifactId>parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>no.it1901.groups2022.gr2227.timemaster</groupId>
+  <artifactId>parent</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
-    <name>Time Master</name>
-    <url>https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2227/gr2227</url>
+  <name>Time Master</name>
+  <url>https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2227/gr2227</url>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <java.version>17</java.version>
-    </properties>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <java.version>17</java.version>
+  </properties>
 
-    <modules>
-        <module>core</module>
-        <module>fxui</module>
-        <module>coverage</module>
-        <module>mixin</module>
-    </modules>
+  <modules>
+    <module>core</module>
+    <module>fxui</module>
+    <module>coverage</module>
+    <module>mixin</module>
+  </modules>
 
-    <build>
-        <pluginManagement>
-            <plugins>
-                <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+  <build>
+    <pluginManagement>
+      <plugins>
 
-                <!-- Maven -->
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.1</version>
-                    <configuration>
-                        <release>17</release>
-                        <argLine>--enable-preview </argLine>
-                    </configuration>
-                </plugin>
+        <!-- Maven -->
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.1</version>
+          <configuration>
+            <release>17</release>
+            <argLine>--enable-preview </argLine>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.7</version>
-                    <executions>
-                        <execution>
-                            <id>jacoco-prepare-agent</id>
-                            <phase>process-test-classes</phase>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>jacoco-report</id>
-                            <phase>test</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+        <!-- Jacoco -->
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.7</version>
+          <executions>
+            <execution>
+              <id>jacoco-prepare-agent</id>
+              <phase>process-test-classes</phase>
+              <goals>
+                <goal>prepare-agent</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>jacoco-report</id>
+              <phase>test</phase>
+              <goals>
+                <goal>report</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
 
+        <!-- Surefire -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.0.0-M5</version>
+        </plugin>
+        
+        <!-- Failsafe -->
+        <plugin>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>3.0.0-M5</version>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.0.0-M5</version>
+        <!-- Site -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.7.1</version>
+        </plugin>
 
-                </plugin>
-                <plugin>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.0.0-M5</version>
-                </plugin>
+        <!-- Reports -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>3.0.0</version>
+          <configuration>
+            <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                     <version>3.7.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>3.0.0</version>
-                    <configuration>
-                        <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>3.2.0</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.puppycrawl.tools</groupId>
-                            <artifactId>checkstyle</artifactId>
-                            <version>9.0</version>
-                        </dependency>
-                    </dependencies>
-                    <configuration>
-                        <configLocation>google_checks.xml</configLocation>
-                        <encoding>UTF-8</encoding>
-                        <consoleOutput>true</consoleOutput>
-                        <failsOnError>true</failsOnError>
-                        <linkXRef>false</linkXRef>
-                    </configuration>
-                    <executions>
-                        <execution>
-                        <id>checkstyle-check</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <plugin>
-                    <groupId>com.github.spotbugs</groupId>
-                    <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.7.2.1</version>
-                    <configuration>
-                        <xmlOutput>false</xmlOutput>
-                        <!--<excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>-->
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>spotbugs-spotbugs</id>
-                            <phase>install</phase>
-                            <goals>
-                                <goal>spotbugs</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-		</plugins>
-
-        </pluginManagement>
-    </build>
-
-    <dependencyManagement>
-        <dependencies>
-
-            <!-- JUnit -->
+        <!-- Checkstyle -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>3.2.0</version>
+          <dependencies>
             <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-api</artifactId>
-                <version>5.9.0</version>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>9.0</version>
             </dependency>
+          </dependencies>
+          <configuration>
+            <configLocation>google_checks.xml</configLocation>
+            <encoding>UTF-8</encoding>
+            <consoleOutput>true</consoleOutput>
+            <failsOnError>true</failsOnError>
+            <linkXRef>false</linkXRef>
+          </configuration>
+          <executions>
+            <execution>
+              <id>checkstyle-check</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
 
-            <!-- Jackson -->
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>2.13.4</version>
-            </dependency>
-            <!--	Java 8 Date/time	-->
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-jsr310</artifactId>
-                <version>2.10.0.pr1</version>
-            </dependency>
+        <!-- Spotbugs -->
+        <plugin>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-maven-plugin</artifactId>
+          <version>4.7.2.1</version>
+          <configuration>
+            <xmlOutput>false</xmlOutput>
+            <!--<excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>-->
+          </configuration>
+          <executions>
+            <execution>
+              <id>spotbugs-spotbugs</id>
+              <phase>install</phase>
+              <goals>
+                <goal>spotbugs</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
 
-        </dependencies>
-    </dependencyManagement>
+    </pluginManagement>
+  </build>
 
-	<reporting>
-		<plugins>           
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-          		<artifactId>maven-checkstyle-plugin</artifactId>
-          		<version>3.2.0</version>
-            </plugin>
+  <dependencyManagement>
+    <dependencies>
 
-		    <!-- <plugin>
-  				<groupId>com.github.spotbugs</groupId>
-  				<artifactId>spotbugs-maven-plugin</artifactId>
-  				<version>4.7.2.1</version>
-			</plugin> -->
-        </plugins>
-	</reporting>
+      <!-- JUnit -->
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.9.0</version>
+      </dependency>
+
+      <!-- Jackson -->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.13.4</version>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
+  <reporting>
+    <plugins>
+
+      <!-- Checkstyle -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.2.0</version>
+      </plugin>
+
+    </plugins>
+  </reporting>
 </project>

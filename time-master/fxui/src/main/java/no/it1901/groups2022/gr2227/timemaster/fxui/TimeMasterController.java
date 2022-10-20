@@ -1,5 +1,6 @@
 package no.it1901.groups2022.gr2227.timemaster.fxui;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -37,8 +38,11 @@ public class TimeMasterController {
   
   
   @FXML private void initialize() {
-    this.timeMaster = new TimeMaster("employees.json");
-    this.chooseDateButton.setValue(timeMaster.getCurrentDate());
+    this.chooseDateButton.setValue(LocalDate.now());
+  }
+  
+  public void setupJsonParser(String fileName) {
+    this.timeMaster = new TimeMaster(fileName);
     timeMaster.readEmployees();
     this.updateEmployeeMenu();
   }

@@ -1,6 +1,7 @@
 package no.it1901.groups2022.gr2227.timemaster.fxui;
 
 import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +15,8 @@ public class App extends Application {
   public void start(Stage stage) throws IOException {
     FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("timeMaster.fxml"));
     Parent parent = fxmlLoader.load();
+    TimeMasterController controller = fxmlLoader.getController();
+    controller.setupJsonParser("employees.json");
     Scene scene = new Scene(parent);
     scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
     stage.setScene(scene);

@@ -4,22 +4,23 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>gr2227.timeMaster</groupId>
+		<groupId>no.it1901.groups2022.gr2227.timemaster</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>fxui</artifactId>
 	<name>FXUI</name>
+	<version>${project.parent.version}</version>
 	<description>Module containing applicationfiles for the user interface</description>
 	<packaging>jar</packaging>
 
 	<dependencies>
 		<!-- TimeMaster -->
 		<dependency>
-			<groupId>gr2227.timeMaster</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>core</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<!-- JavaFX -->
 		<dependency>
@@ -77,7 +78,7 @@
 				<configuration>
 					<argLine>@{argLine} -Xmx1024m</argLine>
 					<argLine>
-						--add-opens timeMaster.fxui/timeMaster.fxui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+						--add-opens no.it1901.groups2022.gr2227.timemaster.fxui/no.it1901.groups2022.gr2227.timemaster.fxui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
 					</argLine>
 				  </configuration>
 			</plugin>
@@ -92,7 +93,7 @@
 				<!-- Default configuration for running -->
 				<!-- Usage: mvn javafx:run -->
 				<configuration>
-					<mainClass>timeMaster.fxui/timeMaster.fxui.App</mainClass>
+					<mainClass>no.it1901.groups2022.gr2227.timemaster.fxui/no.it1901.groups2022.gr2227.timemaster.fxui.App</mainClass>
 				</configuration>
 			</plugin>
 

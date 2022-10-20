@@ -4,13 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>gr2227.timeMaster</groupId>
+		<groupId>no.it1901.groups2022.gr2227.timemaster</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>core</artifactId>
 	<name>Core</name>
+	<version>${project.parent.version}</version>
 	<description>Modules contining core files for the application</description>
 	<packaging>jar</packaging>
 
@@ -18,9 +19,9 @@
 
 		<!-- TimeMaster -->
 		<dependency>
-			<groupId>gr2227.timeMaster</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>mixin</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		
 

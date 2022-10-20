@@ -1,4 +1,4 @@
-package it1901.groups2022.gr2227.timemaster.core;
+package no.it1901.groups2022.gr2227.timemaster.core;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

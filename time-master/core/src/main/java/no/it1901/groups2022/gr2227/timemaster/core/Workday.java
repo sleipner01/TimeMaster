@@ -1,4 +1,4 @@
-package it1901.groups2022.gr2227.timemaster.core;
+package no.it1901.groups2022.gr2227.timemaster.core;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

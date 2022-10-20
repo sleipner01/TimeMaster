@@ -1,4 +1,4 @@
-package it1901.groups2022.gr2227.timemaster.core;
+package no.it1901.groups2022.gr2227.timemaster.core;
 
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -9,7 +9,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import it1901.groups2022.gr2227.timemaster.mixin.Mixin;
+import no.it1901.groups2022.gr2227.timemaster.mixin.Mixin;
 
 public class TimeMasterJsonParser {
   

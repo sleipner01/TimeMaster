@@ -29,7 +29,6 @@
   <build>
     <pluginManagement>
       <plugins>
-        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
 
         <!-- Maven -->
         <plugin>
@@ -41,6 +40,7 @@
           </configuration>
         </plugin>
 
+        <!-- Jacoco -->
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
@@ -63,23 +63,27 @@
           </executions>
         </plugin>
 
+        <!-- Surefire -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>3.0.0-M5</version>
         </plugin>
         
+        <!-- Failsafe -->
         <plugin>
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>3.0.0-M5</version>
         </plugin>
 
+        <!-- Site -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
           <version>3.7.1</version>
         </plugin>
 
+        <!-- Reports -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-project-info-reports-plugin</artifactId>
@@ -89,6 +93,7 @@
           </configuration>
         </plugin>
 
+        <!-- Checkstyle -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
@@ -118,6 +123,7 @@
           </executions>
         </plugin>
 
+        <!-- Spotbugs -->
         <plugin>
           <groupId>com.github.spotbugs</groupId>
           <artifactId>spotbugs-maven-plugin</artifactId>
@@ -157,29 +163,20 @@
         <artifactId>jackson-databind</artifactId>
         <version>2.13.4</version>
       </dependency>
-      <!--	Java 8 Date/time	-->
-      <dependency>
-        <groupId>com.fasterxml.jackson.datatype</groupId>
-        <artifactId>jackson-datatype-jsr310</artifactId>
-        <version>2.10.0.pr1</version>
-      </dependency>
 
     </dependencies>
   </dependencyManagement>
 
   <reporting>
     <plugins>
+
+      <!-- Checkstyle -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>3.2.0</version>
       </plugin>
 
-      <!-- <plugin>
-  				<groupId>com.github.spotbugs</groupId>
-  				<artifactId>spotbugs-maven-plugin</artifactId>
-  				<version>4.7.2.1</version>
-			</plugin> -->
     </plugins>
   </reporting>
 </project>

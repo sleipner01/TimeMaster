@@ -1,6 +1,6 @@
 # App: Time Master 
 
-### User history:
+### User story:
 
 As an employee, I wish to be able to clock in and out at work. So I get paid for all hours worked.
 
@@ -26,7 +26,7 @@ The functionality has to be simple and understandable, there needs to be an intu
 
 —
 
-### User history:
+### User story:
 
 As an employee or employer, we want to be able to add new employees. So they can register the hours they have worked.
 
@@ -43,7 +43,7 @@ Have a separate tab in the app, where one is able to add a new employee by addin
 
 — 
 
-### User history: 
+### User story: 
 
 As an employee, I wish to be able to check how many hours I have worked. So I can predict my income before payday.
 

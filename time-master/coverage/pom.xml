@@ -4,13 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>gr2227.timeMaster</groupId>
+		<groupId>it1901.groups2022.gr2227.timemaster</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
     <artifactId>coverage</artifactId>
     <name>Coverage</name>
+    <version>${project.parent.version}</version>
     <description>Compute aggregated test code coverage</description>
     <packaging>rar</packaging>
 
@@ -20,15 +21,15 @@
 
   <dependencies>
     <dependency>
-      <groupId>gr2227.timeMaster</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>core</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${project.parent.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>gr2227.timeMaster</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>fxui</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${project.parent.version}</version>
       <!-- <scope>test</scope> -->
     </dependency>
   </dependencies>

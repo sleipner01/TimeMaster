@@ -1,7 +1,10 @@
-package timeMaster.fxui;
+package it1901.groups2022.gr2227.timemaster.fxui;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+
+import it1901.groups2022.gr2227.timemaster.core.Employee;
+import it1901.groups2022.gr2227.timemaster.core.TimeMaster;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -10,12 +13,10 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import javafx.scene.layout.VBo
+import timemaster.core.Employee;
+import timemaster.core.TimeMaster;
 import javafx.scene.text.Text;
-import timeMaster.core.Employee;
-import timeMaster.core.TimeMaster;
 
 public class TimeMasterController {
   

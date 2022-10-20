@@ -1,0 +1,9 @@
+module timemaster.fxui {
+    requires timemaster.core;
+    requires javafx.controls;
+    requires javafx.fxml;
+    requires transitive javafx.graphics;
+
+    opens timemaster.fxui to javafx.fxml, javafx.graphics;
+    exports timemaster.fxui;
+}

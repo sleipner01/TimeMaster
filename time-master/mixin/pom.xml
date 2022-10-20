@@ -4,13 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>gr2227.timeMaster</groupId>
+		<groupId>it1901.groups2022.gr2227.timemaster</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>mixin</artifactId>
-	<name>MixIn</name>
+	<name>Mixin</name>
+	<version>${project.parent.version}</version>
 	<description>Module containing mixin files</description>
 	<packaging>jar</packaging>
 

@@ -1,8 +1,8 @@
 image: maven:3.8.6
 
 variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
-  $MAVEN_CLI_OPTS: "--batch-mode --activate-profiles -DskipUiTests=true"
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Djava.awt.headless=true"
+  $MAVEN_CLI_OPTS: "--batch-mode --activate-profiles headless -DskipUiTests=true"
 
 stages:
   - build
@@ -12,15 +12,17 @@ stages:
 cache:
   paths:
     - .m2/repository/
-    - target/
-
-test:
-  stage: test
-  script:
-    - "cd time-master; mvn clean test $MAVEN_CLI_OPTS"
+  key: "$CI_BUILD_REF_NAME"
 
 build:
   stage: build
   when: manual
   script:
     - "cd time-master; mvn clean install $MAVEN_CLI_OPTS"
+
+test:
+  stage: test
+  script:
+    - "cd time-master; mvn clean test $MAVEN_CLI_OPTS"
+
+

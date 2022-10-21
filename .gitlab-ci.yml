@@ -5,7 +5,6 @@ variables:
   $MAVEN_CLI_OPTS: "--batch-mode --activate-profiles -DskipUiTests=true"
 
 stages:
-  - test
   - build
 
 

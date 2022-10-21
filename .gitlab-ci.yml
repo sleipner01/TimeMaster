@@ -1,0 +1,26 @@
+image: maven:3.8.6-openjdk-17
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  $MAVEN_CLI_OPTS: "--batch-mode -DskipUiTests=true"
+
+stages:
+  - test
+  - build
+
+
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+test:
+  stage: test
+  script:
+    - "cd time-master; mvn clean test $MAVEN_CLI_OPTS"
+
+build:
+  stage: build
+  when: manual
+  script:
+    - "cd time-master; mvn clean install $MAVEN_CLI_OPTS"

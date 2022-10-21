@@ -76,6 +76,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
+					<skipTests>${skipUiTests}</skipTests>
 					<argLine>@{argLine} -Xmx1024m</argLine>
 					<argLine>
 						--add-opens no.it1901.groups2022.gr2227.timemaster.fxui/no.it1901.groups2022.gr2227.timemaster.fxui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED

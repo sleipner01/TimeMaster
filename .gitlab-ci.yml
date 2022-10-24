@@ -18,7 +18,7 @@ cache:
 build:
   stage: build
   script:
-    - cd time-master; mvn clean install $MAVEN_CLI_OPTS -Dmaven.test.skip=true
+    - cd time-master; mvn clean compile $MAVEN_CLI_OPTS
 
 test:
   stage: test

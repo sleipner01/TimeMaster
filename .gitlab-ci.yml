@@ -11,7 +11,6 @@ stages:
 cache:
   paths:
     - .m2/repository/
-    - target/
   key: "$CI_BUILD_REF_NAME"
 
 build:
@@ -25,9 +24,9 @@ test:
   script:
     - cd time-master; mvn clean test $MAVEN_CLI_OPTS
     - cd ../
-    - ls
+    - ls -a
     - cd time-master
-    - ls
+    - ls -a
     - cd coverage
     - ls -a
     # - cd target

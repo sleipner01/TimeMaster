@@ -1,0 +1,27 @@
+image: maven:latest
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode -DskipUiTests=true"
+
+stages:
+  - build
+  - test
+
+cache:
+  paths:
+    - .m2/repository/
+  key: "$CI_BUILD_REF_NAME"
+
+build:
+  stage: build
+  script:
+    - cd time-master; mvn install $MAVEN_CLI_OPTS
+
+test:
+  stage: test
+  coverage: '/Total.*?([0-9]{1,3})%/'
+  script:
+    - cd time-master; mvn verify $MAVEN_CLI_OPTS
+    - cat coverage/target/site/jacoco-aggregate/index.html | grep -o '<tfoot>.*</tfoot>'
+    

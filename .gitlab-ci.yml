@@ -23,6 +23,9 @@ test:
   coverage: '/Total.*?([0-9]{1,3})%/'
   script:
     - cd time-master; mvn clean test $MAVEN_CLI_OPTS
+    - cd ../
+    - ls
+    - cd time-master
     - ls
     - cd coverage
     - ls -a

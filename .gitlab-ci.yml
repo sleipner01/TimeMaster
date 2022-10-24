@@ -25,7 +25,7 @@ test:
     - cd time-master; mvn clean test $MAVEN_CLI_OPTS
     - ls
     - cd coverage
-    - ls -Force
+    - ls -a
     # - cd target
     # - ls
     # - cd site

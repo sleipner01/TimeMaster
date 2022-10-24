@@ -29,11 +29,11 @@ test:
     - ls -a
     - cd coverage
     - ls -a
-    # - cd target
-    # - ls
-    # - cd site
-    # - ls
-    # - cd jacoco-aggregate
-    # - ls
+    - cd target
+    - ls -a
+    - cd site
+    - ls -a
+    - cd jacoco-aggregate
+    - ls -a
     - cat ../coverage/target/site/jacoco-aggregate/index.html | grep -o '<tfoot>.*</tfoot>'
     

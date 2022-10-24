@@ -24,5 +24,13 @@ test:
   script:
     - cd time-master; mvn clean test $MAVEN_CLI_OPTS
     - ls
-    - cat coverage/target/site/jacoco-aggregate/index.html | grep -o '<tfoot>.*</tfoot>'
+    - cd coverage
+    - ls
+    - cd target
+    - ls
+    - cd site
+    - ls
+    - cd jacoco-aggregate
+    - ls
+    # - cat coverage/target/site/jacoco-aggregate/index.html | grep -o '<tfoot>.*</tfoot>'
     

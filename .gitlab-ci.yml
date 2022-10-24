@@ -11,6 +11,7 @@ stages:
 cache:
   paths:
     - .m2/repository/
+    - target/
   key: "$CI_BUILD_REF_NAME"
 
 build:

@@ -8,7 +8,7 @@ stages:
   - build
   - test
   - coverage
-  - site
+  # - site
 
 cache:
   paths:
@@ -32,8 +32,8 @@ coverageReport:
     - cd time-master; mvn verify $MAVEN_CLI_OPTS
     - cat coverage/target/site/jacoco-aggregate/index.html | grep -o '<tfoot>.*</tfoot>'
 
-checkstyleReport:
-  stage: site
-  script:
-    - cd time-master; mvn site $MAVEN_CLI_OPTS
+# checkstyleReport:
+#   stage: site
+#   script:
+#     - cd time-master; mvn site $MAVEN_CLI_OPTS
     

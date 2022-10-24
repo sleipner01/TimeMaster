@@ -35,5 +35,5 @@ test:
     # - ls
     # - cd jacoco-aggregate
     # - ls
-    # - cat coverage/target/site/jacoco-aggregate/index.html | grep -o '<tfoot>.*</tfoot>'
+    - cat target/site/jacoco/index.html | grep -o '<tfoot>.*</tfoot>'
     

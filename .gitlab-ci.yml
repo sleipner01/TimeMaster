@@ -23,17 +23,5 @@ test:
   coverage: '/Total.*?([0-9]{1,3})%/'
   script:
     - cd time-master; mvn verify $MAVEN_CLI_OPTS
-    - cd ../
-    - ls -a
-    - cd time-master
-    - ls -a
-    - cd coverage
-    - ls -a
-    - cd target
-    - ls -a
-    - cd site
-    - ls -a
-    - cd jacoco-aggregate
-    - ls -a
-    - cat ../coverage/target/site/jacoco-aggregate/index.html | grep -o '<tfoot>.*</tfoot>'
+    - cat coverage/target/site/jacoco-aggregate/index.html | grep -o '<tfoot>.*</tfoot>'
     

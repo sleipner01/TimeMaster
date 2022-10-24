@@ -16,11 +16,13 @@ cache:
 build:
   stage: build
   script:
-    - "cd time-master; mvn clean install $MAVEN_CLI_OPTS"
+    - cd time-master; mvn clean install $MAVEN_CLI_OPTS
 
 test:
   stage: test
   coverage: '/Total.*?([0-9]{1,3})%/'
   script:
-    - "cd time-master; mvn clean test $MAVEN_CLI_OPTS"
-    - "cd time-master; cat coverage/target/site/jacoco-aggregate/index.html | grep -o '<tfoot>.*</tfoot>'"
+    - cd time-master; mvn clean test $MAVEN_CLI_OPTS
+    - ls
+    - cat coverage/target/site/jacoco-aggregate/index.html | grep -o '<tfoot>.*</tfoot>'
+    

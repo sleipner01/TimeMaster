@@ -2,7 +2,7 @@ image: maven:latest
 
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Djava.awt.headless=true"
-  $MAVEN_CLI_OPTS: "--batch-mode headless -DskipUiTests=true"
+  MAVEN_CLI_OPTS: "--batch-mode headless -DskipUiTests=true"
 
 stages:
   - build

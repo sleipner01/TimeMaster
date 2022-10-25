@@ -73,10 +73,22 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<argLine>@{argLine} -Xmx1024m</argLine>
+					<!-- <argLine>@{argLine} -Xmx1024m</argLine> -->
 					<argLine>
+						@{jaCoCoArgLine}
 						--add-opens no.it1901.groups2022.gr2227.timemaster.fxui/no.it1901.groups2022.gr2227.timemaster.fxui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+						--add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
+						--add-exports javafx.graphics/com.sun.glass.ui.delegate=ALL-UNNAMED
 					</argLine>
+				</configuration>
+			</plugin>
+
+			<!-- Jacoco -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<configuration>
+					<propertyName>jaCoCoArgLine</propertyName>
 				</configuration>
 			</plugin>
 

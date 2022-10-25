@@ -1,6 +1,13 @@
 module no.it1901.groups2022.gr2227.timemaster.rest {
   requires jakarta.ws.rs;
 
+  requires no.it1901.groups2022.gr2227.timemaster.core;
+  requires no.it1901.groups2022.gr2227.timemaster.mixin;
+
+  requires com.fasterxml.jackson.core;
+  requires com.fasterxml.jackson.databind;
+  requires com.fasterxml.jackson.datatype.jsr310;
+
   requires jersey.common;
   requires jersey.server;
   requires jersey.media.json.jackson;

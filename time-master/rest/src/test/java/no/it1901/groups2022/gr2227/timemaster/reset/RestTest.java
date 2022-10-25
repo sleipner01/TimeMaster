@@ -43,7 +43,8 @@ public class RestTest {
      */
     @Test
     public void testGetIt() {
+        String msg = "[{\"id\" : \"bec36f58-2797-45aa-8d11-7522ff34de1d\",\"name\" : \"Test\",\"workdays\" : [ ],\"atWork\" : false}, {\"id\" : \"03ffaa9e-4a78-4008-b63c-b90b48c375c8\",\"name\" : \"Test2\",\"workdays\" : [ {\"date\" : [ 2022, 10, 20 ],\"timeIn\" : [ 20, 38, 41, 267835000 ],\"timeOut\" : null} ],\"atWork\" : true}]";
         String responseMsg = target.path("api").request().get(String.class);
-        assertEquals("Got it!", responseMsg);
+        assertEquals(msg, responseMsg);
     }
 }

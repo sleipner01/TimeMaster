@@ -30,11 +30,6 @@
         <scope>import</scope>
       </dependency>
 
-    </dependencies>
-  </dependencyManagement>
-
-  <dependencies>
-
     <dependency>
       <groupId>org.glassfish.jersey.containers</groupId>
       <artifactId>jersey-container-grizzly2-http</artifactId>
@@ -51,6 +46,7 @@
 		</dependency>
 
   </dependencies>
+</dependencyManagement>
 
   <build>
     <plugins>

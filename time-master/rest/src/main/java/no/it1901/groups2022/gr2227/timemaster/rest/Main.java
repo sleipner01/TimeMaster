@@ -24,7 +24,7 @@ public class Main {
   public static HttpServer startServer() {
     // create a resource config that scans for JAX-RS resources and providers
     // in no.it1901.groups2022.gr2227.timemaster.rest package
-    final ResourceConfig rc = new ResourceConfig().packages("no.it1901.groups2022.gr2227.timemaster.rest");
+    final ResourceConfig rc = new ResourceConfig(Rest.class);
 
     // create and start a new instance of grizzly http server
     // exposing the Jersey application at BASE_URI

@@ -16,8 +16,8 @@ import jakarta.ws.rs.Produces;
 @Path("api")
 public class Rest {
 
-  TimeMaster timeMaster = new TimeMaster("employees.json");
-  ObjectMapper mapper = new ObjectMapper()
+  final TimeMaster timeMaster = new TimeMaster("employees.json");
+  final ObjectMapper mapper = new ObjectMapper()
     .addMixIn(Employee.class, Mixin.class)
     .enable(SerializationFeature.INDENT_OUTPUT)
     .registerModule(new JavaTimeModule());
@@ -32,35 +32,35 @@ public class Rest {
   @Produces("application/json")
   @GET
   public String getEmployees() {
-    String json = "";
+    String res = null;
     timeMaster.readEmployees();
 
     try {
-      json = mapper.writeValueAsString(timeMaster.getEmployees());
+      res = mapper.writeValueAsString(timeMaster.getEmployees());
     } catch (Exception e) {
       e.printStackTrace();
     }
 
-    return json;
+    return res;
   }
 
   @Path("employees/{name}")
   @Produces("application/json")
   @GET
-  public String getEmployeeByName(@PathParam("name")String name) {
-    String json = "";
+  public String getEmployeeByName(@PathParam("name") String name) {
+    String res = null;
     timeMaster.readEmployees();
 
     try {
       for (Employee employee : timeMaster.getEmployees()) {
         if (employee.getName().toLowerCase().equals(name.toLowerCase())) {
-          json = mapper.writeValueAsString(employee);
+          res = mapper.writeValueAsString(employee);
         }
       }
     } catch (Exception e) {
       e.printStackTrace();
     }
 
-    return json;
+    return res;
   }
 }

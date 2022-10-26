@@ -10,42 +10,53 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 
-/**
- * Root resource (exposed at "api" path)
- */
 @Path("api")
 public class Rest {
 
   TimeMaster timeMaster = new TimeMaster("employees.json");
-  ObjectMapper mapper = new ObjectMapper();
+  ObjectMapper mapper = new ObjectMapper()
+    .addMixIn(Employee.class, Mixin.class)
+    .enable(SerializationFeature.INDENT_OUTPUT)
+    .registerModule(new JavaTimeModule());
 
-  /**
-   * Method handling HTTP GET requests. The returned object will be sent
-   * to the client as "text/plain" media type.
-   *
-   * @return String that will be returned as a text/plain response.
-   */
   @Path("test")
   @GET
-  // @Produces("application/json")
   public String helloWorld() {
     return "Hello, World!";
   }
 
   @Path("employees")
-  @GET
   @Produces("application/json")
+  @GET
   public String getEmployees() {
-    String json = "ERROR\n";
+    String json = "";
     timeMaster.readEmployees();
-    mapper.addMixIn(Employee.class, Mixin.class);
-    mapper.enable(SerializationFeature.INDENT_OUTPUT);
-    mapper.registerModule(new JavaTimeModule());
 
     try {
       json = mapper.writeValueAsString(timeMaster.getEmployees());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    return json;
+  }
+
+  @Path("employees/{name}")
+  @Produces("application/json")
+  @GET
+  public String getEmployeeByName(@PathParam("name")String name) {
+    String json = "";
+    timeMaster.readEmployees();
+
+    try {
+      for (Employee employee : timeMaster.getEmployees()) {
+        if (employee.getName().toLowerCase().equals(name.toLowerCase())) {
+          json = mapper.writeValueAsString(employee);
+        }
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }

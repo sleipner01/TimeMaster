@@ -3,7 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -108,7 +110,18 @@
        </Tab>
        <Tab text="Check Hours Worked">
          <content>
-           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                     <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="14.0" prefHeight="344.0" prefWidth="372.0">
+                       <content>
+                         <AnchorPane minHeight="344.0" minWidth="372.0">
+                              <children>
+                                 <ListView fx:id="workdayHistoryList" minHeight="344.0" minWidth="372.0" />
+                              </children>
+                           </AnchorPane>
+                       </content>
+                     </ScrollPane>
+                  </children></AnchorPane>
          </content>
        </Tab>
          <Tab text="Add New Employee">

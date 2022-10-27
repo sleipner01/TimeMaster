@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TimeMaster {
   
@@ -59,11 +60,17 @@ public class TimeMaster {
   public void readEmployees() {
     this.employees = this.jsonParser.read();
   }
+
+  public boolean employeeIsSet() {
+    return !Objects.isNull(this.chosenEmployee);
+  }
   
   // If the employee is clocked in the Workday will be finished with the specified timestamp.
   // Returns true if the employee is at work after successfull execution.
+<<<<<<< time-master/core/src/main/java/no/it1901/groups2022/gr2227/timemaster/core/TimeMaster.java
   public boolean clockEmployeeInOut(LocalDateTime dateTimeInput) throws IllegalStateException {
-    if (this.chosenEmployee == null) {
+    if (!this.employeeIsSet()) {
+>>>>>>> time-master/core/src/main/java/no/it1901/groups2022/gr2227/timemaster/core/TimeMaster.java
       throw new IllegalStateException("No employee is selected");
     }
     //TODO: Input validation
@@ -94,4 +101,13 @@ public class TimeMaster {
     this.saveEmployees();
     return this.getChosenEmployee().isAtWork();
   }
+
+  public ArrayList<Workday> getEmployeeWorkdayHistory() throws IllegalStateException {
+    if(!this.employeeIsSet()) {
+      throw new IllegalStateException("No employee is selected");
+    }
+  
+    return this.getChosenEmployee().getWorkdays();
+  }
+
 }

@@ -54,11 +54,15 @@ public class TimeMaster {
   public void readEmployees() {
     this.employees = this.jsonParser.read();
   }
+
+  public boolean employeeIsSet() {
+    return this.chosenEmployee != null;
+  }
   
   // If the employee is clocked in the Workday will be finished with the specified timestamp.
   // Returns true if the employee is at work after successfull execution.
   public boolean clockEmployeeInOut(LocalDate dateInput, LocalTime timeInput) throws IllegalStateException {
-    if (this.chosenEmployee == null) {
+    if (!this.employeeIsSet()) {
       throw new IllegalStateException("No employee is selected");
     }
     LocalDate date = dateInput;
@@ -90,4 +94,13 @@ public class TimeMaster {
     this.saveEmployees();
     return this.getChosenEmployee().isAtWork();
   }
+
+  public ArrayList<Workday> getEmployeeWorkdayHistory() throws IllegalStateException {
+    if(!this.employeeIsSet()) {
+      throw new IllegalStateException("No employee is selected");
+    }
+  
+    return this.getChosenEmployee().getWorkdays();
+  }
+
 }

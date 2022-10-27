@@ -67,10 +67,8 @@ public class TimeMaster {
   
   // If the employee is clocked in the Workday will be finished with the specified timestamp.
   // Returns true if the employee is at work after successfull execution.
-<<<<<<< time-master/core/src/main/java/no/it1901/groups2022/gr2227/timemaster/core/TimeMaster.java
   public boolean clockEmployeeInOut(LocalDateTime dateTimeInput) throws IllegalStateException {
     if (!this.employeeIsSet()) {
->>>>>>> time-master/core/src/main/java/no/it1901/groups2022/gr2227/timemaster/core/TimeMaster.java
       throw new IllegalStateException("No employee is selected");
     }
     //TODO: Input validation

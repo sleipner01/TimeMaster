@@ -41,6 +41,22 @@ public class Workday {
   
   @Override
   public String toString() {
-    return this.getTimeIn() + "," + this.getTimeOut();
+    LocalDateTime timeIn = this.getTimeIn();
+    String dayOfWeek = timeIn.getDayOfWeek().toString();
+    String dayOfMonth = String.valueOf(timeIn.getDayOfMonth());
+    String month = timeIn.getMonth().toString();
+    String year = String.valueOf(timeIn.getYear());
+    String inHour = String.valueOf(timeIn.getHour());
+    String inMinute = String.valueOf(timeIn.getMinute());
+
+    String date = dayOfWeek + " " + dayOfMonth + " " + month + " " + year;
+    String stampIn = inHour + ":" + inMinute;
+    String stampOut = "";
+
+    if(timeOut != null) {
+      stampOut = String.valueOf(timeOut.getHour()) + ":" + String.valueOf(timeOut.getMinute());
+    } 
+
+    return date + " | " + stampIn + " | " + stampOut;
   }
 }

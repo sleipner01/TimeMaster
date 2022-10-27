@@ -4,6 +4,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Workday",
+            "request": "launch",
+            "mainClass": "no.it1901.groups2022.gr2227.timemaster.core/no.it1901.groups2022.gr2227.timemaster.core.Workday",
+            "projectName": "core"
+        },
+        {
+            "type": "java",
             "name": "Launch Employee",
             "request": "launch",
             "mainClass": "timeMaster.core/timeMaster.core.Employee",

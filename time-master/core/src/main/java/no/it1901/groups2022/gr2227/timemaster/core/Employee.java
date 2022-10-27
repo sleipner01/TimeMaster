@@ -1,7 +1,6 @@
 package no.it1901.groups2022.gr2227.timemaster.core;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -33,31 +32,33 @@ public class Employee {
     return !this.workdays.contains(workday);
   }
   
-  private boolean isValidWorkday(LocalDate date, LocalTime time) {
+  private boolean isValidWorkday(LocalDateTime dateTimeInput) {
     // TODO: Check if any other workday in the close timespan conflicts with this timestamp.
     
     return true;
   }
   
-  public void checkIn(LocalDate date, LocalTime time) {
+  public void checkIn(LocalDateTime dateTimeInput) {
     if (isAtWork()) { 
       throw new IllegalStateException(this.toString() + " is already at work!");
     }
-    if (!isValidWorkday(date, time)) {
+    if (!isValidWorkday(dateTimeInput)) {
       throw new IllegalArgumentException("This timestamp comes in conflict with another workday");
     }
-    this.workdays.add(new Workday(date, time));
+    //TODO: validate Input
+    this.workdays.add(new Workday(dateTimeInput));
     this.atWork = true;
-    System.out.println(this.toString() + " checked in at: " + date + " " + time);
+    System.out.println(this.toString() + " checked in at: " + dateTimeInput);
   }
   
-  public void checkOut(LocalTime time) {
+  public void checkOut(LocalDateTime dateTimeInput) {
     if (!isAtWork()) { 
       throw new IllegalStateException(this.toString() + " is not at work!");
     }
-    this.workdays.get(workdays.size() - 1).setTimeOut(time);
+    //TODO: Validate input
+    this.workdays.get(workdays.size() - 1).setTimeOut(dateTimeInput);
     this.atWork = false;
-    System.out.println(this.toString() + " checked out at: " + time);
+    System.out.println(this.toString() + " checked out at: " + dateTimeInput);
   }
   
   public String getId() { 
@@ -86,11 +87,11 @@ public class Employee {
   public String getLatestClockIn() {
     ArrayList<Workday> workdays = this.getWorkdays();
     Workday latest = workdays.get(workdays.size() - 1);
-    return latest.getDate().toString() + " " + latest.getTimeIn().toString();
+    return latest.getTimeIn().toString();
   }
   
-  public Workday getDate(LocalDate date) {
-    return this.workdays.stream().filter(e -> e.getDate().equals(date)).findAny().get();
+  public Workday getDate(LocalDateTime dateTime) {
+    return this.workdays.stream().filter(e -> e.getTimeIn().equals(dateTime)).findAny().get();
   }
   
   @Override

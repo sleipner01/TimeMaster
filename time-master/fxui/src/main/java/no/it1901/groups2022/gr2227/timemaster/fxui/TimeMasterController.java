@@ -1,6 +1,7 @@
 package no.it1901.groups2022.gr2227.timemaster.fxui;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -49,11 +50,14 @@ public class TimeMasterController {
   
   
   @FXML private void handleRegisterTime() {
+    //TODO: Inputvalidation
+    LocalDate date = chooseDateButton.getValue();
+    LocalTime time = LocalTime.of(Integer.parseInt(this.inputHour.getText()),
+                     Integer.parseInt(this.inputMinutes.getText()));
+    LocalDateTime dateTime = LocalDateTime.of(date, time);
     try {
-      timeMaster.clockEmployeeInOut(chooseDateButton.getValue(),
-          LocalTime.of(Integer.parseInt(this.inputHour.getText()),
-          Integer.parseInt(this.inputMinutes.getText())));
-      
+      timeMaster.clockEmployeeInOut(dateTime);
+    
       this.clearTimeInputs();
       this.setTimeRegisterInputs();
     } catch (IllegalStateException e) {

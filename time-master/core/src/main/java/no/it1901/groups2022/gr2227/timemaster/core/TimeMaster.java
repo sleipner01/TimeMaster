@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TimeMaster {
   
@@ -56,7 +57,7 @@ public class TimeMaster {
   }
 
   public boolean employeeIsSet() {
-    return this.chosenEmployee != null;
+    return !Objects.isNull(this.chosenEmployee);
   }
   
   // If the employee is clocked in the Workday will be finished with the specified timestamp.

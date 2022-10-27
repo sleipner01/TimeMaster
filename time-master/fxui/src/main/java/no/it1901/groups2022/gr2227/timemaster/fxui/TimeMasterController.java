@@ -3,12 +3,16 @@ package no.it1901.groups2022.gr2227.timemaster.fxui;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
@@ -35,6 +39,7 @@ public class TimeMasterController {
   @FXML private Circle statusIndicator;
   @FXML private Text statusText;
   @FXML private Text clockInInfo;
+  @FXML private ListView<String> workdayHistoryList;
   
   
   @FXML private void initialize() {
@@ -154,6 +159,7 @@ public class TimeMasterController {
       timeMaster.setChosenEmployee(index);
       this.chooseEmployeeButton.setText(timeMaster.getChosenEmployee().getName());
       this.setTimeRegisterInputs();
+      this.showWorkdayHistory();
     } catch (Exception e) {
       e.printStackTrace();
       displayError(e.getMessage());
@@ -181,4 +187,21 @@ public class TimeMasterController {
     alert.setContentText(errorMessage);
     alert.showAndWait();
   }
+
+  private void showWorkdayHistory() {
+    if(!timeMaster.employeeIsSet()) {
+      this.emptyWorkdayHistory();
+      System.out.println("Not doing things");
+      return;
+    }
+    
+    List<String> workdayList = timeMaster.getEmployeeWorkdayHistory().stream().map(workday -> workday.toString()).toList();
+    ObservableList<String> observableWorkdayList = FXCollections.observableArrayList(workdayList);
+    workdayHistoryList.setItems(observableWorkdayList);
+  }
+
+  private void emptyWorkdayHistory() {
+      //TODO: Set informative text
+  }
+
 }

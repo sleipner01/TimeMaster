@@ -203,7 +203,9 @@ public class TimeMasterController {
       return;
     }
     
-    List<String> workdayList = timeMaster.getEmployeeWorkdayHistory().stream().map(workday -> workday.toString()).toList();
+    List<String> workdayList = timeMaster.getEmployeeWorkdayHistory().stream()
+                                                                     .map(workday -> workday.toString())
+                                                                     .toList();
     ObservableList<String> observableWorkdayList = FXCollections.observableArrayList(workdayList);
     workdayHistoryList.setItems(observableWorkdayList);
   }

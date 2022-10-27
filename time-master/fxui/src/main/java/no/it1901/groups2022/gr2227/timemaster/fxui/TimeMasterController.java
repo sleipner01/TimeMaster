@@ -64,7 +64,7 @@ public class TimeMasterController {
       timeMaster.clockEmployeeInOut(dateTime);
     
       this.clearTimeInputs();
-      this.setTimeRegisterInputs();
+      updateDisplay();
     } catch (IllegalStateException e) {
       displayError(e.getMessage());
     } catch (Exception e) {
@@ -76,7 +76,7 @@ public class TimeMasterController {
   @FXML private void autoClockInOut() {
     try {
       timeMaster.autoClockEmployeeInOut();
-      setTimeRegisterInputs();
+      updateDisplay();
     } catch (IllegalStateException e) {
       displayError(e.getMessage());
     } catch (Exception e) {
@@ -84,16 +84,20 @@ public class TimeMasterController {
       displayError(e.getMessage());
     }
   }
+
+  private void updateDisplay() {
+    setTimeRegisterInputs();
+    setEmployeeStatus();
+  }
   
   private void setTimeRegisterInputs() {
-    if (timeMaster.getChosenEmployee() == null) {
+    if (!timeMaster.employeeIsSet()) {
       autoCheckInOutBox.setDisable(true);
       manualCheckInOutBox.setDisable(true);
     } else {
       autoCheckInOutBox.setDisable(false);
       manualCheckInOutBox.setDisable(false);
     }
-    setEmployeeStatus();
   }
   
   private void setEmployeeStatus() {
@@ -101,6 +105,7 @@ public class TimeMasterController {
     setStatusText();
     setTimeRegisterButtons();
     setClockInInfoLabel();
+    showWorkdayHistory();
   }
   
   private void setStatusIndicator() {
@@ -162,8 +167,7 @@ public class TimeMasterController {
     try {
       timeMaster.setChosenEmployee(index);
       this.chooseEmployeeButton.setText(timeMaster.getChosenEmployee().getName());
-      this.setTimeRegisterInputs();
-      this.showWorkdayHistory();
+      updateDisplay();
     } catch (Exception e) {
       e.printStackTrace();
       displayError(e.getMessage());
@@ -205,7 +209,7 @@ public class TimeMasterController {
   }
 
   private void emptyWorkdayHistory() {
-      //TODO: Set informative text
+      workdayHistoryList.setItems(null);
   }
 
 }

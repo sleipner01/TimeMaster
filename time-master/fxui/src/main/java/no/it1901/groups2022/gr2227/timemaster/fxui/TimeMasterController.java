@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -45,6 +46,18 @@ public class TimeMasterController {
   
   @FXML private void initialize() {
     this.chooseDateButton.setValue(LocalDate.now());
+    workDayHistoryListenerSetup();
+  }
+
+  private void workDayHistoryListenerSetup() {
+    workdayHistoryList.getSelectionModel()
+        .selectedItemProperty()
+        .addListener((ObservableValue<? extends String> ov, String old_val, String new_val) -> {
+          String selectedItem = workdayHistoryList.getSelectionModel().getSelectedItem();
+          int index = workdayHistoryList.getSelectionModel().getSelectedIndex();
+
+          System.out.println("Item selected : " + selectedItem + ", Item index : " + index);
+        });
   }
   
   public void setupJsonParser(String fileName) {
@@ -206,6 +219,7 @@ public class TimeMasterController {
     List<String> workdayList = timeMaster.getEmployeeWorkdayHistory().stream()
                                                                      .map(workday -> workday.toString())
                                                                      .toList();
+
     ObservableList<String> observableWorkdayList = FXCollections.observableArrayList(workdayList);
     workdayHistoryList.setItems(observableWorkdayList);
   }

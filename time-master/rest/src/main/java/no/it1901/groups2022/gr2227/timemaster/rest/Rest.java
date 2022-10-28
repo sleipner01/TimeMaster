@@ -52,9 +52,6 @@ public class Rest {
     for (int i = 0; i < file.size(); i++) {
       String employeeId = file.get(i).get("id").toString();
       employeeId = employeeId.substring(1, employeeId.length()-1); //Dette er smålig hacky men we dont care. please fix
-      System.out.println(employeeId);
-      System.out.println(id);
-      System.out.println(employeeId.equals(id) );
       if (employeeId.equals(id)) {
         file.remove(i);
         file.insert(i, req);

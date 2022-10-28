@@ -3,7 +3,6 @@ package no.it1901.groups2022.gr2227.timemaster.fxui;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.value.ObservableValue;
@@ -15,21 +14,20 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import no.it1901.groups2022.gr2227.timemaster.core.Employee;
 import no.it1901.groups2022.gr2227.timemaster.core.TimeMaster;
 
 public class TimeMasterController {
   
   private TimeMaster timeMaster;
+  private ObservableList<String> observableEmployeeList;
+  private ObservableList<String> observableWorkdayList;
+
   
-  @FXML private MenuButton chooseEmployeeButton;
   @FXML private Button registerTimeButton;
   @FXML private Button autoRegisterTimeButton;
   @FXML private DatePicker chooseDateButton;
@@ -49,6 +47,7 @@ public class TimeMasterController {
   @FXML private void initialize() {
     this.chooseDateButton.setValue(LocalDate.now());
     workDayHistoryListenerSetup();
+    chooseEmployeeListenerSetup();
   }
 
   private void workDayHistoryListenerSetup() {
@@ -60,7 +59,26 @@ public class TimeMasterController {
 
           System.out.println("Item selected : " + selectedItem + ", Item index : " + index);
         });
+
+    observableWorkdayList = FXCollections.observableArrayList();
+    workdayHistoryList.setItems(observableWorkdayList);
   }
+
+  private void chooseEmployeeListenerSetup() {
+    chooseEmployeeListView.getSelectionModel()
+        .selectedItemProperty()
+        .addListener((ObservableValue<? extends String> ov, String old_val, String new_val) -> {
+          String selectedItem = chooseEmployeeListView.getSelectionModel().getSelectedItem();
+          int index = chooseEmployeeListView.getSelectionModel().getSelectedIndex();
+          setChosenEmployee(index);
+
+          System.out.println("Employee selected : " + selectedItem + ", Item index : " + index);
+        });
+
+    observableEmployeeList = FXCollections.observableArrayList();
+    chooseEmployeeListView.setItems(observableEmployeeList);
+  }
+
   
   public void setupJsonParser(String fileName) {
     this.timeMaster = new TimeMaster(fileName);
@@ -168,34 +186,17 @@ public class TimeMasterController {
   }
   
   private void updateEmployeeMenu() {
-    this.chooseEmployeeButton.getItems().clear();
-    ArrayList<Employee> employees = timeMaster.getEmployees();
-    for (int i = 0; i < employees.size(); i++) {
-      MenuItem menuItem = new MenuItem(employees.get(i).getName());
-      System.out.println(employees.get(i).getName());
-      
-      // ActionEvent a will not be used
-      final int index = i;
-      menuItem.setOnAction(a -> setChosenEmployee(index));
-      
-      // Adding to employee-menu
-      this.chooseEmployeeButton.getItems().add(menuItem);
-      
-      List<String> employeeList = timeMaster.getEmployees()
-          .stream()
-          .map(employee -> employee.getName())
-          .toList();
-  
-      ObservableList<String> observableWorkdayList = FXCollections.observableArrayList(employeeList);
-      chooseEmployeeListView.setItems(observableWorkdayList);
-  
-    }
+    List<String> employeeList = timeMaster.getEmployees()
+    .stream()
+    .map(employee -> employee.getName())
+    .toList();
+
+    observableEmployeeList.setAll(employeeList);
   }
   
   private void setChosenEmployee(int index) {
     try {
       timeMaster.setChosenEmployee(index);
-      this.chooseEmployeeButton.setText(timeMaster.getChosenEmployee().getName());
       updateDisplay();
     } catch (Exception e) {
       e.printStackTrace();
@@ -207,14 +208,15 @@ public class TimeMasterController {
   @FXML private void handleCreateEmployee() {
     try {
       timeMaster.createEmployee(newEmployeeName.getText());
+      newEmployeeName.clear();
+      updateEmployeeMenu();
     } catch (IllegalArgumentException e) {
       displayError(e.getMessage());
     } catch (Exception e) {
       e.printStackTrace();
       displayError(e.getMessage());
     }
-    newEmployeeName.clear();
-    updateEmployeeMenu();
+
   }
   
   private void displayError(String errorMessage) {
@@ -231,18 +233,18 @@ public class TimeMasterController {
       System.out.println("Not doing things");
       return;
     }
-    
     List<String> workdayList = timeMaster.getEmployeeWorkdayHistory()
-        .stream()
-        .map(workday -> workday.toString())
-        .toList();
-
-    ObservableList<String> observableWorkdayList = FXCollections.observableArrayList(workdayList);
-    workdayHistoryList.setItems(observableWorkdayList);
+    .stream()
+    .map(workday -> workday.toString())
+    .toList();
+    
+    System.out.println(workdayList);
+    observableWorkdayList.setAll(workdayList);
+    System.out.println(observableWorkdayList);
   }
 
   private void emptyWorkdayHistory() {
-      workdayHistoryList.setItems(null);
+    workdayHistoryList.setItems(null);
   }
 
 }

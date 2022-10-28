@@ -3,12 +3,16 @@ package no.it1901.groups2022.gr2227.timemaster.fxui;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
@@ -35,6 +39,7 @@ public class TimeMasterController {
   @FXML private Circle statusIndicator;
   @FXML private Text statusText;
   @FXML private Text clockInInfo;
+  @FXML private ListView<String> chooseEmployeeListView;
   
   
   @FXML private void initialize() {
@@ -146,6 +151,15 @@ public class TimeMasterController {
       
       // Adding to employee-menu
       this.chooseEmployeeButton.getItems().add(menuItem);
+      
+      List<String> employeeList = timeMaster.getEmployees()
+          .stream()
+          .map(employee -> employee.getName())
+          .toList();
+  
+      ObservableList<String> observableWorkdayList = FXCollections.observableArrayList(employeeList);
+      chooseEmployeeListView.setItems(observableWorkdayList);
+  
     }
   }
   

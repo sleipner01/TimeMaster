@@ -29,8 +29,8 @@ public class EmployeeTest {
 	
 	@BeforeEach
 	public void createDateTimes() {
-		dateTime1 = LocalDateTime.now();
-		dateTime2 = LocalDateTime.now().plusHours(2);
+		dateTime1 = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
+		dateTime2 = LocalDateTime.of(1970, 1, 1, 2, 0, 0);;
 	}
 
 	@BeforeEach
@@ -72,7 +72,7 @@ public class EmployeeTest {
 	@Test
 	public void getLatestClockInTest() {
 		employee1.checkIn(dateTime1);
-		assertEquals(dateTime1.toString(), employee1.getLatestClockIn());
+		assertEquals("Thu, Jan 01 1970 - 00:00", employee1.getLatestClockIn());
 	}
 	
 	@Test

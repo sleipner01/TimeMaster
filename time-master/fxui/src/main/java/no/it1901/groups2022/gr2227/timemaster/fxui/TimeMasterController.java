@@ -43,6 +43,7 @@ public class TimeMasterController {
   @FXML private Text clockInInfo;
   @FXML private Text historyEmployeeName;
   @FXML private ListView<String> workdayHistoryList;
+  @FXML private ListView<String> chooseEmployeeListView;
   
   
   @FXML private void initialize() {
@@ -179,6 +180,15 @@ public class TimeMasterController {
       
       // Adding to employee-menu
       this.chooseEmployeeButton.getItems().add(menuItem);
+      
+      List<String> employeeList = timeMaster.getEmployees()
+          .stream()
+          .map(employee -> employee.getName())
+          .toList();
+  
+      ObservableList<String> observableWorkdayList = FXCollections.observableArrayList(employeeList);
+      chooseEmployeeListView.setItems(observableWorkdayList);
+  
     }
   }
   

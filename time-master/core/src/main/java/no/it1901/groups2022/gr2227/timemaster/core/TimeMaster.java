@@ -1,5 +1,6 @@
 package no.it1901.groups2022.gr2227.timemaster.core;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class TimeMaster {
     return new ArrayList<>(this.employees); 
   }
   
-  public void createEmployee(String name) throws IllegalArgumentException {
+  public void createEmployee(String name) throws IllegalArgumentException, IOException {
     // TODO: Validate name with Regex. Maybe split into first and sur name
     if (name.equals("")) {
       throw new IllegalArgumentException("Input required, please enter name");
@@ -46,17 +47,13 @@ public class TimeMaster {
     this.readEmployees(); //Updates the list of employees after a new employee has been added. 
   }
   
-  public void readEmployees() {
-    try {
+  public void readEmployees() throws IOException {
       this.employees = this.apiHandler.getEmployees();
-    } catch(Exception e){
-      e.printStackTrace();
-    }
   }
   
   // If the employee is clocked in the Workday will be finished with the specified timestamp.
   // Returns true if the employee is at work after successfull execution.
-  public boolean clockEmployeeInOut(LocalDate dateInput, LocalTime timeInput) throws IllegalStateException {
+  public boolean clockEmployeeInOut(LocalDate dateInput, LocalTime timeInput) throws IllegalStateException, IOException {
     if (this.chosenEmployee == null) {
       throw new IllegalStateException("No employee is selected");
     }
@@ -74,7 +71,7 @@ public class TimeMaster {
   
   // If the employee is clocked in the Workday will be finished with the specified timestamp.
   // Returns true if the employee is at work after successfull execution.
-  public boolean autoClockEmployeeInOut() throws IllegalStateException {
+  public boolean autoClockEmployeeInOut() throws IllegalStateException, IOException {
     if (this.chosenEmployee == null) {
       throw new IllegalStateException("No employee is selected");
     }

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -76,20 +75,12 @@ public class ApiHandler {
     return this.jsonParser.readWorkdays(this.getResponse(name));
   }
 
-  public void createEmployee(Employee employee) {
-    try {
-      request("employees", this.jsonParser.write(employee),"PUT");
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+  public void createEmployee(Employee employee) throws IOException{
+    request("employees", this.jsonParser.write(employee),"PUT");
   }
 
-    public void updateEmployee(Employee employee) {
-    try {
+    public void updateEmployee(Employee employee) throws IOException {
       request("employees/" + employee.getId(), this.jsonParser.write(employee),"POST");
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
   }
 
 }

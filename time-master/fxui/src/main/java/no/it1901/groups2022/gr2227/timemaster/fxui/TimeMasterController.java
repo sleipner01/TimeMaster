@@ -1,5 +1,7 @@
 package no.it1901.groups2022.gr2227.timemaster.fxui;
 
+import java.io.IOException;
+import java.net.ConnectException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import no.it1901.groups2022.gr2227.timemaster.core.Employee;
 import no.it1901.groups2022.gr2227.timemaster.core.TimeMaster;
 
@@ -37,11 +40,16 @@ public class TimeMasterController {
   @FXML private Text clockInInfo;
   
   
-  @FXML private void initialize() {
-    this.chooseDateButton.setValue(LocalDate.now());
-    this.timeMaster = new TimeMaster();
-    this.timeMaster.readEmployees();
-    this.updateEmployeeMenu();
+  @FXML private void initialize() throws ConnectException {
+    try {
+      this.chooseDateButton.setValue(LocalDate.now());
+      this.timeMaster = new TimeMaster();
+      this.timeMaster.readEmployees();
+      this.updateEmployeeMenu();
+    } catch (IOException e) {
+      displayError(e.getMessage() + ", make sure the REST API is running.");
+      throw new ConnectException();
+    }
   }
   
   

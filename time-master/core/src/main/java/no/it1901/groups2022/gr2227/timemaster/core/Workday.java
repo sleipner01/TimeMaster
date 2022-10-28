@@ -3,6 +3,7 @@ package no.it1901.groups2022.gr2227.timemaster.core;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Workday {
   
@@ -42,21 +43,31 @@ public class Workday {
   @Override
   public String toString() {
     LocalDateTime timeIn = this.getTimeIn();
+
+    // Date
     String dayOfWeek = timeIn.getDayOfWeek().toString();
     String dayOfMonth = String.valueOf(timeIn.getDayOfMonth());
     String month = timeIn.getMonth().toString();
     String year = String.valueOf(timeIn.getYear());
-    String inHour = String.valueOf(timeIn.getHour());
-    String inMinute = String.valueOf(timeIn.getMinute());
 
     String date = dayOfWeek + " " + dayOfMonth + " " + month + " " + year;
-    String stampIn = inHour + ":" + inMinute;
+    
+    // Time
+    DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+    String stampIn = timeIn.format(timeFormat);
+
     String stampOut = "";
 
     if(timeOut != null) {
-      stampOut = String.valueOf(timeOut.getHour()) + ":" + String.valueOf(timeOut.getMinute());
+      stampOut = this.getTimeOut().format(timeFormat);
     } 
 
     return String.format("%-26.26s%10s%14s%10s%14s", date, "|", stampIn, "|", stampOut);
+  }
+
+  public static void main(String[] args) {
+    Workday w = new Workday(LocalDateTime.of(1970, 1, 1, 0, 0, 0));
+    w.setTimeOut(LocalDateTime.now());
+    System.out.println(w.toString());
   }
 }

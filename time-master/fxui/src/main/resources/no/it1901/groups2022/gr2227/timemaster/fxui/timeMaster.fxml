@@ -112,15 +112,20 @@
          <content>
            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
-                     <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="14.0" prefHeight="344.0" prefWidth="372.0">
+                     <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="45.0" prefHeight="336.0" prefWidth="372.0">
                        <content>
                          <AnchorPane minHeight="344.0" minWidth="372.0">
                               <children>
-                                 <ListView fx:id="workdayHistoryList" minHeight="344.0" minWidth="372.0" />
+                                 <ListView fx:id="workdayHistoryList" minHeight="344.0" minWidth="372.0" prefWidth="372.0" />
                               </children>
                            </AnchorPane>
                        </content>
                      </ScrollPane>
+                     <Text fx:id="historyEmployeeName" layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="59.21630859375">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Text>
                   </children></AnchorPane>
          </content>
        </Tab>

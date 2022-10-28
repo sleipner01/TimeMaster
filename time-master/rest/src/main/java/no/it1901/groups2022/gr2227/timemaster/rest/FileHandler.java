@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class FileHandler {
 
@@ -17,6 +18,7 @@ public class FileHandler {
 
   public FileHandler(String name) {
     this.mapper = new ObjectMapper();
+    this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
     this.fileName = name;
     this.dir = Paths.get(System.getProperty("user.dir"), "../rest/timeMasterSaveFiles").toString();
     this.file = new File(Paths.get(this.dir.toString(), this.fileName).toString());

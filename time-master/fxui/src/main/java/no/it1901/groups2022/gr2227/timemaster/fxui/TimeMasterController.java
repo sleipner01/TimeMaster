@@ -41,6 +41,7 @@ public class TimeMasterController {
   @FXML private Circle statusIndicator;
   @FXML private Text statusText;
   @FXML private Text clockInInfo;
+  @FXML private Text historyEmployeeName;
   @FXML private ListView<String> workdayHistoryList;
   
   
@@ -119,6 +120,11 @@ public class TimeMasterController {
     setTimeRegisterButtons();
     setClockInInfoLabel();
     showWorkdayHistory();
+    setHistoryEmployeeName();
+  }
+
+  public void setHistoryEmployeeName() {
+    this.historyEmployeeName.setText(timeMaster.getChosenEmployee().getName());
   }
   
   private void setStatusIndicator() {

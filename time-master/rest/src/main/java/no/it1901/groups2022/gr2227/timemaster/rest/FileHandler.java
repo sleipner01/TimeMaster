@@ -1,7 +1,9 @@
 package no.it1901.groups2022.gr2227.timemaster.rest;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +20,14 @@ public class FileHandler {
     this.fileName = name;
     this.dir = Paths.get(System.getProperty("user.dir"), "../rest/timeMasterSaveFiles").toString();
     this.file = new File(Paths.get(this.dir.toString(), this.fileName).toString());
+    try {
+      file.createNewFile();
+      if (file.length() == 0) {
+        this.mapper.writeValue(file, new ArrayList<>());
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public JsonNode readFile() {

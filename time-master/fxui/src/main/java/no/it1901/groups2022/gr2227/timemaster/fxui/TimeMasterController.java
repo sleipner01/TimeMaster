@@ -39,11 +39,8 @@ public class TimeMasterController {
   
   @FXML private void initialize() {
     this.chooseDateButton.setValue(LocalDate.now());
-  }
-  
-  public void setupJsonParser(String fileName) {
-    this.timeMaster = new TimeMaster(fileName);
-    timeMaster.readEmployees();
+    this.timeMaster = new TimeMaster();
+    this.timeMaster.readEmployees();
     this.updateEmployeeMenu();
   }
   
@@ -138,7 +135,7 @@ public class TimeMasterController {
     ArrayList<Employee> employees = timeMaster.getEmployees();
     for (int i = 0; i < employees.size(); i++) {
       MenuItem menuItem = new MenuItem(employees.get(i).getName());
-      System.out.println(employees.get(i).getName());
+      //System.out.println(employees.get(i).getName());
       
       // ActionEvent a will not be used
       final int index = i;

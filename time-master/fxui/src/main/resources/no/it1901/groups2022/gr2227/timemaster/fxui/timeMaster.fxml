@@ -5,7 +5,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -112,20 +111,12 @@
          <content>
            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
-                     <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="45.0" prefHeight="336.0" prefWidth="372.0">
-                       <content>
-                         <AnchorPane minHeight="344.0" minWidth="372.0">
-                              <children>
-                                 <ListView fx:id="workdayHistoryList" minHeight="344.0" minWidth="372.0" prefWidth="372.0" />
-                              </children>
-                           </AnchorPane>
-                       </content>
-                     </ScrollPane>
-                     <Text fx:id="historyEmployeeName" layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="59.21630859375">
+                     <Text fx:id="historyEmployeeName" layoutX="14.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="369.21630859375" AnchorPane.topAnchor="10.0">
                         <font>
                            <Font size="20.0" />
                         </font>
                      </Text>
+                     <ListView fx:id="workdayHistoryList" editable="true" minHeight="307.0" minWidth="372.0" prefHeight="310.0" prefWidth="372.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="44.0" />
                   </children></AnchorPane>
          </content>
        </Tab>

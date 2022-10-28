@@ -3,15 +3,10 @@ package no.it1901.groups2022.gr2227.timemaster.fxui;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -37,9 +32,6 @@ public class AppTest extends ApplicationTest {
 
   private Parent root;
   private TimeMasterController controller;
-  private Path path;
-  private File file;
-  String fileName = "employeesTest.json";
   String testName = "Test";
 
   @Override
@@ -47,20 +39,8 @@ public class AppTest extends ApplicationTest {
     FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("timeMaster.fxml"));
     root = fxmlLoader.load();
     controller = fxmlLoader.getController();
-    controller.setupJsonParser("employeesTest.json");
     stage.setScene(new Scene(root));
     stage.show();
-  }
-
-  @BeforeEach
-  public void setup() {
-    path = Paths.get(System.getProperty("user.dir"), "../core/timeMasterSaveFiles");
-    file = new File(path.toString(), fileName);
-  }
-  
-  @AfterEach
-  public void cleanUp() {
-    file.delete();
   }
 
   public Parent getRootNode() {

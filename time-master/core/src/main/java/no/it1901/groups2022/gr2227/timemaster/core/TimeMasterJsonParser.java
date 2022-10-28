@@ -22,13 +22,12 @@ public class TimeMasterJsonParser {
  
 
   public String write(Object value) {
-    String out = "";
     try {
-      out = this.mapper.writeValueAsString(value);
+      return this.mapper.writeValueAsString(value);
     } catch (Exception e) {
       e.printStackTrace();
+      return null;
     }
-    return out;
   }
   
   public Employee readEmployee(String input) {
@@ -36,8 +35,8 @@ public class TimeMasterJsonParser {
       return this.mapper.readValue(input, Employee.class);
     } catch (Exception e) {
       e.printStackTrace();
+      return null;
     }
-    return null;
   }
   
   public ArrayList<Employee> readEmployees(String input) {
@@ -45,8 +44,8 @@ public class TimeMasterJsonParser {
       return this.mapper.readValue(input, new TypeReference<ArrayList<Employee>>() {});
     } catch (Exception e) {
       e.printStackTrace();
+      return null;
     }
-    return null;
   }
 
   public ArrayList<Workday> readWorkdays(String input) {
@@ -54,8 +53,8 @@ public class TimeMasterJsonParser {
       return this.mapper.readValue(input, new TypeReference<ArrayList<Workday>>() {});
     } catch (Exception e) {
       e.printStackTrace();
+      return null;
     }
-    return null;
   }
   
 }

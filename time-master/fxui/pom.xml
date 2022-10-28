@@ -105,6 +105,24 @@
 				</configuration>
 			</plugin>
 
+			<!-- Rest Api -->
+			<!-- For running locally -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>no.it1901.groups2022.gr2227.timemaster.rest.Main</mainClass>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 

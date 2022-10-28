@@ -57,6 +57,6 @@ public class Workday {
       stampOut = String.valueOf(timeOut.getHour()) + ":" + String.valueOf(timeOut.getMinute());
     } 
 
-    return date + " | " + stampIn + " | " + stampOut;
+    return String.format("%-26.26s%10s%14s%10s%14s", date, "|", stampIn, "|", stampOut);
   }
 }

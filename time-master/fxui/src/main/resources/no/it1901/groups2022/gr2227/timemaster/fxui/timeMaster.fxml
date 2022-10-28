@@ -116,7 +116,7 @@
                            <Font size="20.0" />
                         </font>
                      </Text>
-                     <ListView fx:id="workdayHistoryList" editable="true" minHeight="307.0" minWidth="372.0" prefHeight="310.0" prefWidth="372.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="44.0" />
+                     <ListView fx:id="workdayHistoryList" editable="true" minHeight="307.0" minWidth="372.0" prefHeight="310.0" prefWidth="372.0" styleClass=".list-cell {    -fx-font-family: &quot;Monospaced&quot;;    -fx-font-size: 12px;}" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="44.0" />
                   </children></AnchorPane>
          </content>
        </Tab>

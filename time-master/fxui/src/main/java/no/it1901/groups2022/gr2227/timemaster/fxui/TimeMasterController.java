@@ -38,7 +38,6 @@ public class TimeMasterController {
   @FXML private Text statusText;
   @FXML private Text clockInInfo;
   
-  
   @FXML private void initialize() throws ConnectException {
     try {
       this.chooseDateButton.setValue(LocalDate.now());
@@ -49,6 +48,21 @@ public class TimeMasterController {
       displayError(e.getMessage() + ", make sure the REST API is running.");
       throw new ConnectException();
     }
+  }
+
+  /**
+   * For testing purposes. Turning off API calls.
+   */
+  public void setApplicationInTestState() {
+    timeMaster.setApplicationInTestState();
+  }
+
+  /**
+   * For testing purposes.
+   * Resetting to Production state if needed after testing.
+   */
+  public void setApplicationInProductionState() {
+    timeMaster.setApplicationInProductionState();
   }
   
   

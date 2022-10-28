@@ -5,18 +5,39 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+
+
 public class TimeMaster {
   
   private Employee chosenEmployee;
   private ArrayList<Employee> employees;
   private ApiHandler apiHandler;
+  private State state;
   
   public TimeMaster() {
     this.employees = new ArrayList<Employee>();
     this.apiHandler = new ApiHandler();
+
+    // Default state. Will be overwritten if needed.
+    this.setApplicationInProductionState();
+  }
+
+  /**
+   * For testing purposes. Turns off API calls from TimeMaster.
+   */
+  public void setApplicationInTestState() {
+    this.state = State.TEST;
+  }
+
+  /**
+   * For testing purposes.
+   * To reset TimeMaster state to production if needed after testing.
+   */
+  public void setApplicationInProductionState() {
+    this.state = State.PRODUCTION;
   }
   
-    public LocalDate getCurrentDate() {
+  public LocalDate getCurrentDate() {
     return LocalDate.now(); 
   }
 
@@ -43,8 +64,17 @@ public class TimeMaster {
     }
     Employee employee = new Employee(name);
     this.employees.add(employee);
-    this.apiHandler.createEmployee(employee);
-    this.readEmployees(); //Updates the list of employees after a new employee has been added. 
+    
+    switch (state) {
+      case TEST:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
+        break;
+      
+      default:
+        this.apiHandler.createEmployee(employee);
+        this.readEmployees(); //Updates the list of employees after a new employee has been added. 
+        break;
+    }
   }
   
   public void readEmployees() throws IOException {
@@ -65,7 +95,17 @@ public class TimeMaster {
     } else { 
       this.getChosenEmployee().checkOut(time);
     }
-    this.apiHandler.updateEmployee(this.getChosenEmployee());
+
+    switch (state) {
+      case TEST:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
+        break;
+    
+      default:
+        this.apiHandler.updateEmployee(this.getChosenEmployee());
+        break;
+    }
+
     return this.getChosenEmployee().isAtWork();
   }
   
@@ -83,7 +123,17 @@ public class TimeMaster {
     } else { 
       this.getChosenEmployee().checkOut(time);
     }
-    this.apiHandler.updateEmployee(this.getChosenEmployee());
+
+    switch (state) {
+      case TEST:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
+        break;
+    
+      default:
+        this.apiHandler.updateEmployee(this.getChosenEmployee());
+        break;
+    }
+
     return this.getChosenEmployee().isAtWork();
   }
 }

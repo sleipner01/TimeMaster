@@ -1,5 +1,6 @@
 package no.it1901.groups2022.gr2227.timemaster.fxui;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -26,6 +27,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import org.testfx.api.FxAssert;
+import org.testfx.api.FxRobotException;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.LabeledMatchers;
 
@@ -89,19 +91,7 @@ public class AppTest extends ApplicationTest {
     clickOn("#addNewEmployeeButton");
     clickOn(LabeledMatchers.hasText("Stamp In"));
 
-    ArrayList<String> names = getEmployees();
-    assertTrue(names.contains(testName));
-  }
-
-  private ArrayList<String> getEmployees() {
-    MenuButton employeesButton = lookup("#chooseEmployeeButton").query();
-    ObservableList<MenuItem> employees = employeesButton.getItems();
-    
-    ArrayList<String> employeeNames = new ArrayList<>();
-    for (MenuItem employee : employees) {
-      employeeNames.add(employee.getText());
-    }
-    return employeeNames;
+    FxAssert.verifyThat(testName, LabeledMatchers.hasText(testName));
   }
 
   @Test
@@ -113,7 +103,6 @@ public class AppTest extends ApplicationTest {
     clickOn(LabeledMatchers.hasText("Stamp In"));
 
     clickOn("#newEmployeeName").write(testName);
-    clickOn("#chooseEmployeeButton");
     clickOn(LabeledMatchers.hasText(testName));
     clickOn("#autoRegisterTimeButton");
 

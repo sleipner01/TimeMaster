@@ -1,7 +1,7 @@
 package no.it1901.groups2022.gr2227.timemaster.rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
-
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -9,7 +9,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-
+import jakarta.ws.rs.core.Response;
 @Path("api")
 public class Rest {
 
@@ -35,15 +35,33 @@ public class Rest {
   }
 
   @Path("employees")
-  @Produces("text/plain")
   @Consumes("application/json")
   @PUT
-  public void createEmployee(String req) {
-    try {
-      fileHandler.write(fileHandler.parseString(req));;
-    } catch (Exception e) {
-      e.printStackTrace();
+  public Response createEmployee(JsonNode req) {
+      ArrayNode file = (ArrayNode) fileHandler.readFile();
+      file.add(req);
+      fileHandler.write(file);
+      return Response.status(Response.Status.CREATED).entity("Created employee with id:" + req.get("id")).build();
+  }
+
+  @Path("employees/{id}")
+  @Consumes("application/json")
+  @POST
+  public Response updateEmployee(JsonNode req, @PathParam("id") String id) {
+    ArrayNode file = (ArrayNode) fileHandler.readFile();
+    for (int i = 0; i < file.size(); i++) {
+      String employeeId = file.get(i).get("id").toString();
+      employeeId = employeeId.substring(1, employeeId.length()-1); //Dette er smålig hacky men we dont care. please fix
+      System.out.println(employeeId);
+      System.out.println(id);
+      System.out.println(employeeId.equals(id) );
+      if (employeeId.equals(id)) {
+        file.remove(i);
+        file.insert(i, req);
+        fileHandler.write(file);
+      }
     }
+    return Response.status(Response.Status.OK).entity("Updated employee with id:" + req.get("id")).build();
   }
 
   @Path("employees/{name}")

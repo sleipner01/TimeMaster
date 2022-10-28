@@ -1,7 +1,5 @@
 package no.it1901.groups2022.gr2227.timemaster.core;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -9,13 +7,12 @@ import java.util.ArrayList;
 public class TimeMaster {
   
   private Employee chosenEmployee;
-  private Path saveDirPath;
-  private TimeMasterJsonParser jsonParser;
-  private ArrayList<Employee> employees = new ArrayList<>();
+  private ArrayList<Employee> employees;
+  private ApiHandler apiHandler;
   
-  public TimeMaster(String fileName) {
-    this.saveDirPath = Paths.get(System.getProperty("user.dir"), "../core/timeMasterSaveFiles");
-    this.jsonParser = new TimeMasterJsonParser(saveDirPath, fileName);
+  public TimeMaster() {
+    this.employees = new ArrayList<Employee>();
+    this.apiHandler = new ApiHandler();
   }
   
   public LocalDate getCurrentDate() { 
@@ -43,16 +40,18 @@ public class TimeMaster {
     if (name.equals("")) {
       throw new IllegalArgumentException("Input required, please enter name");
     }
-    this.employees.add(new Employee(name));
-    this.saveEmployees();
-  }
-  
-  public void saveEmployees() {
-    this.jsonParser.write(this.employees);
+    Employee employee = new Employee(name);
+    // this.employees.add(employee);
+    this.apiHandler.createEmployee(employee);
+    this.readEmployees(); //Updates the list of employees after a new employee has been added. 
   }
   
   public void readEmployees() {
-    this.employees = this.jsonParser.read();
+    try {
+      this.employees = this.apiHandler.getEmployees();
+    } catch(Exception e){
+      e.printStackTrace();
+    }
   }
   
   // If the employee is clocked in the Workday will be finished with the specified timestamp.
@@ -69,7 +68,7 @@ public class TimeMaster {
     } else { 
       this.getChosenEmployee().checkOut(time);
     }
-    this.saveEmployees();
+    this.apiHandler.updateEmployee(this.getChosenEmployee());
     return this.getChosenEmployee().isAtWork();
   }
   
@@ -87,7 +86,7 @@ public class TimeMaster {
     } else { 
       this.getChosenEmployee().checkOut(time);
     }
-    this.saveEmployees();
+    this.apiHandler.updateEmployee(this.getChosenEmployee());
     return this.getChosenEmployee().isAtWork();
   }
 }

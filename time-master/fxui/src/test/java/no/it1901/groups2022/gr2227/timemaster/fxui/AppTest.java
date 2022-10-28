@@ -94,8 +94,6 @@ public class AppTest extends ApplicationTest {
     clickOn("#newEmployeeName").write(testName);
     clickOn("#addNewEmployeeButton");
     clickOn(LabeledMatchers.hasText("Stamp In"));
-
-    clickOn("#newEmployeeName").write(testName);
     clickOn(LabeledMatchers.hasText(testName));
     clickOn("#autoRegisterTimeButton");
 

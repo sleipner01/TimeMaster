@@ -19,13 +19,29 @@ public class Workday {
   public Workday(LocalDateTime timeIn) {
     this.timeIn = timeIn;
   }
+
+  private String formatDateTime(LocalDateTime dateTime) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy - HH:mm");
+    return dateTime.format(formatter);
+  }
   
   public LocalDateTime getTimeIn() { 
     return timeIn; 
   }
+
+  public String getTimeInAsFormattedString() {
+    return formatDateTime(this.timeIn);
+  }
   
   public LocalDateTime getTimeOut() { 
     return timeOut;
+  }
+
+  public String getTimeOutAsFormattedString() throws IllegalStateException {
+    if(!this.isTimedOut()) {
+      throw new IllegalStateException("The workday isn't timed out.");
+    }
+    return formatDateTime(this.timeOut);
   }
 
   public boolean isTimedOut() {
@@ -63,11 +79,5 @@ public class Workday {
     } 
 
     return String.format("%-26.26s%10s%14s%10s%14s", date, "|", stampIn, "|", stampOut);
-  }
-
-  public static void main(String[] args) {
-    Workday w = new Workday(LocalDateTime.of(1970, 1, 1, 0, 0, 0));
-    w.setTimeOut(LocalDateTime.now());
-    System.out.println(w.toString());
   }
 }

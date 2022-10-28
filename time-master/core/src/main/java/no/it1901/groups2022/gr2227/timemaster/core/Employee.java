@@ -87,7 +87,7 @@ public class Employee {
   public String getLatestClockIn() {
     ArrayList<Workday> workdays = this.getWorkdays();
     Workday latest = workdays.get(workdays.size() - 1);
-    return latest.getTimeIn().toString();
+    return latest.getTimeInAsFormattedString();
   }
   
   public Workday getDate(LocalDateTime dateTime) {

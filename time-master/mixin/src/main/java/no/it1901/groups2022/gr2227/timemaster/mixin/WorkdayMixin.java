@@ -4,4 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public abstract class WorkdayMixin {
   @JsonIgnore abstract boolean isTimedOut(); 
+  @JsonIgnore abstract String getTimeInAsFormattedString();
+  @JsonIgnore abstract String getTimeOutAsFormattedString();
 }

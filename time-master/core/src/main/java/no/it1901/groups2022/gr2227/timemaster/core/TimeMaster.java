@@ -15,7 +15,7 @@ public class TimeMaster {
     this.apiHandler = new ApiHandler();
   }
   
-  public LocalDate getCurrentDate() { 
+    public LocalDate getCurrentDate() {
     return LocalDate.now(); 
   }
 
@@ -41,7 +41,7 @@ public class TimeMaster {
       throw new IllegalArgumentException("Input required, please enter name");
     }
     Employee employee = new Employee(name);
-    // this.employees.add(employee);
+    this.employees.add(employee);
     this.apiHandler.createEmployee(employee);
     this.readEmployees(); //Updates the list of employees after a new employee has been added. 
   }

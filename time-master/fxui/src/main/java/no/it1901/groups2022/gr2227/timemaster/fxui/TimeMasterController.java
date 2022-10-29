@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,8 +12,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -56,8 +60,8 @@ public class TimeMasterController {
         .addListener((ObservableValue<? extends String> ov, String old_val, String new_val) -> {
           String selectedItem = workdayHistoryList.getSelectionModel().getSelectedItem();
           int index = workdayHistoryList.getSelectionModel().getSelectedIndex();
-
           System.out.println("Item selected : " + selectedItem + ", Item index : " + index);
+          openWorkdayEditInterface(index);
         });
 
     observableWorkdayList = FXCollections.observableArrayList();
@@ -246,5 +250,77 @@ public class TimeMasterController {
   private void emptyWorkdayHistory() {
     workdayHistoryList.setItems(null);
   }
+
+  private boolean confirmationDialog(String body) {
+    ButtonType confirmButtonType = new ButtonType("Confirm", ButtonData.OK_DONE);
+    ButtonType cancelButtonType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+    Dialog<ButtonType> dialog = new Dialog<>();
+    dialog.setTitle("Confirmation");
+    dialog.setContentText(body);
+    dialog.getDialogPane().getButtonTypes().add(confirmButtonType);
+    dialog.getDialogPane().getButtonTypes().add(cancelButtonType);
+    
+    Optional<ButtonType> result = dialog.showAndWait();
+    System.out.println(result.get());
+    if (result.isPresent()) {
+        switch (result.get().getButtonData()) {
+          case OK_DONE:
+            System.out.println("Confirmed");
+            return true;        
+          case CANCEL_CLOSE:
+            System.out.println("Cancelled");
+            return false;
+          default:
+            displayError("The window wasn't closed properly...");
+            return false;
+        }
+    } else {
+      return false;
+    }
+  }
+
+  private void openWorkdayEditInterface(int index) {
+    ButtonType okButtonType = new ButtonType("Ok", ButtonData.OK_DONE);
+    ButtonType cancelButtonType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+    Dialog<ButtonType> dialog = new Dialog<>();
+    dialog.setTitle("Edit Workday");
+    dialog.setContentText("Change workday values...");
+    dialog.getDialogPane().getButtonTypes().add(okButtonType);
+    dialog.getDialogPane().getButtonTypes().add(cancelButtonType);
+    
+    try {
+      Optional<ButtonType> choice = dialog.showAndWait();
+      if (choice.isPresent()) {
+        switch (choice.get().getButtonData()) {
+          case OK_DONE:
+            boolean result = confirmationDialog("Are you sure you want to change the workday to these values?");
+            if(result) {
+              saveWorkdayEditChoices(LocalDateTime.now(), LocalDateTime.now());
+            }
+            else {
+              openWorkdayEditInterface(index);
+            }
+            break;
+        
+          case CANCEL_CLOSE:
+            System.out.println("Workday editing cancelled");
+            break;
+          default:
+            System.out.println("The window wasn't closed properly");
+            break;
+        }
+    }
+    } catch (Exception e) {
+      e.printStackTrace();
+      displayError(e.getMessage());
+    }
+  }
+
+  private void saveWorkdayEditChoices(LocalDateTime timeIn, LocalDateTime timeOut) {
+    System.out.println(timeIn + " " + timeOut);
+  }
+    
 
 }

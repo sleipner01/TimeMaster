@@ -3,10 +3,14 @@ package no.it1901.groups2022.gr2227.timemaster.fxui;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -33,6 +37,7 @@ public class AppTest extends ApplicationTest {
   private Parent root;
   private TimeMasterController controller;
   String testName = "Test";
+  File file;
 
   @Override
   public void start(Stage stage) throws IOException {
@@ -42,6 +47,21 @@ public class AppTest extends ApplicationTest {
     controller.setApplicationInTestState();
     stage.setScene(new Scene(root));
     stage.show();
+  }
+
+  @BeforeEach
+  public void init() {
+    file = new File(Paths.get(System.getProperty("user.dir"), "../rest/timeMasterSaveFiles").toString(), "employeesTest.json");
+    try {
+      file.createNewFile();
+    } catch (Exception e) {
+
+    }
+  }
+
+  @AfterEach
+  public void cleanUp() {
+    file.delete();
   }
 
   public Parent getRootNode() {

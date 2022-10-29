@@ -157,7 +157,7 @@
           </execution>
         </executions>
         <configuration>
-          <mainClass>no.it1901.groups2022.gr2227.timemaster.rest.Main</mainClass>
+          <mainClass>no.it1901.groups2022.gr2227.timemaster.rest.Server</mainClass>
         </configuration>
       </plugin>
 

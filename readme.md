@@ -30,12 +30,12 @@ The project is set up for Gitpod.
 1. In the terminal, excute: `git clone https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2227/gr2227.git`
 2. Open the folder as a mven project in your preffered IDE.
 3. Navigate to the ```rest```-directory with: `cd time-master/rest`
-5. Execute ```mvn exec:java``` to run a local server.
-6. Open a new terminal.
-7. Navigate to the ```time-master```-directory with: `cd time-master`
-8. Execute ```mvn clean install```
-9. Navigate to ```fxui```-directory with: `cd fxui`
-10. Run the application with: `mvn clean javafx:run`
+4. Execute ```mvn exec:java``` to run a local server.
+5. Open a new terminal.
+6. Navigate to the ```time-master```-directory with: `cd time-master`
+7. Execute ```mvn clean install```
+8. Navigate to ```fxui```-directory with: `cd fxui`
+9. Run the application with: `mvn clean javafx:run`
 
 <hr>
 
@@ -46,6 +46,8 @@ The application is built to support and run with `javafx:run`. See [developer in
 ### Testing
 
 The test can be run with `mvn test` from the `time-master`-directory. This will generate a report with testcoverage. The report is stored as an index.html file at [`time-master/coverage/target/site/jacoco-aggregate/index.html`](time-master/coverage/target/site/jacoco-aggregate/), and can be opened in the browser.
+
+NOTE: The server must run for this to work. Follow instructions 3 and 4 in [developer installation](./readme.md#developer-installation) to start the server.
 
 ### Code Quality
 

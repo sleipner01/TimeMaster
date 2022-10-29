@@ -304,7 +304,7 @@ public class TimeMasterController {
 
   private void openWorkdayEditInterface(int index) {
 
-
+    // TODO: Clean code. Split into methods. Functions useful in other parts of the controller should be implemented
 
     ButtonType okButtonType = new ButtonType("Ok", ButtonData.OK_DONE);
     ButtonType cancelButtonType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);

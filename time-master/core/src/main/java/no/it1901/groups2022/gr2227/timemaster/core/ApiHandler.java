@@ -56,13 +56,6 @@ public class ApiHandler {
     }
   }
 
-  public void postRequest(String path, String req) throws IOException {
-    HttpURLConnection connection = setConnection(path, "POST");
-    connection.setDoOutput(true);
-    connection.setRequestProperty("Content-Type", "application/json");
-
-  }
-
   public Employee getEmployee(String name) throws IOException {
     return this.jsonParser.readEmployee(this.getResponse(name));
   }

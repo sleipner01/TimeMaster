@@ -12,16 +12,15 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class FileHandler {
 
   final ObjectMapper mapper;
-  final String fileName;
   final String dir;
-  final File file;
+  String fileName;
 
   public FileHandler(String name) {
     this.mapper = new ObjectMapper();
     this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
     this.fileName = name;
     this.dir = Paths.get(System.getProperty("user.dir"), "../rest/timeMasterSaveFiles").toString();
-    this.file = new File(Paths.get(this.dir.toString(), this.fileName).toString());
+    File file = new File(Paths.get(this.dir.toString(), this.fileName).toString());
     try {
       file.createNewFile();
       if (file.length() == 0) {
@@ -34,7 +33,7 @@ public class FileHandler {
 
   public JsonNode readFile() {
     try {
-      return this.mapper.readTree(this.file);
+      return this.mapper.readTree(new File(Paths.get(this.dir.toString(), this.fileName).toString()));
     } catch (Exception e) {
       e.printStackTrace();
       return null;
@@ -52,7 +51,7 @@ public class FileHandler {
 
   public void write(Object val) {
     try {
-      this.mapper.writeValue(file, val);
+      this.mapper.writeValue(new File(Paths.get(this.dir.toString(), this.fileName).toString()), val);
     } catch (Exception e) {
       e.printStackTrace();
     }

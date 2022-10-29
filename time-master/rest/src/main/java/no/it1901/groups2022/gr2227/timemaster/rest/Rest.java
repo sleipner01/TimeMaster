@@ -1,5 +1,8 @@
 package no.it1901.groups2022.gr2227.timemaster.rest;
 
+import java.io.File;
+import java.nio.file.Paths;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import jakarta.ws.rs.Consumes;
@@ -10,10 +13,19 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 @Path("api")
 public class Rest {
 
-  FileHandler fileHandler = new FileHandler("employees.json");
+  FileHandler fileHandler;
+
+  public Rest() {
+    if (new File(Paths.get(System.getProperty("user.dir"), "../rest/timeMasterSaveFiles").toString(), "employeesTest.json").exists()) {
+      fileHandler = new FileHandler("employeesTest.json");
+    } else {
+      fileHandler = new FileHandler("employees.json");
+    }
+  }
 
   @Path("test")
   @GET
@@ -56,9 +68,10 @@ public class Rest {
         file.remove(i);
         file.insert(i, req);
         fileHandler.write(file);
+        return Response.status(Status.OK).entity("Updated employee with id:" + req.get("id")).build();
       }
     }
-    return Response.status(Response.Status.OK).entity("Updated employee with id:" + req.get("id")).build();
+    return Response.status(Status.NOT_FOUND).entity(Status.NOT_FOUND.getReasonPhrase()).build();
   }
 
   @Path("employees/{name}")

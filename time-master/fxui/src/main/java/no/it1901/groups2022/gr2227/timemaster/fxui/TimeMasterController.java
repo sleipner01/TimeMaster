@@ -256,14 +256,9 @@ public class TimeMasterController {
   }
 
   private boolean confirmationDialog(String body) {
-    ButtonType confirmButtonType = new ButtonType("Confirm", ButtonData.OK_DONE);
-    ButtonType cancelButtonType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
-    Dialog<ButtonType> dialog = new Dialog<>();
-    dialog.setTitle("Confirmation");
+    Alert dialog = new Alert(AlertType.CONFIRMATION);
     dialog.setContentText(body);
-    dialog.getDialogPane().getButtonTypes().add(confirmButtonType);
-    dialog.getDialogPane().getButtonTypes().add(cancelButtonType);
     
     Optional<ButtonType> result = dialog.showAndWait();
     System.out.println(result.get());
@@ -282,6 +277,12 @@ public class TimeMasterController {
     } else {
       return false;
     }
+  }
+
+  private void warningDialog(String body) {
+    Alert dialog = new Alert(AlertType.WARNING);
+    dialog.setContentText(body);
+    dialog.showAndWait();
   }
 
   private void limitTextFieldToTwoNumbers(TextField field) {
@@ -327,30 +328,39 @@ public class TimeMasterController {
     TextField timeOutMinute = new TextField();
     limitTextFieldToTwoNumbers(timeOutMinute);
     timeOutMinute.setPromptText("Min: 0-59");
-    dialog.getDialogPane().setContent(new VBox(8, labelIn, dateIn, timeInHour, timeInMinute, labelOut, dateOut, timeOutHour, timeOutMinute));
-    // dialog.setResultConverter((ButtonType button) -> {
-    //     if (button == ButtonType.OK) {
-    //         return new Results(textField.getText(),
-    //             datePicker.getValue(), comboBox.getValue());
-    //     }
-    //     return null;
-    // });
-    // Optional<Results> optionalResult = dialog.showAndWait();
-    // optionalResult.ifPresent((Results results) -> {
-    //     System.out.println(
-    //         results.text + " " + results.date + " " + results.venue);
-    // });
-
+    dialog.getDialogPane().setContent(new VBox(8, labelIn, dateIn, timeInHour, timeInMinute, 
+                                                           labelOut, dateOut, timeOutHour, timeOutMinute));
     
     try {
       Optional<ButtonType> choice = dialog.showAndWait();
       if (choice.isPresent()) {
         switch (choice.get().getButtonData()) {
+
           case OK_DONE:
             boolean result = confirmationDialog("Are you sure you want to change the workday to these values?");
             if(result) {
-              validateWorkdayEditInputs();
-              saveWorkdayEditChoices(LocalDateTime.now(), LocalDateTime.now());
+              if (!isValidMinuteInput(1)) {
+                warningDialog("is not a valid input");
+                openWorkdayEditInterface(index);
+              }
+              if (!isValidHourInput(1)) {
+                openWorkdayEditInterface(index);
+              }
+
+              // DateTime in
+              LocalDate date = dateIn.getValue();
+              LocalTime time = LocalTime.of(Integer.parseInt(timeInHour.getText()),
+                               Integer.parseInt(timeInMinute.getText()));
+              LocalDateTime dateTimeIn = LocalDateTime.of(date, time);
+
+              // DateTime out
+              LocalDate date2 = dateOut.getValue();
+              LocalTime time2 = LocalTime.of(Integer.parseInt(timeOutHour.getText()),
+                               Integer.parseInt(timeOutMinute.getText()));
+              LocalDateTime dateTimeOut = LocalDateTime.of(date2, time2);
+
+              saveWorkdayEditChoices(dateTimeIn, dateTimeOut);
+
             } else {
               openWorkdayEditInterface(index);
             }
@@ -359,6 +369,7 @@ public class TimeMasterController {
           case CANCEL_CLOSE:
             System.out.println("Workday editing cancelled");
             break;
+
           default:
             System.out.println("The window wasn't closed properly");
             break;
@@ -370,8 +381,14 @@ public class TimeMasterController {
     }
   }
 
-  private void validateWorkdayEditInputs() {
+  private boolean isValidHourInput(int input) {
+    // TODO: validate
+    return true;
+  }
 
+  private boolean isValidMinuteInput(int input) {
+    // TODO: validate
+    return true;
   }
 
   private void saveWorkdayEditChoices(LocalDateTime timeIn, LocalDateTime timeOut) {

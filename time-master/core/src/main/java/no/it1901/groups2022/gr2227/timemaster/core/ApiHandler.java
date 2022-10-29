@@ -76,11 +76,11 @@ public class ApiHandler {
   }
 
   public void createEmployee(Employee employee) throws IOException{
-    request("employees", this.jsonParser.write(employee),"PUT");
+    request("employees", this.jsonParser.write(employee),"POST");
   }
 
     public void updateEmployee(Employee employee) throws IOException {
-      request("employees/" + employee.getId(), this.jsonParser.write(employee),"POST");
+      request("employees/" + employee.getId(), this.jsonParser.write(employee),"PUT");
   }
 
 }

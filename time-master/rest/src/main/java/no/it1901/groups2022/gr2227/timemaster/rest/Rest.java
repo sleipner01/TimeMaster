@@ -36,7 +36,7 @@ public class Rest {
 
   @Path("employees")
   @Consumes("application/json")
-  @PUT
+  @POST
   public Response createEmployee(JsonNode req) {
       ArrayNode file = (ArrayNode) fileHandler.readFile();
       file.add(req);
@@ -46,7 +46,7 @@ public class Rest {
 
   @Path("employees/{id}")
   @Consumes("application/json")
-  @POST
+  @PUT
   public Response updateEmployee(JsonNode req, @PathParam("id") String id) {
     ArrayNode file = (ArrayNode) fileHandler.readFile();
     for (int i = 0; i < file.size(); i++) {

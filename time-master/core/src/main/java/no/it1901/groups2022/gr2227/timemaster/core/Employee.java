@@ -98,11 +98,5 @@ public class Employee {
   public String toString() {
     return this.id + "," + this.getName();
   }
-
-  public static void main(String[] args) {
-    Employee e = new Employee("Magnus");
-    e.checkIn(LocalDateTime.now());
-    System.out.println(e.getLatestClockIn());
-  }
   
 }

@@ -71,7 +71,7 @@ public class Workday {
     String date = dayOfWeek + " " + dayOfMonth + " " + month + " " + year;
     
     // Time
-    DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+    DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault());
     String stampIn = timeIn.format(timeFormat);
 
     String stampOut = "";

@@ -29,10 +29,13 @@ The project is set up for Gitpod.
 
 1. In the terminal, excute: `git clone https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2227/gr2227.git`
 2. Open the folder as a mven project in your preffered IDE.
-3. Navigate to the ```time-master```-directory with: `cd time-master`
-4. Execute ```mvn clean install```
-5. Navigate to ```fxui```-directory with: `cd fxui`
-6. Run the application with: `mvn clean javafx:run`
+3. Navigate to the ```rest```-directory with: `cd time-master/rest`
+5. Execute ```mvn exec:java``` to run a local server.
+6. Open a new terminal.
+7. Navigate to the ```time-master```-directory with: `cd time-master`
+8. Execute ```mvn clean install```
+9. Navigate to ```fxui```-directory with: `cd fxui`
+10. Run the application with: `mvn clean javafx:run`
 
 <hr>
 

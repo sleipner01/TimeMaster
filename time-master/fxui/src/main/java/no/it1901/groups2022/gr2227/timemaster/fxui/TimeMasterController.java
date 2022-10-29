@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -52,6 +54,8 @@ public class TimeMasterController {
     this.chooseDateButton.setValue(LocalDate.now());
     workDayHistoryListenerSetup();
     chooseEmployeeListenerSetup();
+    limitTextFieldToTwoNumbers(inputHour);
+    limitTextFieldToTwoNumbers(inputMinutes);
   }
 
   private void workDayHistoryListenerSetup() {
@@ -280,15 +284,63 @@ public class TimeMasterController {
     }
   }
 
+  private void limitTextFieldToTwoNumbers(TextField field) {
+    int maxLength = 2;
+    field.textProperty().addListener(new ChangeListener<String>() {
+      @Override
+      public void changed(ObservableValue<? extends String> observable, String oldValue, 
+          String newValue) {
+          if (!newValue.matches("\\d*")) {
+              field.setText(newValue.replaceAll("[^\\d]", ""));
+          }
+          if (field.getText().length() > maxLength) {
+            String s = field.getText().substring(0, maxLength);
+            field.setText(s);
+        }
+      }
+    });
+  }
+
   private void openWorkdayEditInterface(int index) {
     ButtonType okButtonType = new ButtonType("Ok", ButtonData.OK_DONE);
     ButtonType cancelButtonType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
     Dialog<ButtonType> dialog = new Dialog<>();
     dialog.setTitle("Edit Workday");
-    dialog.setContentText("Change workday values...");
-    dialog.getDialogPane().getButtonTypes().add(okButtonType);
-    dialog.getDialogPane().getButtonTypes().add(cancelButtonType);
+    dialog.setHeaderText("Change workday values...");
+    dialog.getDialogPane().getButtonTypes().addAll(okButtonType, cancelButtonType);
+
+    Label labelIn = new Label("Time in");
+    DatePicker dateIn = new DatePicker(LocalDate.now());
+    TextField timeInHour = new TextField();
+    limitTextFieldToTwoNumbers(timeInHour);
+    timeInHour.setPromptText("Hour: 0-23");
+    TextField timeInMinute = new TextField();
+    limitTextFieldToTwoNumbers(timeInMinute);
+    timeInMinute.setPromptText("Min: 0-59");
+
+    Label labelOut = new Label("Time Out");
+    DatePicker dateOut = new DatePicker(LocalDate.now());
+    TextField timeOutHour = new TextField();
+    limitTextFieldToTwoNumbers(timeOutHour);
+    timeOutHour.setPromptText("Hour: 0-23");
+    TextField timeOutMinute = new TextField();
+    limitTextFieldToTwoNumbers(timeOutMinute);
+    timeOutMinute.setPromptText("Min: 0-59");
+    dialog.getDialogPane().setContent(new VBox(8, labelIn, dateIn, timeInHour, timeInMinute, labelOut, dateOut, timeOutHour, timeOutMinute));
+    // dialog.setResultConverter((ButtonType button) -> {
+    //     if (button == ButtonType.OK) {
+    //         return new Results(textField.getText(),
+    //             datePicker.getValue(), comboBox.getValue());
+    //     }
+    //     return null;
+    // });
+    // Optional<Results> optionalResult = dialog.showAndWait();
+    // optionalResult.ifPresent((Results results) -> {
+    //     System.out.println(
+    //         results.text + " " + results.date + " " + results.venue);
+    // });
+
     
     try {
       Optional<ButtonType> choice = dialog.showAndWait();
@@ -297,9 +349,9 @@ public class TimeMasterController {
           case OK_DONE:
             boolean result = confirmationDialog("Are you sure you want to change the workday to these values?");
             if(result) {
+              validateWorkdayEditInputs();
               saveWorkdayEditChoices(LocalDateTime.now(), LocalDateTime.now());
-            }
-            else {
+            } else {
               openWorkdayEditInterface(index);
             }
             break;
@@ -316,6 +368,10 @@ public class TimeMasterController {
       e.printStackTrace();
       displayError(e.getMessage());
     }
+  }
+
+  private void validateWorkdayEditInputs() {
+
   }
 
   private void saveWorkdayEditChoices(LocalDateTime timeIn, LocalDateTime timeOut) {

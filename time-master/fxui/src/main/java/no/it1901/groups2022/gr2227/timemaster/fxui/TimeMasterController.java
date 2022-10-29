@@ -303,6 +303,9 @@ public class TimeMasterController {
   }
 
   private void openWorkdayEditInterface(int index) {
+
+
+
     ButtonType okButtonType = new ButtonType("Ok", ButtonData.OK_DONE);
     ButtonType cancelButtonType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
@@ -331,6 +334,20 @@ public class TimeMasterController {
     dialog.getDialogPane().setContent(new VBox(8, labelIn, dateIn, timeInHour, timeInMinute, 
                                                            labelOut, dateOut, timeOutHour, timeOutMinute));
     
+    // AutoFill
+    LocalDateTime editingWorkdayTimeIn = timeMaster.getChosenEmployee().getWorkdays().get(index).getTimeIn();
+    dateIn.setValue(LocalDate.of(editingWorkdayTimeIn.getYear(), editingWorkdayTimeIn.getMonth(), editingWorkdayTimeIn.getDayOfMonth()));
+    timeInHour.setText(String.valueOf(editingWorkdayTimeIn.getHour()));
+    timeInMinute.setText(String.valueOf(editingWorkdayTimeIn.getMinute()));
+    
+    if(timeMaster.getChosenEmployee().getWorkdays().get(index).isTimedOut()) {
+      LocalDateTime editingWorkdayTimeOut = timeMaster.getChosenEmployee().getWorkdays().get(index).getTimeOut();
+      dateOut.setValue(LocalDate.of(editingWorkdayTimeOut.getYear(), editingWorkdayTimeOut.getMonth(), editingWorkdayTimeOut.getDayOfMonth()));
+      timeOutHour.setText(String.valueOf(editingWorkdayTimeOut.getHour()));
+      timeOutMinute.setText(String.valueOf(editingWorkdayTimeOut.getMinute()));
+    }
+
+
     try {
       Optional<ButtonType> choice = dialog.showAndWait();
       if (choice.isPresent()) {

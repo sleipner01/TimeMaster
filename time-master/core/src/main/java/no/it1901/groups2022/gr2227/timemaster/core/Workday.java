@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Workday {
   
@@ -21,7 +22,8 @@ public class Workday {
   }
 
   private String formatDateTime(LocalDateTime dateTime) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy - HH:mm");
+    // Using Locale.getDefault to create a predictable result. Different regions uses different standards
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E. MMM dd yyyy - HH:mm", Locale.getDefault());
     return dateTime.format(formatter);
   }
   

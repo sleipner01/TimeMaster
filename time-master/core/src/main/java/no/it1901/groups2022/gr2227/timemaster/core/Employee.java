@@ -9,7 +9,6 @@ public class Employee {
   private String id;
   private String name;
   private ArrayList<Workday> workdays = new ArrayList<>();
-  private boolean atWork;
   
   public Employee() {}
   
@@ -27,27 +26,106 @@ public class Employee {
   private String generateId() { 
     return UUID.randomUUID().toString(); 
   }
-  
-  private Boolean isWorkdayValid(Workday workday) {
-    return !this.workdays.contains(workday);
+
+  private void validateCheckInTimestamp(LocalDateTime input) throws IllegalArgumentException {
+    this.sortWorkdaysAscending();
+
+    for (int i = this.workdays.size() - 1; i >= 0; i--) {
+      Workday tempWorkday = workdays.get(i);
+
+      // If the last workday isn't checked out - Error
+      if (i == workdays.size() && !tempWorkday.isTimedOut()) {
+        throw new IllegalArgumentException(
+            "Your last workday isn't clocked out yet...\n" + 
+            "Workday: " + tempWorkday.toString()
+            );
+      }
+
+      // If the timestamp is newer than the last ended workday - true
+      if (i == workdays.size() - 1 && tempWorkday.isTimedOut()) {
+        if (input.isAfter(tempWorkday.getTimeOut())) {
+          return;
+        }
+      }
+      
+      // If the timestamp is in the middle of another workday - error
+      if (input.isAfter(tempWorkday.getTimeIn()) && input.isBefore(tempWorkday.getTimeOut())) {
+        throw new IllegalArgumentException(
+          "** Input was in between workday **\n" + 
+          "Check in: " + tempWorkday.getTimeIn().toString() + "\n" +
+          "Check out: " + tempWorkday.getTimeOut().toString()
+        );
+      }
+
+      // If input is before the first workday checkin - true
+      if (i == 0 && tempWorkday.getTimeIn().isAfter(input)) {
+        return;
+      }
+
+      // As long as we are not checking the last workday
+      if (0 < i) {
+        // If input is in between tempWorkday and the one before
+        if (this.workdays.get(i - 1).getTimeOut().isBefore(input) && input.isBefore(tempWorkday.getTimeIn())) {
+          return;
+        }
+      }
+
+    }
+  }
+
+  private void validateCheckOutTimestamp(LocalDateTime input) throws IllegalArgumentException {
+
+    for (int i = this.workdays.size() - 1; i >= 0; i--) {
+      Workday tempWorkday = workdays.get(i);
+
+      // If the last workday isn't checked out - Error
+      if (i == workdays.size() && !tempWorkday.isTimedOut()) {
+        throw new IllegalArgumentException(
+            "Your last workday isn't clocked out yet...\n" + 
+            "Workday: " + tempWorkday.toString()
+            );
+      }
+
+      // If the timestamp is newer than the last ended workday - true
+      if (i == workdays.size() - 1 && tempWorkday.isTimedOut()) {
+        if (input.isAfter(tempWorkday.getTimeOut())) {
+          return;
+        }
+      }
+      
+      // If the timestamp is in the middle of another workday - error
+      if (input.isAfter(tempWorkday.getTimeIn()) && input.isBefore(tempWorkday.getTimeOut())) {
+        throw new IllegalArgumentException(
+          "** Input was in between workday **\n" + 
+          "Check in: " + tempWorkday.getTimeIn().toString() + "\n" +
+          "Check out: " + tempWorkday.getTimeOut().toString()
+        );
+      }
+
+      // If input is before the first workday checkin - true
+      if (i == 0 && tempWorkday.getTimeIn().isAfter(input)) {
+        return;
+      }
+
+      // As long as we are not checking the last workday
+      if (0 < i) {
+        // If input is in between tempWorkday and the one before
+        if (this.workdays.get(i - 1).getTimeOut().isBefore(input) && input.isBefore(tempWorkday.getTimeIn())) {
+          return;
+        }
+      }
+
+    }
   }
   
-  private boolean isValidWorkday(LocalDateTime dateTimeInput) {
-    // TODO: Check if any other workday in the close timespan conflicts with this timestamp.
-    
-    return true;
-  }
-  
-  public void checkIn(LocalDateTime dateTimeInput) {
+  public void checkIn(LocalDateTime dateTimeInput) throws IllegalStateException, IllegalArgumentException {
     if (isAtWork()) { 
       throw new IllegalStateException(this.toString() + " is already at work!");
     }
-    if (!isValidWorkday(dateTimeInput)) {
-      throw new IllegalArgumentException("This timestamp comes in conflict with another workday");
-    }
-    //TODO: validate Input
-    this.workdays.add(new Workday(dateTimeInput));
-    this.atWork = true;
+
+    validateCheckInTimestamp(dateTimeInput);
+
+    this.addWorkday(new Workday(dateTimeInput));
     System.out.println(this.toString() + " checked in at: " + dateTimeInput);
   }
   
@@ -57,7 +135,6 @@ public class Employee {
     }
     //TODO: Validate input
     this.workdays.get(workdays.size() - 1).setTimeOut(dateTimeInput);
-    this.atWork = false;
     System.out.println(this.toString() + " checked out at: " + dateTimeInput);
   }
   
@@ -68,16 +145,21 @@ public class Employee {
   public String getName() { 
     return this.name; 
   }
+
+  private Workday getLatestWorkday() {
+    return this.workdays.get(this.workdays.size()-1);
+  }
   
   public boolean isAtWork() { 
-    return this.atWork; 
+    return !this.getLatestWorkday().isTimedOut();
   }
   
   public void addWorkday(Workday workday) {
-    if (!this.isWorkdayValid(workday)) { 
+    if (this.workdays.contains(workday)) { 
       throw new IllegalArgumentException("Workday is already added.");
     }
     this.workdays.add(workday);
+    this.sortWorkdaysAscending();
   }
   
   public ArrayList<Workday> getWorkdays() {
@@ -85,13 +167,12 @@ public class Employee {
   }
   
   public String getLatestClockIn() {
-    ArrayList<Workday> workdays = this.getWorkdays();
     Workday latest = workdays.get(workdays.size() - 1);
     return latest.getTimeInAsFormattedString();
   }
-  
-  public Workday getDate(LocalDateTime dateTime) {
-    return this.workdays.stream().filter(e -> e.getTimeIn().equals(dateTime)).findAny().get();
+
+  private void sortWorkdaysAscending() {
+    this.workdays.sort((a, b) -> { return a.getTimeIn().compareTo(b.getTimeIn()); });
   }
   
   @Override

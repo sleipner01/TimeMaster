@@ -68,7 +68,7 @@ public class EmployeeTest {
 	public void getTimeInTest() {
 		employee1.checkIn(dateTime1);
 		assertEquals(dateTime1.toString(), 
-		employee1.getDate(dateTime1).getTimeIn().toString());
+		employee1.getWorkdays().get(0).getTimeIn().toString());
 	}
 	
 	@Test

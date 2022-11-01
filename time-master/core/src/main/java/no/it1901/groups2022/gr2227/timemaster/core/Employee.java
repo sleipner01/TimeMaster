@@ -147,10 +147,14 @@ public class Employee {
   }
 
   private Workday getLatestWorkday() {
+    if (this.workdays.size() < 1) {
+      return null;
+    }
     return this.workdays.get(this.workdays.size()-1);
   }
   
   public boolean isAtWork() { 
+    if(this.workdays.size() < 1) return false;
     return !this.getLatestWorkday().isTimedOut();
   }
   

@@ -59,9 +59,9 @@ public class RestTest extends JerseyTest {
   }
   
   @Test
-  public void getEmployeeByNameTest() {
+  public void getEmployeeByIdTest() {
     target("api/employees").request().post(Entity.json(employeeJson));
-    String res = target("api/employees/anne").request().get(String.class);
+    String res = target("api/employees/0").request().get(String.class);
     assertEquals(employeeJson, res);
   }
 

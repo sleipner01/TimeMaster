@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -37,13 +38,7 @@ public class Rest {
   @Produces("application/json")
   @GET
   public JsonNode getEmployees() {
-    try {
       return fileHandler.readFile();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-    return null;
   }
 
   @Path("employees")
@@ -62,9 +57,7 @@ public class Rest {
   public Response updateEmployee(JsonNode req, @PathParam("id") String id) {
     ArrayNode file = (ArrayNode) fileHandler.readFile();
     for (int i = 0; i < file.size(); i++) {
-      String employeeId = file.get(i).get("id").toString();
-      employeeId = employeeId.substring(1, employeeId.length()-1); //Dette er smålig hacky men we dont care. please fix
-      if (employeeId.equals(id)) {
+      if (file.get(i).get("id").textValue().equals(id)) {
         file.remove(i);
         file.insert(i, req);
         fileHandler.write(file);
@@ -78,16 +71,28 @@ public class Rest {
   @Produces("application/json")
   @GET
   public JsonNode getEmployeeByName(@PathParam("name") String name) {
-    try {
       for (JsonNode node : fileHandler.readFile()) {
         if (node.get("name").textValue().toLowerCase().equals(name.toLowerCase())) {
           return node;
         }
       }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
     return null;
   }
-  
-}
+
+  @Path("employees/{id}")
+  @Consumes("application/json")
+  @DELETE
+  public Response deleteEmployee(@PathParam("id") String id) {
+    ArrayNode file = (ArrayNode)fileHandler.readFile();
+    for (int i = 0; i < file.size(); i++) {
+      System.out.println(file.get(i).get("id").textValue());
+      System.out.println(id);
+      if (file.get(i).get("id").textValue().equals(id)) {
+        file.remove(i);
+        fileHandler.write(file);
+        return Response.status(Status.OK).entity("Deleted employee with id:" + id).build();
+      }
+    }
+    return Response.status(Status.NOT_FOUND).entity(Status.NOT_FOUND.getReasonPhrase()).build();
+    }
+  }

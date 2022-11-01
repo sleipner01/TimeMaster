@@ -2,6 +2,8 @@ package no.it1901.groups2022.gr2227.timemaster.rest;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -12,6 +14,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 @Path("api")
@@ -89,5 +92,16 @@ public class Rest {
     }
     return null;
   }
-  
+
+  @Path("/status")
+  @Produces({ MediaType.TEXT_PLAIN })
+  @GET
+  public Response systemStatus() {
+    return Response.status(Response.Status.OK)
+      .entity("** System running **\n" +
+      "Status code: " + Response.Status.OK + "\n" +
+      "DateTime: " + LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "\n" +
+      "Ready for requests...")
+      .build();
+  }
 }

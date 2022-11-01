@@ -76,4 +76,48 @@ public class ApiHandler {
       request("employees/" + employee.getId(), this.jsonParser.write(employee),"PUT");
   }
 
+  /**
+   * Check server status. 
+   *
+   * @return  <code>true</code> if server is running and responding.
+   *          <code>false</code> if the server is off or isn't responding properly.
+   */
+  public boolean checkServerStatus() {
+    try {
+      HttpURLConnection connection = setConnection("status", "GET");
+      int responseCode = connection.getResponseCode();
+      if(200 <= responseCode && responseCode < 300) {
+        System.out.println("********************" + "\n");
+        String response = "";
+          Scanner scanner = new Scanner(connection.getInputStream());
+          while (scanner.hasNextLine()) {
+            response += scanner.nextLine();
+            response += "\n";
+          }
+          scanner.close();
+        
+          System.out.println(response);
+        System.out.println("********************" + "\n");
+        return true;
+      }
+      else {
+        System.err.println( "********************" + "\n" +
+          "The server isn't responding properly.\n" + 
+          "Reponse code: " + connection.getResponseCode() + "\n" +
+          "Response message: " + connection.getResponseMessage() + "\n" +
+          "********************"
+          );
+        return false;
+      }
+    } catch (IOException e) {
+      System.err.println("Connection to the server failed. It might not be running.");
+      return false;
+    }
+  }
+
+  public static void main(String[] args) {
+    ApiHandler api = new ApiHandler();
+    System.out.println(api.checkServerStatus());
+  }
+
 }

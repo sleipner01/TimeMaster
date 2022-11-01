@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -72,7 +74,8 @@ public class EmployeeTest {
 	@Test
 	public void getLatestClockInTest() {
 		employee1.checkIn(dateTime1);
-		assertEquals("Thu, Jan 01 1970 - 00:00", employee1.getLatestClockIn());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E. MMM dd yyyy - HH:mm", Locale.getDefault());
+		assertEquals(dateTime1.format(formatter), employee1.getLatestClockIn());
 	}
 	
 	@Test

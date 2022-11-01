@@ -67,12 +67,12 @@ public class Rest {
     return Response.status(Status.NOT_FOUND).entity(Status.NOT_FOUND.getReasonPhrase()).build();
   }
 
-  @Path("employees/{name}")
+  @Path("employees/{id}")
   @Produces("application/json")
   @GET
-  public JsonNode getEmployeeByName(@PathParam("name") String name) {
+  public JsonNode getEmployeeByName(@PathParam("id") String id) {
       for (JsonNode node : fileHandler.readFile()) {
-        if (node.get("name").textValue().toLowerCase().equals(name.toLowerCase())) {
+        if (node.get("id").textValue().equals(id)) {
           return node;
         }
       }

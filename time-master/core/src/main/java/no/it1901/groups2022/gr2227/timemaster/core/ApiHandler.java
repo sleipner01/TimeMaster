@@ -56,8 +56,8 @@ public class ApiHandler {
     }
   }
 
-  public Employee getEmployee(String name) throws IOException {
-    return this.jsonParser.readEmployee(this.getResponse(name));
+  public Employee getEmployee(Employee employee) throws IOException {
+    return this.jsonParser.readEmployee(this.getResponse(employee.getId()));
   }
 
   public ArrayList<Employee> getEmployees() throws IOException {

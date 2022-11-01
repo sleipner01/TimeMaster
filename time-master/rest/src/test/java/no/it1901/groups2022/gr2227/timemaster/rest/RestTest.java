@@ -42,6 +42,7 @@ public class RestTest extends JerseyTest {
 
   @Test
   public void helloWorldTest() {
+    file.delete();
     String res = target("api/test").request().get(String.class);
     assertEquals("Hello, World!", res);
   }
@@ -61,8 +62,11 @@ public class RestTest extends JerseyTest {
   @Test
   public void getEmployeeByIdTest() {
     target("api/employees").request().post(Entity.json(employeeJson));
-    String res = target("api/employees/0").request().get(String.class);
-    assertEquals(employeeJson, res);
+    String res1 = target("api/employees/0").request().get(String.class);
+    assertEquals(employeeJson, res1);
+    String res2 = target("api/employees/NaN").request().get(String.class);
+    assertEquals("", res2);
+
   }
 
   @Test
@@ -71,6 +75,17 @@ public class RestTest extends JerseyTest {
     Response res1 = target("api/employees/0").request().put(Entity.json(employeeJson));
     assertEquals(Status.OK.getStatusCode(), res1.getStatus());
     Response res2 = target("api/employees/NaN").request().put(Entity.json(employeeJson));
+    assertEquals(Status.NOT_FOUND.getStatusCode(), res2.getStatus());
+  }
+
+  @Test
+  public void deleteEmployeeTest() {
+    target("api/employees").request().post(Entity.json(employeeJson));
+    Response res1 = target("/api/employees/0").request().delete();
+    assertEquals(Status.OK.getStatusCode(), res1.getStatus());
+
+    target("api/employees").request().post(Entity.json(employeeJson));
+    Response res2 = target("/api/employees/NaN").request().delete();
     assertEquals(Status.NOT_FOUND.getStatusCode(), res2.getStatus());
   }
 

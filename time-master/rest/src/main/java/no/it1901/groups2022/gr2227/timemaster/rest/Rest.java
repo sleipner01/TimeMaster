@@ -70,7 +70,7 @@ public class Rest {
   @Path("employees/{id}")
   @Produces("application/json")
   @GET
-  public JsonNode getEmployeeByName(@PathParam("id") String id) {
+  public JsonNode getEmployeeById(@PathParam("id") String id) {
       for (JsonNode node : fileHandler.readFile()) {
         if (node.get("id").textValue().equals(id)) {
           return node;

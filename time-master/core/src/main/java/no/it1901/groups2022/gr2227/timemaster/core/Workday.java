@@ -26,21 +26,21 @@ public class Workday {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E. MMM dd yyyy - HH:mm", Locale.getDefault());
     return dateTime.format(formatter);
   }
-  
-  public LocalDateTime getTimeIn() { 
-    return timeIn; 
+
+  public LocalDateTime getTimeIn() {
+    return timeIn;
   }
 
   public String getTimeInAsFormattedString() {
     return formatDateTime(this.timeIn);
   }
-  
-  public LocalDateTime getTimeOut() { 
+
+  public LocalDateTime getTimeOut() {
     return timeOut;
   }
 
   public String getTimeOutAsFormattedString() throws IllegalStateException {
-    if(!this.isTimedOut()) {
+    if (!this.isTimedOut()) {
       throw new IllegalStateException("The workday isn't timed out.");
     }
     return formatDateTime(this.timeOut);
@@ -50,14 +50,35 @@ public class Workday {
     return this.timeOut != null;
   }
 
-  public void setTimeOut(LocalDate dateOut,LocalTime timeOut) {
-    this.timeOut = LocalDateTime.of(dateOut, timeOut);
+  private boolean isValidInput(LocalDateTime input) {
+    if (input.isBefore(this.timeIn)) {
+      return false;
+    }
+
+    return true;
   }
-  
-  public void setTimeOut(LocalDateTime timeOut) {
+
+  public void setTimeOut(LocalDate dateOut, LocalTime timeOut) throws IllegalArgumentException {
+    LocalDateTime input = LocalDateTime.of(dateOut, timeOut);
+    if (!isValidInput(input)) {
+      throw new IllegalArgumentException(
+          "The timestamp is before time-in timestamp.\n" +
+              "Time in: " + this.timeIn.toString() + "\n" +
+              "Input: " + input.toString());
+    }
+    this.timeOut = input;
+  }
+
+  public void setTimeOut(LocalDateTime timeOut) throws IllegalArgumentException {
+    if (!isValidInput(timeOut)) {
+      throw new IllegalArgumentException(
+          "The timestamp is before time-in timestamp.\n" +
+              "Time in: " + this.timeIn.toString() + "\n" +
+              "Input: " + timeOut.toString());
+    }
     this.timeOut = timeOut;
   }
-  
+
   @Override
   public String toString() {
     LocalDateTime timeIn = this.getTimeIn();
@@ -69,16 +90,16 @@ public class Workday {
     String year = String.valueOf(timeIn.getYear());
 
     String date = dayOfWeek + " " + dayOfMonth + " " + month + " " + year;
-    
+
     // Time
     DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault());
     String stampIn = timeIn.format(timeFormat);
 
     String stampOut = "";
 
-    if(timeOut != null) {
+    if (timeOut != null) {
       stampOut = this.getTimeOut().format(timeFormat);
-    } 
+    }
 
     return String.format("%-26.26s%10s%14s%10s%14s", date, "|", stampIn, "|", stampOut);
   }

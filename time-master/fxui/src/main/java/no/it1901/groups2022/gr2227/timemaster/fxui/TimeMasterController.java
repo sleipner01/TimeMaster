@@ -236,16 +236,16 @@ public class TimeMasterController {
   }
 
   private void showWorkdayHistory() {
-    if(!timeMaster.employeeIsSet()) {
+    if (!timeMaster.employeeIsSet()) {
       this.emptyWorkdayHistory();
       System.out.println("Not doing things");
       return;
     }
     List<String> workdayList = timeMaster.getEmployeeWorkdayHistory()
-    .stream()
-    .map(workday -> workday.toString())
-    .toList();
-    
+        .stream()
+        .map(workday -> workday.toString())
+        .toList();
+
     System.out.println(workdayList);
     observableWorkdayList.setAll(workdayList);
     System.out.println(observableWorkdayList);
@@ -259,21 +259,21 @@ public class TimeMasterController {
 
     Alert dialog = new Alert(AlertType.CONFIRMATION);
     dialog.setContentText(body);
-    
+
     Optional<ButtonType> result = dialog.showAndWait();
     System.out.println(result.get());
     if (result.isPresent()) {
-        switch (result.get().getButtonData()) {
-          case OK_DONE:
-            System.out.println("Confirmed");
-            return true;        
-          case CANCEL_CLOSE:
-            System.out.println("Cancelled");
-            return false;
-          default:
-            displayError("The window wasn't closed properly...");
-            return false;
-        }
+      switch (result.get().getButtonData()) {
+        case OK_DONE:
+          System.out.println("Confirmed");
+          return true;
+        case CANCEL_CLOSE:
+          System.out.println("Cancelled");
+          return false;
+        default:
+          displayError("The window wasn't closed properly...");
+          return false;
+      }
     } else {
       return false;
     }
@@ -289,14 +289,14 @@ public class TimeMasterController {
     int maxLength = 2;
     field.textProperty().addListener(new ChangeListener<String>() {
       @Override
-      public void changed(ObservableValue<? extends String> observable, String oldValue, 
+      public void changed(ObservableValue<? extends String> observable, String oldValue,
           String newValue) {
-          if (!newValue.matches("\\d*")) {
-              field.setText(newValue.replaceAll("[^\\d]", ""));
-          }
-          if (field.getText().length() > maxLength) {
-            String s = field.getText().substring(0, maxLength);
-            field.setText(s);
+        if (!newValue.matches("\\d*")) {
+          field.setText(newValue.replaceAll("[^\\d]", ""));
+        }
+        if (field.getText().length() > maxLength) {
+          String s = field.getText().substring(0, maxLength);
+          field.setText(s);
         }
       }
     });
@@ -358,24 +358,37 @@ public class TimeMasterController {
           case OK_DONE:
             boolean result = confirmationDialog("Are you sure you want to change the workday to these values?");
             if (result) {
-              if (!isValidMinuteInput(1)) {
-                warningDialog("is not a valid input");
+
+              if (!isValidMinuteInput(timeInMinute.getText())) {
+                warningDialog(timeInMinute.getText() + "is not a valid input for minute-in.");
                 openWorkdayEditInterface(index);
               }
-              if (!isValidHourInput(1)) {
+              if (!isValidMinuteInput(timeOutMinute.getText())) {
+                warningDialog(timeOutMinute.getText() + "is not a valid input for minute-out.");
+                openWorkdayEditInterface(index);
+              }
+              if (!isValidHourInput(timeInHour.getText())) {
+                warningDialog(timeInHour.getText() + "is not a valid input for hour-in.");
+                openWorkdayEditInterface(index);
+              }
+              if (!isValidHourInput(timeOutHour.getText())) {
+                warningDialog(timeOutHour.getText() + "is not a valid input for hour-out.");
                 openWorkdayEditInterface(index);
               }
 
+              int parsedTimeInHour = Integer.parseInt(timeInHour.getText());
+              int parsedTimeInMinute = Integer.parseInt(timeInMinute.getText());
+              int parsedTimeOutHour = Integer.parseInt(timeOutHour.getText());
+              int parsedTimeOutMinute = Integer.parseInt(timeOutMinute.getText());
+
               // DateTime in
               LocalDate date = dateIn.getValue();
-              LocalTime time = LocalTime.of(Integer.parseInt(timeInHour.getText()),
-                  Integer.parseInt(timeInMinute.getText()));
+              LocalTime time = LocalTime.of(parsedTimeInHour, parsedTimeInMinute);
               LocalDateTime dateTimeIn = LocalDateTime.of(date, time);
 
               // DateTime out
               LocalDate date2 = dateOut.getValue();
-              LocalTime time2 = LocalTime.of(Integer.parseInt(timeOutHour.getText()),
-                  Integer.parseInt(timeOutMinute.getText()));
+              LocalTime time2 = LocalTime.of(parsedTimeOutHour, parsedTimeOutMinute);
               LocalDateTime dateTimeOut = LocalDateTime.of(date2, time2);
 
               saveWorkdayEditChoices(index, dateTimeIn, dateTimeOut);
@@ -403,13 +416,39 @@ public class TimeMasterController {
 
   }
 
-  private boolean isValidHourInput(int input) {
-    // TODO: validate
+  private boolean isValidNumberInput(String input) {
+    if (input.length() <= 0 || 2 < input.length()) {
+      return false;
+    }
+
     return true;
   }
 
-  private boolean isValidMinuteInput(int input) {
-    // TODO: validate
+  private boolean isValidHourInput(String input) {
+    if (!isValidNumberInput(input)) {
+      return false;
+    }
+
+    int integer = Integer.parseInt(input);
+
+    if (integer < 0 || 23 < integer) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private boolean isValidMinuteInput(String input) {
+    if (!isValidNumberInput(input)) {
+      return false;
+    }
+
+    int integer = Integer.parseInt(input);
+
+    if (integer < 0 || 59 < integer) {
+      return false;
+    }
+
     return true;
   }
 

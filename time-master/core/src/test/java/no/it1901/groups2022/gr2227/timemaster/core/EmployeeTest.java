@@ -81,6 +81,7 @@ public class EmployeeTest {
 	@Test
 	public void addWorkdaysTest() {
 		employee1.addWorkday(workday1);
+		employee1.checkOut(dateTime1.plusHours(1));
 		assertTrue(employee1.getWorkdays().size() == 1);
 		assertTrue(employee1.getWorkdays().get(0).equals(workday1));
 		employee1.addWorkday(workday2);

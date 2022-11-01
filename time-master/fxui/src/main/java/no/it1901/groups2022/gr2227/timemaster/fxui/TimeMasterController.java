@@ -1,5 +1,7 @@
 package no.it1901.groups2022.gr2227.timemaster.fxui;
 
+import java.io.IOException;
+import java.net.ConnectException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -36,15 +38,31 @@ public class TimeMasterController {
   @FXML private Text statusText;
   @FXML private Text clockInInfo;
   
-  
-  @FXML private void initialize() {
-    this.chooseDateButton.setValue(LocalDate.now());
+  @FXML private void initialize() throws ConnectException {
+    try {
+      this.chooseDateButton.setValue(LocalDate.now());
+      this.timeMaster = new TimeMaster();
+      this.timeMaster.readEmployees();
+      this.updateEmployeeMenu();
+    } catch (IOException e) {
+      displayError(e.getMessage() + ", make sure the REST API is running.");
+      throw new ConnectException();
+    }
   }
-  
-  public void setupJsonParser(String fileName) {
-    this.timeMaster = new TimeMaster(fileName);
-    timeMaster.readEmployees();
-    this.updateEmployeeMenu();
+
+  /**
+   * For testing purposes. Turning off API calls.
+   */
+  public void setApplicationInTestState() {
+    timeMaster.setApplicationInTestState();
+  }
+
+  /**
+   * For testing purposes.
+   * Resetting to Production state if needed after testing.
+   */
+  public void setApplicationInProductionState() {
+    timeMaster.setApplicationInProductionState();
   }
   
   
@@ -138,7 +156,7 @@ public class TimeMasterController {
     ArrayList<Employee> employees = timeMaster.getEmployees();
     for (int i = 0; i < employees.size(); i++) {
       MenuItem menuItem = new MenuItem(employees.get(i).getName());
-      System.out.println(employees.get(i).getName());
+      //System.out.println(employees.get(i).getName());
       
       // ActionEvent a will not be used
       final int index = i;

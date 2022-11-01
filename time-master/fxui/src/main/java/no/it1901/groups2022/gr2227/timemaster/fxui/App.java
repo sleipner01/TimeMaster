@@ -15,8 +15,6 @@ public class App extends Application {
   public void start(Stage stage) throws IOException {
     FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("timeMaster.fxml"));
     Parent parent = fxmlLoader.load();
-    TimeMasterController controller = fxmlLoader.getController();
-    controller.setupJsonParser("employees.json");
     Scene scene = new Scene(parent);
     scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
     stage.setScene(scene);

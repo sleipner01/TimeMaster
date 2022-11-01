@@ -5,50 +5,56 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import no.it1901.groups2022.gr2227.timemaster.mixin.Mixin;
 
 public class TimeMasterJsonParser {
   
   final ObjectMapper mapper;
-  final String filePath;
-  
-  public TimeMasterJsonParser(Path dir, String fileName) {
+
+  public TimeMasterJsonParser() {
     this.mapper = new ObjectMapper();
     this.mapper.configure(Feature.AUTO_CLOSE_SOURCE, true);
     this.mapper.addMixIn(Employee.class, Mixin.class);
     this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
     this.mapper.registerModule(new JavaTimeModule());
-    this.filePath = Paths.get(dir.toString(), fileName).toString();
   }
-  
-  public void write(ArrayList<Employee> employees) {
+ 
+
+  public String write(Object value) {
     try {
-      this.mapper.writeValue(new File(filePath), employees);
+      return this.mapper.writeValueAsString(value);
     } catch (Exception e) {
       e.printStackTrace();
+      return null;
     }
   }
   
-  public ArrayList<Employee> read() {
-    var employees = new ArrayList<Employee>();
-    if (new File(filePath).length() == 0) {
-      System.out.println("Savefile is empty");
-      return new ArrayList<>();
-    } 
+  public Employee readEmployee(String input) {
     try {
-      employees = this.mapper.readValue(
-        new File(filePath),
-        new TypeReference<ArrayList<Employee>>() {
-        });
-      
+      return this.mapper.readValue(input, Employee.class);
     } catch (Exception e) {
       e.printStackTrace();
+      return null;
     }
-    return employees;
+  }
+  
+  public ArrayList<Employee> readEmployees(String input) {
+    try {
+      return this.mapper.readValue(input, new TypeReference<ArrayList<Employee>>() {});
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  public ArrayList<Workday> readWorkdays(String input) {
+    try {
+      return this.mapper.readValue(input, new TypeReference<ArrayList<Workday>>() {});
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
   }
   
 }

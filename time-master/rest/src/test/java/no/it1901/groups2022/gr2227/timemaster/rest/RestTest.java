@@ -1,55 +1,77 @@
 package no.it1901.groups2022.gr2227.timemaster.rest;
 
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.client.WebTarget;
-
-import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.test.JerseyTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.BeforeEach;
+import java.io.File;
+import java.nio.file.Paths;
+
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class RestTest {
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
-    private HttpServer server;
-    private WebTarget target;
+public class RestTest extends JerseyTest {
 
-    // @BeforeEach
-    // public void setUp() throws Exception {
-    //     // start the server
-    //     server = Main.startServer();
-    //     // create the client
-    //     Client c = ClientBuilder.newClient();
+  FileHandler fileHandler;
+  String employeeJson;
+  File file;
 
-    //     // uncomment the following line if you want to enable
-    //     // support for JSON in the client (you also have to uncomment
-    //     // dependency on jersey-media-json module in pom.xml and Main.startServer())
-    //     // --
-    //     // c.configuration().enable(new org.glassfish.jersey.media.json.JsonJaxbFeature());
+  @Override
+  protected Application configure() {
+    return new ResourceConfig(Rest.class);
+  }
 
-    //     target = c.target(Main.BASE_URI);
-    // }
+  @BeforeEach
+  public void init() {
+    fileHandler = new FileHandler("employeesTest.json");
+    employeeJson = "{\"id\":\"0\",\"name\":\"Anne\",\"workdays\":[],\"atWork\":false}";
+    file = new File(Paths.get(System.getProperty("user.dir"), "../rest/timeMasterSaveFiles").toString(), "employeesTest.json");
+  }
 
-    // @AfterEach
-    // public void tearDown() throws Exception {
-    //     server.shutdown();
-    // }
+  @AfterEach
+  public void cleanUp() {
+    file.delete();
+  }
 
-    /**
-     * Test to see that the message "Got it!" is sent in the response.
-     */
-    // @Test
-    // public void testGetIt() {
-    //     String msg = "[{\"id\" : \"bec36f58-2797-45aa-8d11-7522ff34de1d\",\"name\" : \"Test\",\"workdays\" : [ ],\"atWork\" : false}, {\"id\" : \"03ffaa9e-4a78-4008-b63c-b90b48c375c8\",\"name\" : \"Test2\",\"workdays\" : [ {\"date\" : [ 2022, 10, 20 ],\"timeIn\" : [ 20, 38, 41, 267835000 ],\"timeOut\" : null} ],\"atWork\" : true}]";
-    //     String responseMsg = target.path("api").request().get(String.class);
-    //     assertEquals(msg, responseMsg);
-    // }
+  @Test
+  public void helloWorldTest() {
+    String res = target("api/test").request().get(String.class);
+    assertEquals("Hello, World!", res);
+  }
 
-    @Test
-    public void simple() {
-        assertEquals(true, true);
-    }
+  @Test
+  public void getEmployeesTest() {
+    Response res = target("api/employees").request().get();
+    assertEquals(Status.OK.getStatusCode(), res.getStatus());
+  }
+
+  @Test
+  public void createEmployeeTest() {
+    Response res = target("api/employees").request().post(Entity.json(employeeJson));
+    assertEquals(Status.CREATED.getStatusCode(), res.getStatus());
+  }
+  
+  @Test
+  public void getEmployeeByNameTest() {
+    target("api/employees").request().post(Entity.json(employeeJson));
+    String res = target("api/employees/anne").request().get(String.class);
+    assertEquals(employeeJson, res);
+  }
+
+  @Test
+  public void updateEmployeeTest() {
+    target("api/employees").request().post(Entity.json(employeeJson));
+    Response res1 = target("api/employees/0").request().put(Entity.json(employeeJson));
+    assertEquals(Status.OK.getStatusCode(), res1.getStatus());
+    Response res2 = target("api/employees/NaN").request().put(Entity.json(employeeJson));
+    assertEquals(Status.NOT_FOUND.getStatusCode(), res2.getStatus());
+  }
+
 }

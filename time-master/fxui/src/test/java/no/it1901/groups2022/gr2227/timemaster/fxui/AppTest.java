@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Stream;
@@ -37,27 +36,29 @@ public class AppTest extends ApplicationTest {
 
   private Parent root;
   private TimeMasterController controller;
-  private Path path;
-  private File file;
-  String fileName = "employeesTest.json";
   String testName = "Test";
+  File file;
 
   @Override
   public void start(Stage stage) throws IOException {
     FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("timeMaster.fxml"));
     root = fxmlLoader.load();
     controller = fxmlLoader.getController();
-    controller.setupJsonParser("employeesTest.json");
+    controller.setApplicationInTestState();
     stage.setScene(new Scene(root));
     stage.show();
   }
 
   @BeforeEach
-  public void setup() {
-    path = Paths.get(System.getProperty("user.dir"), "../core/timeMasterSaveFiles");
-    file = new File(path.toString(), fileName);
+  public void init() {
+    file = new File(Paths.get(System.getProperty("user.dir"), "../rest/timeMasterSaveFiles").toString(), "employeesTest.json");
+    try {
+      file.createNewFile();
+    } catch (Exception e) {
+
+    }
   }
-  
+
   @AfterEach
   public void cleanUp() {
     file.delete();

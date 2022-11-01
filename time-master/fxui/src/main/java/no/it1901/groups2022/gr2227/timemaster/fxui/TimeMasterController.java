@@ -96,11 +96,29 @@ public class TimeMasterController {
   
   
   @FXML private void handleRegisterTime() {
-    //TODO: Inputvalidation
+
+    String inputMinuteString = this.inputMinutes.getText();
+    String inputHourString = this.inputHour.getText();
+    // Creating a main boolean variable to be able to show all validation-errors.
+    boolean validationFailure = false;
+    if (!isValidMinuteInput(inputMinuteString)) {
+      warningDialog(inputMinuteString + " is not a valid input for minute-in.");
+      validationFailure = true;
+    }
+
+    if (!isValidHourInput(inputHourString)) {
+      warningDialog(inputHourString + " is not a valid input for hour-in.");
+      validationFailure = true;
+    }
+    if (validationFailure) {
+      return;
+    }
+
     LocalDate date = chooseDateButton.getValue();
-    LocalTime time = LocalTime.of(Integer.parseInt(this.inputHour.getText()),
-                     Integer.parseInt(this.inputMinutes.getText()));
+    LocalTime time = LocalTime.of(Integer.parseInt(inputHourString),
+                     Integer.parseInt(inputMinuteString));
     LocalDateTime dateTime = LocalDateTime.of(date, time);
+
     try {
       timeMaster.clockEmployeeInOut(dateTime);
     
@@ -360,22 +378,22 @@ public class TimeMasterController {
             // Creating a main boolean variable to be able to show all validation-errors.
             boolean validationFailure = false;
             if (!isValidMinuteInput(timeInMinute.getText())) {
-              warningDialog(timeInMinute.getText() + "is not a valid input for minute-in.");
+              warningDialog(timeInMinute.getText() + " is not a valid input for minute-in.");
               validationFailure = true;
             }
             if (!isValidMinuteInput(timeOutMinute.getText())) {
-              warningDialog(timeOutMinute.getText() + "is not a valid input for minute-out.");
+              warningDialog(timeOutMinute.getText() + " is not a valid input for minute-out.");
               validationFailure = true;
             }
             if (!isValidHourInput(timeInHour.getText())) {
-              warningDialog(timeInHour.getText() + "is not a valid input for hour-in.");
+              warningDialog(timeInHour.getText() + " is not a valid input for hour-in.");
               validationFailure = true;
             }
             if (!isValidHourInput(timeOutHour.getText())) {
-              warningDialog(timeOutHour.getText() + "is not a valid input for hour-out.");
+              warningDialog(timeOutHour.getText() + " is not a valid input for hour-out.");
               validationFailure = true;
             }
-            if(validationFailure) {
+            if (validationFailure) {
               openWorkdayEditInterface(index);
               break;
             }

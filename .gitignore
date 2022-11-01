@@ -2,7 +2,7 @@
 .DS_Store
 
 # Local VSCode settings
-#.vscode
+.vscode
 
 # ignore maven build folder
 time-master/*/target/

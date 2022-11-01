@@ -304,7 +304,8 @@ public class TimeMasterController {
 
   private void openWorkdayEditInterface(int index) {
 
-    // TODO: Clean code. Split into methods. Functions useful in other parts of the controller should be implemented
+    // TODO: Clean code. Split into methods. Functions useful in other parts of the
+    // controller should be implemented
 
     ButtonType okButtonType = new ButtonType("Ok", ButtonData.OK_DONE);
     ButtonType cancelButtonType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
@@ -331,22 +332,23 @@ public class TimeMasterController {
     TextField timeOutMinute = new TextField();
     limitTextFieldToTwoNumbers(timeOutMinute);
     timeOutMinute.setPromptText("Min: 0-59");
-    dialog.getDialogPane().setContent(new VBox(8, labelIn, dateIn, timeInHour, timeInMinute, 
-                                                           labelOut, dateOut, timeOutHour, timeOutMinute));
-    
+    dialog.getDialogPane().setContent(new VBox(8, labelIn, dateIn, timeInHour, timeInMinute,
+        labelOut, dateOut, timeOutHour, timeOutMinute));
+
     // AutoFill
     LocalDateTime editingWorkdayTimeIn = timeMaster.getChosenEmployee().getWorkdays().get(index).getTimeIn();
-    dateIn.setValue(LocalDate.of(editingWorkdayTimeIn.getYear(), editingWorkdayTimeIn.getMonth(), editingWorkdayTimeIn.getDayOfMonth()));
+    dateIn.setValue(LocalDate.of(editingWorkdayTimeIn.getYear(), editingWorkdayTimeIn.getMonth(),
+        editingWorkdayTimeIn.getDayOfMonth()));
     timeInHour.setText(String.valueOf(editingWorkdayTimeIn.getHour()));
     timeInMinute.setText(String.valueOf(editingWorkdayTimeIn.getMinute()));
-    
-    if(timeMaster.getChosenEmployee().getWorkdays().get(index).isTimedOut()) {
+
+    if (timeMaster.getChosenEmployee().getWorkdays().get(index).isTimedOut()) {
       LocalDateTime editingWorkdayTimeOut = timeMaster.getChosenEmployee().getWorkdays().get(index).getTimeOut();
-      dateOut.setValue(LocalDate.of(editingWorkdayTimeOut.getYear(), editingWorkdayTimeOut.getMonth(), editingWorkdayTimeOut.getDayOfMonth()));
+      dateOut.setValue(LocalDate.of(editingWorkdayTimeOut.getYear(), editingWorkdayTimeOut.getMonth(),
+          editingWorkdayTimeOut.getDayOfMonth()));
       timeOutHour.setText(String.valueOf(editingWorkdayTimeOut.getHour()));
       timeOutMinute.setText(String.valueOf(editingWorkdayTimeOut.getMinute()));
     }
-
 
     try {
       Optional<ButtonType> choice = dialog.showAndWait();
@@ -355,7 +357,7 @@ public class TimeMasterController {
 
           case OK_DONE:
             boolean result = confirmationDialog("Are you sure you want to change the workday to these values?");
-            if(result) {
+            if (result) {
               if (!isValidMinuteInput(1)) {
                 warningDialog("is not a valid input");
                 openWorkdayEditInterface(index);
@@ -367,35 +369,38 @@ public class TimeMasterController {
               // DateTime in
               LocalDate date = dateIn.getValue();
               LocalTime time = LocalTime.of(Integer.parseInt(timeInHour.getText()),
-                               Integer.parseInt(timeInMinute.getText()));
+                  Integer.parseInt(timeInMinute.getText()));
               LocalDateTime dateTimeIn = LocalDateTime.of(date, time);
 
               // DateTime out
               LocalDate date2 = dateOut.getValue();
               LocalTime time2 = LocalTime.of(Integer.parseInt(timeOutHour.getText()),
-                               Integer.parseInt(timeOutMinute.getText()));
+                  Integer.parseInt(timeOutMinute.getText()));
               LocalDateTime dateTimeOut = LocalDateTime.of(date2, time2);
 
-              saveWorkdayEditChoices(dateTimeIn, dateTimeOut);
+              saveWorkdayEditChoices(index, dateTimeIn, dateTimeOut);
 
             } else {
               openWorkdayEditInterface(index);
             }
             break;
-        
+
           case CANCEL_CLOSE:
             System.out.println("Workday editing cancelled");
             break;
 
           default:
-            System.out.println("The window wasn't closed properly");
+            System.err.println("The window wasn't closed properly");
             break;
         }
-    }
+      } else {
+        System.out.println("The window wasn't closed properly");
+      }
     } catch (Exception e) {
       e.printStackTrace();
       displayError(e.getMessage());
     }
+
   }
 
   private boolean isValidHourInput(int input) {
@@ -408,9 +413,8 @@ public class TimeMasterController {
     return true;
   }
 
-  private void saveWorkdayEditChoices(LocalDateTime timeIn, LocalDateTime timeOut) {
+  private void saveWorkdayEditChoices(int index, LocalDateTime timeIn, LocalDateTime timeOut) {
     System.out.println(timeIn + " " + timeOut);
   }
-    
 
 }

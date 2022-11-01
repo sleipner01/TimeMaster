@@ -304,9 +304,6 @@ public class TimeMasterController {
 
   private void openWorkdayEditInterface(int index) {
 
-    // TODO: Clean code. Split into methods. Functions useful in other parts of the
-    // controller should be implemented
-
     ButtonType okButtonType = new ButtonType("Ok", ButtonData.OK_DONE);
     ButtonType cancelButtonType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
@@ -315,8 +312,9 @@ public class TimeMasterController {
     dialog.setHeaderText("Change workday values...");
     dialog.getDialogPane().getButtonTypes().addAll(okButtonType, cancelButtonType);
 
+    // Time in inputs
     Label labelIn = new Label("Time in");
-    DatePicker dateIn = new DatePicker(LocalDate.now());
+    DatePicker dateIn = new DatePicker();
     TextField timeInHour = new TextField();
     limitTextFieldToTwoNumbers(timeInHour);
     timeInHour.setPromptText("Hour: 0-23");
@@ -324,8 +322,9 @@ public class TimeMasterController {
     limitTextFieldToTwoNumbers(timeInMinute);
     timeInMinute.setPromptText("Min: 0-59");
 
+    // Time out inputs
     Label labelOut = new Label("Time Out");
-    DatePicker dateOut = new DatePicker(LocalDate.now());
+    DatePicker dateOut = new DatePicker();
     TextField timeOutHour = new TextField();
     limitTextFieldToTwoNumbers(timeOutHour);
     timeOutHour.setPromptText("Hour: 0-23");
@@ -350,31 +349,40 @@ public class TimeMasterController {
       timeOutMinute.setText(String.valueOf(editingWorkdayTimeOut.getMinute()));
     }
 
+    // Show interface
     try {
       Optional<ButtonType> choice = dialog.showAndWait();
       if (choice.isPresent()) {
         switch (choice.get().getButtonData()) {
 
           case OK_DONE:
+
+            // Creating a main boolean variable to be able to show all validation-errors.
+            boolean validationFailure = false;
+            if (!isValidMinuteInput(timeInMinute.getText())) {
+              warningDialog(timeInMinute.getText() + "is not a valid input for minute-in.");
+              validationFailure = true;
+            }
+            if (!isValidMinuteInput(timeOutMinute.getText())) {
+              warningDialog(timeOutMinute.getText() + "is not a valid input for minute-out.");
+              validationFailure = true;
+            }
+            if (!isValidHourInput(timeInHour.getText())) {
+              warningDialog(timeInHour.getText() + "is not a valid input for hour-in.");
+              validationFailure = true;
+            }
+            if (!isValidHourInput(timeOutHour.getText())) {
+              warningDialog(timeOutHour.getText() + "is not a valid input for hour-out.");
+              validationFailure = true;
+            }
+            if(validationFailure) {
+              openWorkdayEditInterface(index);
+              break;
+            }
+
+            // Get confirmation
             boolean result = confirmationDialog("Are you sure you want to change the workday to these values?");
             if (result) {
-
-              if (!isValidMinuteInput(timeInMinute.getText())) {
-                warningDialog(timeInMinute.getText() + "is not a valid input for minute-in.");
-                openWorkdayEditInterface(index);
-              }
-              if (!isValidMinuteInput(timeOutMinute.getText())) {
-                warningDialog(timeOutMinute.getText() + "is not a valid input for minute-out.");
-                openWorkdayEditInterface(index);
-              }
-              if (!isValidHourInput(timeInHour.getText())) {
-                warningDialog(timeInHour.getText() + "is not a valid input for hour-in.");
-                openWorkdayEditInterface(index);
-              }
-              if (!isValidHourInput(timeOutHour.getText())) {
-                warningDialog(timeOutHour.getText() + "is not a valid input for hour-out.");
-                openWorkdayEditInterface(index);
-              }
 
               int parsedTimeInHour = Integer.parseInt(timeInHour.getText());
               int parsedTimeInMinute = Integer.parseInt(timeInMinute.getText());
@@ -396,6 +404,7 @@ public class TimeMasterController {
             } else {
               openWorkdayEditInterface(index);
             }
+
             break;
 
           case CANCEL_CLOSE:

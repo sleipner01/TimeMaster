@@ -84,7 +84,7 @@ public class ApiHandler {
    */
   public boolean checkServerStatus() {
     try {
-      HttpURLConnection connection = setConnection("status", "GET");
+      HttpURLConnection connection = setConnection("", "GET");
       int responseCode = connection.getResponseCode();
       if(200 <= responseCode && responseCode < 300) {
         System.out.println("********************" + "\n");
@@ -113,11 +113,6 @@ public class ApiHandler {
       System.err.println("Connection to the server failed. It might not be running.");
       return false;
     }
-  }
-
-  public static void main(String[] args) {
-    ApiHandler api = new ApiHandler();
-    System.out.println(api.checkServerStatus());
   }
 
 }

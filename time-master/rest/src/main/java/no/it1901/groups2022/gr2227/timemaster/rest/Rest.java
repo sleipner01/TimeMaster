@@ -93,7 +93,7 @@ public class Rest {
     return null;
   }
 
-  @Path("/status")
+  @Path("")
   @Produces({ MediaType.TEXT_PLAIN })
   @GET
   public Response systemStatus() {

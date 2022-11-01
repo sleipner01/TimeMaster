@@ -71,7 +71,7 @@ public class TimeMaster {
     if (!this.employeeIsSet()) {
       throw new IllegalStateException("No employee is selected");
     }
-    //TODO: Input validation
+    
     LocalDateTime dateTime = dateTimeInput;
     
     if (!this.getChosenEmployee().isAtWork()) {

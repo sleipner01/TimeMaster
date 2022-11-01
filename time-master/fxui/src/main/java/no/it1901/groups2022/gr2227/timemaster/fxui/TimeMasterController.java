@@ -46,7 +46,6 @@ public class TimeMasterController {
       this.updateEmployeeMenu();
     } catch (IOException e) {
       displayError(e.getMessage() + ", make sure the REST API is running.");
-      throw new ConnectException();
     }
   }
 

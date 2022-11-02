@@ -4,5 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public abstract class EmployeeMixin {
   @JsonIgnore abstract String getLatestClockIn(); 
+  @JsonIgnore abstract boolean isAtWork(); 
 }
 

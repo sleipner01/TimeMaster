@@ -82,17 +82,38 @@ public class Employee {
       );
     }
 
-    for (int i = this.workdays.size() - 2; i >= 0; i--) {
+    if(workday.equals(this.getLatestWorkday())) {
+      return;
+    }
+
+    for (int i = this.workdays.size() - 1; i >= 0; i--) {
 
       Workday tempWorkday = this.workdays.get(i);
 
+      // If we are at the latest workday which is not closed,
+      // the new workday must be before the latest workday.
+      if(tempWorkday.equals(this.getLatestWorkday()) || 
+        input.isAfter(tempWorkday.getTimeIn())) {
+        if(!tempWorkday.isTimedOut()) {
+          if(workday.getTimeIn().isAfter(tempWorkday.getTimeIn())) {
+            throw new IllegalArgumentException(
+              "** Input comes in conflict with the following workday **\n" +
+              "Check in: " + tempWorkday.getTimeIn().toString() + "\n" +
+              "Input: " + input.toString()
+            );
+          }
+          continue;
+        }
+      }
+
       // If we are at the first workday and the checkout comes in conflict with the workday
       if (i == 0) {
-        if (tempWorkday.getTimeIn().isBefore(input)) {
+        if (input.isAfter(tempWorkday.getTimeIn())) {
           throw new IllegalArgumentException(
             "** Input comes in conflict with the following workday **\n" +
             "Check in: " + tempWorkday.getTimeIn().toString() + "\n" +
-            "Check out: " + tempWorkday.getTimeOut().toString()
+            "Check out: " + tempWorkday.getTimeOut().toString() + "\n" +
+            "Input: " + input.toString()
           );
         }
       }
@@ -101,11 +122,12 @@ public class Employee {
         continue;
       }
 
-      if (tempWorkday.getTimeIn().isBefore(input)) {
+      if (input.isAfter(tempWorkday.getTimeIn())) {
         throw new IllegalArgumentException(
           "** Input comes in conflict with the following workday **\n" +
           "Check in: " + tempWorkday.getTimeIn().toString() + "\n" +
-          "Check out: " + tempWorkday.getTimeOut().toString()
+          "Check out: " + tempWorkday.getTimeOut().toString() + "\n" + 
+          "Input: " + input.toString() + "\n"
         );
       } else {
         return;

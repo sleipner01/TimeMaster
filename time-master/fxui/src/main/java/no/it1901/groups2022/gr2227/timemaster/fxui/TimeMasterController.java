@@ -322,13 +322,14 @@ public class TimeMasterController {
 
   private void openWorkdayEditInterface(int index) {
 
-    ButtonType okButtonType = new ButtonType("Ok", ButtonData.OK_DONE);
+    ButtonType okButtonType = new ButtonType("Ok", ButtonData.APPLY);
     ButtonType cancelButtonType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+    ButtonType deleteButtonType = new ButtonType("Delete", ButtonData.OTHER);
 
     Dialog<ButtonType> dialog = new Dialog<>();
     dialog.setTitle("Edit Workday");
     dialog.setHeaderText("Change workday values...");
-    dialog.getDialogPane().getButtonTypes().addAll(okButtonType, cancelButtonType);
+    dialog.getDialogPane().getButtonTypes().addAll(okButtonType, cancelButtonType, deleteButtonType);
 
     // Time in inputs
     Label labelIn = new Label("Time in");
@@ -373,7 +374,7 @@ public class TimeMasterController {
       if (choice.isPresent()) {
         switch (choice.get().getButtonData()) {
 
-          case OK_DONE:
+          case APPLY:
 
             // Creating a main boolean variable to be able to show all validation-errors.
             boolean validationFailure = false;
@@ -418,6 +419,19 @@ public class TimeMasterController {
               LocalDateTime dateTimeOut = LocalDateTime.of(date2, time2);
 
               saveWorkdayEditChoices(index, dateTimeIn, dateTimeOut);
+
+            } else {
+              openWorkdayEditInterface(index);
+            }
+
+            break;
+
+          case OTHER:
+            // Get confirmation
+            boolean deleteConfirmation = confirmationDialog("Are you sure you want to delete this workday?");
+            if (deleteConfirmation) {
+
+              deleteWorkday(index);
 
             } else {
               openWorkdayEditInterface(index);
@@ -481,6 +495,10 @@ public class TimeMasterController {
 
   private void saveWorkdayEditChoices(int index, LocalDateTime timeIn, LocalDateTime timeOut) {
     System.out.println(timeIn + " " + timeOut);
+  }
+
+  private void deleteWorkday(int index) {
+    System.out.println("DELETING");
   }
 
 }

@@ -90,7 +90,7 @@ public class TimeMasterController {
       cell.setOnMouseClicked(e -> {
         if (!cell.isEmpty()) {
           System.out.println("You clicked on " + cell.getItem());
-          openWorkdayEditInterface(cell.getIndex());
+          openWorkdayEditInterface(cell.getItem());
           e.consume();
         }
       });
@@ -301,13 +301,7 @@ public class TimeMasterController {
       this.emptyWorkdayHistory();
       return;
     }
-    // List<String> workdayList = timeMaster.getEmployeeWorkdayHistory()
-    //     .stream()
-    //     .map(workday -> workday.toString())
-    //     .toList();
-
     observableWorkdayList.setAll(timeMaster.getEmployeeWorkdayHistory());
-
   }
 
   private void emptyWorkdayHistory() {
@@ -361,7 +355,7 @@ public class TimeMasterController {
     });
   }
 
-  private void openWorkdayEditInterface(int index) {
+  private void openWorkdayEditInterface(Workday workday) {
 
     ButtonType okButtonType = new ButtonType("Ok", ButtonData.APPLY);
     ButtonType cancelButtonType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
@@ -395,14 +389,14 @@ public class TimeMasterController {
         labelOut, dateOut, timeOutHour, timeOutMinute));
 
     // AutoFill
-    LocalDateTime editingWorkdayTimeIn = timeMaster.getChosenEmployee().getWorkdays().get(index).getTimeIn();
+    LocalDateTime editingWorkdayTimeIn = workday.getTimeIn();
     dateIn.setValue(LocalDate.of(editingWorkdayTimeIn.getYear(), editingWorkdayTimeIn.getMonth(),
         editingWorkdayTimeIn.getDayOfMonth()));
     timeInHour.setText(String.valueOf(editingWorkdayTimeIn.getHour()));
     timeInMinute.setText(String.valueOf(editingWorkdayTimeIn.getMinute()));
 
-    if (timeMaster.getChosenEmployee().getWorkdays().get(index).isTimedOut()) {
-      LocalDateTime editingWorkdayTimeOut = timeMaster.getChosenEmployee().getWorkdays().get(index).getTimeOut();
+    if (workday.isTimedOut()) {
+      LocalDateTime editingWorkdayTimeOut = workday.getTimeOut();
       dateOut.setValue(LocalDate.of(editingWorkdayTimeOut.getYear(), editingWorkdayTimeOut.getMonth(),
           editingWorkdayTimeOut.getDayOfMonth()));
       timeOutHour.setText(String.valueOf(editingWorkdayTimeOut.getHour()));
@@ -436,7 +430,7 @@ public class TimeMasterController {
               validationFailure = true;
             }
             if (validationFailure) {
-              openWorkdayEditInterface(index);
+              openWorkdayEditInterface(workday);
               break;
             }
 
@@ -459,10 +453,10 @@ public class TimeMasterController {
               LocalTime time2 = LocalTime.of(parsedTimeOutHour, parsedTimeOutMinute);
               LocalDateTime dateTimeOut = LocalDateTime.of(date2, time2);
 
-              saveWorkdayEditChoices(index, dateTimeIn, dateTimeOut);
+              saveWorkdayEditChoices(workday, dateTimeIn, dateTimeOut);
 
             } else {
-              openWorkdayEditInterface(index);
+              openWorkdayEditInterface(workday);
             }
 
             break;
@@ -472,10 +466,10 @@ public class TimeMasterController {
             boolean deleteConfirmation = confirmationDialog("Are you sure you want to delete this workday?");
             if (deleteConfirmation) {
 
-              deleteWorkday(index);
+              deleteWorkday(workday);
 
             } else {
-              openWorkdayEditInterface(index);
+              openWorkdayEditInterface(workday);
             }
 
             break;
@@ -534,14 +528,14 @@ public class TimeMasterController {
     return true;
   }
 
-  private void saveWorkdayEditChoices(int index, LocalDateTime timeIn, LocalDateTime timeOut) {
+  private void saveWorkdayEditChoices(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut) {
     System.out.println(timeIn + " " + timeOut);
   }
 
-  private void deleteWorkday(int index) {
+  private void deleteWorkday(Workday workday) {
     System.out.println("Deleting...");
     try {
-      timeMaster.deleteWorkdayFromEmployee(timeMaster.getEmployeeWorkdayHistory().get(index));
+      timeMaster.deleteWorkdayFromEmployee(workday);
       showWorkdayHistory();
     } catch (IllegalArgumentException e) {
       displayError(e.getMessage());

@@ -288,7 +288,7 @@ public class TimeMasterController {
   private void displayError(String errorMessage) {
     Alert alert = new Alert(AlertType.ERROR);
     alert.setTitle("Error");
-    alert.setHeaderText("The program ecountered a problem!");
+    alert.setHeaderText("The program encountered a problem!");
     alert.setContentText(errorMessage);
     alert.showAndWait();
   }

@@ -35,8 +35,8 @@ public class Employee {
       // If the last workday isn't checked out - Error
       if (i == workdays.size() && !tempWorkday.isTimedOut()) {
         throw new IllegalArgumentException(
-            "Your last workday isn't clocked out yet...\n" + 
-            "Workday: " + tempWorkday.toString()
+            "Your last workday isn't clocked out yet...\n"
+            + "Workday: " + tempWorkday.toString()
             );
       }
 
@@ -50,9 +50,9 @@ public class Employee {
       // If the timestamp is in the middle of another workday - error
       if (input.isAfter(tempWorkday.getTimeIn()) && input.isBefore(tempWorkday.getTimeOut())) {
         throw new IllegalArgumentException(
-          "** Input was in between workday **\n" + 
-          "Check in: " + tempWorkday.getTimeIn().toString() + "\n" +
-          "Check out: " + tempWorkday.getTimeOut().toString()
+          "** Input was in between workday **\n"
+          + "Check in: " + tempWorkday.getTimeIn().toString() + "\n"
+          + "Check out: " + tempWorkday.getTimeOut().toString()
         );
       }
 
@@ -64,7 +64,9 @@ public class Employee {
       // As long as we are not checking the last workday
       if (0 < i) {
         // If input is in between tempWorkday and the one before
-        if (this.workdays.get(i - 1).getTimeOut().isBefore(input) && input.isBefore(tempWorkday.getTimeIn())) {
+        if (this.workdays.get(i - 1).getTimeOut().isBefore(input)
+            &&
+            input.isBefore(tempWorkday.getTimeIn())) {
           return;
         }
       }
@@ -72,17 +74,18 @@ public class Employee {
     }
   }
 
-  private void validateCheckOutTimestamp(LocalDateTime input, Workday workday) throws IllegalArgumentException {
+  private void validateCheckOutTimestamp(LocalDateTime input, Workday workday) 
+      throws IllegalArgumentException {
 
     if (input.isBefore(workday.getTimeIn())) {
       throw new IllegalArgumentException(
-        "Input cannot be before the workday started!\n" +
-        "Check in: " + workday.getTimeIn().toString() + "\n" +
-        "Input: " + input.toString() 
+        "Input cannot be before the workday started!\n"
+        + "Check in: " + workday.getTimeIn().toString() + "\n"
+        + "Input: " + input.toString() 
       );
     }
 
-    if(workday.equals(this.getLatestWorkday())) {
+    if (workday.equals(this.getLatestWorkday())) {
       return;
     }
 
@@ -92,21 +95,22 @@ public class Employee {
 
       // If we are at the latest workday which is not closed,
       // the new workday must be before the latest workday.
-      if(tempWorkday.equals(this.getLatestWorkday()) || 
-        input.isAfter(tempWorkday.getTimeIn())) {
-        if(!tempWorkday.isTimedOut()) {
-          if(workday.getTimeIn().isAfter(tempWorkday.getTimeIn())) {
+      if (tempWorkday.equals(this.getLatestWorkday()) 
+          || 
+          input.isAfter(tempWorkday.getTimeIn())) {
+        if (!tempWorkday.isTimedOut()) {
+          if (workday.getTimeIn().isAfter(tempWorkday.getTimeIn())) {
             throw new IllegalArgumentException(
-              "** Input comes in conflict with the following workday **\n" +
-              "Check in: " + tempWorkday.getTimeIn().toString() + "\n" +
-              "Input: " + input.toString()
+              "** Input comes in conflict with the following workday **\n"
+              + "Check in: " + tempWorkday.getTimeIn().toString() + "\n"
+              + "Input: " + input.toString()
             );
           }
           continue;
         }
       }
 
-      if(workday.getTimeIn().isAfter(tempWorkday.getTimeOut())) {
+      if (workday.getTimeIn().isAfter(tempWorkday.getTimeOut())) {
         return;
       }
 
@@ -114,10 +118,10 @@ public class Employee {
       if (i == 0) {
         if (input.isAfter(tempWorkday.getTimeIn())) {
           throw new IllegalArgumentException(
-            "** Input comes in conflict with the following workday **\n" +
-            "Check in: " + tempWorkday.getTimeIn().toString() + "\n" +
-            "Check out: " + tempWorkday.getTimeOut().toString() + "\n" +
-            "Input: " + input.toString()
+            "** Input comes in conflict with the following workday **\n"
+            + "Check in: " + tempWorkday.getTimeIn().toString() + "\n"
+            + "Check out: " + tempWorkday.getTimeOut().toString() + "\n"
+            + "Input: " + input.toString()
           );
         }
       }
@@ -128,10 +132,10 @@ public class Employee {
 
       if (input.isAfter(tempWorkday.getTimeIn())) {
         throw new IllegalArgumentException(
-          "** Input comes in conflict with the following workday **\n" +
-          "Check in: " + tempWorkday.getTimeIn().toString() + "\n" +
-          "Check out: " + tempWorkday.getTimeOut().toString() + "\n" + 
-          "Input: " + input.toString() + "\n"
+          "** Input comes in conflict with the following workday **\n"
+          + "Check in: " + tempWorkday.getTimeIn().toString() + "\n"
+          + "Check out: " + tempWorkday.getTimeOut().toString() + "\n"
+          + "Input: " + input.toString() + "\n"
         );
       } else {
         return;
@@ -141,7 +145,8 @@ public class Employee {
 
   }
   
-  public void checkIn(LocalDateTime dateTimeInput) throws IllegalStateException, IllegalArgumentException {
+  public void checkIn(LocalDateTime dateTimeInput) 
+      throws IllegalStateException, IllegalArgumentException {
     if (isAtWork()) { 
       throw new IllegalStateException(this.toString() + " is already at work!");
     }
@@ -151,7 +156,8 @@ public class Employee {
     System.out.println(this.toString() + " checked in at: " + dateTimeInput);
   }
   
-  public void checkOut(LocalDateTime dateTimeInput) throws IllegalStateException, IllegalArgumentException {
+  public void checkOut(LocalDateTime dateTimeInput) 
+      throws IllegalStateException, IllegalArgumentException {
     if (!isAtWork()) { 
       throw new IllegalStateException(this.toString() + " is not at work!");
     }
@@ -174,11 +180,13 @@ public class Employee {
     if (this.workdays.size() < 1) {
       return null;
     }
-    return this.workdays.get(this.workdays.size()-1);
+    return this.workdays.get(this.workdays.size() - 1);
   }
   
   public boolean isAtWork() { 
-    if(this.workdays.size() < 1) return false;
+    if (this.workdays.size() < 1) { 
+      return false;
+    }
     return !this.getLatestWorkday().isTimedOut();
   }
   
@@ -189,14 +197,14 @@ public class Employee {
     if (!workday.isTimedOut() && 0 < this.workdays.size()) {
       if (!this.getLatestWorkday().isTimedOut()) {
         throw new IllegalArgumentException(
-          "** Cannot add another open workday while another open workday is open **\n" +
-          "Conflicting workday: " + this.getLatestWorkday().toString()
+          "** Cannot add another open workday while another open workday is open **\n"
+          + "Conflicting workday: " + this.getLatestWorkday().toString()
         );
       }
       if (this.getLatestWorkday().getTimeOut().isAfter(workday.getTimeIn())) {
         throw new IllegalArgumentException(
-          "** An open workday cannot be set before an earlier workday. **\n" +
-          "Conflicting workday: " + this.getLatestWorkday().toString()
+          "** An open workday cannot be set before an earlier workday. **\n"
+          + "Conflicting workday: " + this.getLatestWorkday().toString()
         );
       }
     }
@@ -210,7 +218,8 @@ public class Employee {
     this.sortWorkdaysAscending();
   }
 
-  public void editWorkday(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut) throws IllegalArgumentException {
+  public void editWorkday(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut)
+      throws IllegalArgumentException {
     if (!this.workdays.contains(workday)) { 
       throw new IllegalArgumentException(
         "Workday: " + workday.toString()
@@ -223,12 +232,10 @@ public class Employee {
     editedWorkday.setTimeOut(timeOut);
     try {
       this.addWorkday(editedWorkday);
-    }
-    catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
       this.addWorkday(workday);
       throw new IllegalArgumentException(e.getMessage());
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       this.addWorkday(workday);
       throw new IllegalArgumentException(e.getMessage());
     }
@@ -255,7 +262,9 @@ public class Employee {
   }
 
   private void sortWorkdaysAscending() {
-    this.workdays.sort((a, b) -> { return a.getTimeIn().compareTo(b.getTimeIn()); });
+    this.workdays.sort((a, b) -> { 
+      return a.getTimeIn().compareTo(b.getTimeIn()); 
+    });
   }
   
   @Override

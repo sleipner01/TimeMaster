@@ -106,6 +106,10 @@ public class Employee {
         }
       }
 
+      if(workday.getTimeIn().isAfter(tempWorkday.getTimeOut())) {
+        return;
+      }
+
       // If we are at the first workday and the checkout comes in conflict with the workday
       if (i == 0) {
         if (input.isAfter(tempWorkday.getTimeIn())) {
@@ -204,6 +208,30 @@ public class Employee {
 
     this.workdays.add(workday);
     this.sortWorkdaysAscending();
+  }
+
+  public void editWorkday(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut) throws IllegalArgumentException {
+    if (!this.workdays.contains(workday)) { 
+      throw new IllegalArgumentException(
+        "Workday: " + workday.toString()
+        + " doesn't exist at " + this.toString()
+      );
+    }
+
+    this.deleteWorkday(workday);
+    Workday editedWorkday = new Workday(timeIn);
+    editedWorkday.setTimeOut(timeOut);
+    try {
+      this.addWorkday(editedWorkday);
+    }
+    catch (IllegalArgumentException e) {
+      this.addWorkday(workday);
+      throw new IllegalArgumentException(e.getMessage());
+    }
+    catch (Exception e) {
+      this.addWorkday(workday);
+      throw new IllegalArgumentException(e.getMessage());
+    }
   }
 
   public void deleteWorkday(Workday workday) throws IllegalArgumentException {

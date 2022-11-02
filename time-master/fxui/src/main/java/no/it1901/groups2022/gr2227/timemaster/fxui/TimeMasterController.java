@@ -530,12 +530,11 @@ public class TimeMasterController {
   }
 
   private void saveWorkdayEditChoices(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut) {
-    System.out.println(timeIn + " " + timeOut);
+    timeMaster.editWorkday(workday, timeIn, timeOut);
     showWorkdayHistory();
   }
 
   private void deleteWorkday(Workday workday) {
-    System.out.println("Deleting...");
     try {
       timeMaster.deleteWorkdayFromEmployee(workday);
       updateDisplay();

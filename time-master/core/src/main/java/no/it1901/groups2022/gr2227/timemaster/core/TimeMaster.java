@@ -113,6 +113,14 @@ public class TimeMaster {
     return this.getChosenEmployee().getWorkdays();
   }
 
+  public void editWorkday(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut) throws IllegalStateException, IllegalArgumentException {
+    if (this.chosenEmployee == null) {
+      throw new IllegalStateException("No employee is selected");
+    }
+    this.getChosenEmployee().editWorkday(workday, timeIn, timeOut);
+    saveEmployees();
+  }
+
   public void deleteWorkdayFromEmployee(Workday workday) throws IllegalStateException, IllegalArgumentException {
     if (this.chosenEmployee == null) {
       throw new IllegalStateException("No employee is selected");

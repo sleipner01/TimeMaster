@@ -119,6 +119,7 @@ public class TimeMaster {
     }
 
     this.getChosenEmployee().deleteWorkday(workday);
+    saveEmployees();
   }
 
 }

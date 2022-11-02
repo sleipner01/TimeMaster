@@ -82,7 +82,9 @@ public class TimeMasterController {
         @Override
         protected void updateItem(Workday item, boolean empty) {
           super.updateItem(item, empty);
-          if(!(item == null)) {
+          if(item == null || empty) {
+            setText(null);
+          } else {
             setText(item.toString());
           }
         }
@@ -112,7 +114,9 @@ public class TimeMasterController {
         @Override
         protected void updateItem(Employee item, boolean empty) {
           super.updateItem(item, empty);
-          if (!(item == null)) {
+          if (item == null || empty) {
+            setText(null);
+          } else {
             setText(item.getName());
           }
         }
@@ -527,13 +531,14 @@ public class TimeMasterController {
 
   private void saveWorkdayEditChoices(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut) {
     System.out.println(timeIn + " " + timeOut);
+    showWorkdayHistory();
   }
 
   private void deleteWorkday(Workday workday) {
     System.out.println("Deleting...");
     try {
       timeMaster.deleteWorkdayFromEmployee(workday);
-      showWorkdayHistory();
+      updateDisplay();
     } catch (IllegalArgumentException e) {
       displayError(e.getMessage());
     } catch (IllegalStateException e) {
@@ -542,6 +547,8 @@ public class TimeMasterController {
       displayError("Something went wrong!\n" + e.getMessage());
       e.printStackTrace();
     }
+
   }
+  
 
 }

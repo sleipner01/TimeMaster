@@ -32,8 +32,13 @@ public class TimeMaster {
     return LocalDateTime.now();
   }
   
-  public void setChosenEmployee(int index) throws Exception {
-    this.chosenEmployee = this.employees.get(index);
+  public void setChosenEmployee(Employee employee) throws IllegalArgumentException {
+    if (!this.employees.contains(employee)) {
+      throw new IllegalArgumentException(
+        employee.toString() + " does not exist"
+      );
+    }
+    this.chosenEmployee = employee;
   }
   
   public Employee getChosenEmployee() {

@@ -3,7 +3,6 @@ package no.it1901.groups2022.gr2227.timemaster.fxui;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.Optional;
 
 import javafx.beans.value.ChangeListener;
@@ -28,11 +27,12 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import no.it1901.groups2022.gr2227.timemaster.core.TimeMaster;
 import no.it1901.groups2022.gr2227.timemaster.core.Workday;
+import no.it1901.groups2022.gr2227.timemaster.core.Employee;
 
 public class TimeMasterController {
 
   private TimeMaster timeMaster;
-  private ObservableList<String> observableEmployeeList;
+  private ObservableList<Employee> observableEmployeeList;
   private ObservableList<Workday> observableWorkdayList;
 
   @FXML
@@ -62,7 +62,7 @@ public class TimeMasterController {
   @FXML
   private ListView<Workday> workdayHistoryList;
   @FXML
-  private ListView<String> chooseEmployeeListView;
+  private ListView<Employee> chooseEmployeeListView;
 
   @FXML
   private void initialize() {
@@ -108,17 +108,19 @@ public class TimeMasterController {
     chooseEmployeeListView.setItems(observableEmployeeList);
 
     chooseEmployeeListView.setCellFactory(lv -> {
-      ListCell<String> cell = new ListCell<String>() {
+      ListCell<Employee> cell = new ListCell<Employee>() {
         @Override
-        protected void updateItem(String item, boolean empty) {
+        protected void updateItem(Employee item, boolean empty) {
           super.updateItem(item, empty);
-          setText(item);
+          if (!(item == null)) {
+            setText(item.getName());
+          }
         }
       };
       cell.setOnMouseClicked(e -> {
         if (!cell.isEmpty()) {
           System.out.println("You clicked on " + cell.getItem());
-          setChosenEmployee(cell.getIndex());
+          setChosenEmployee(cell.getItem());
           e.consume();
         }
       });
@@ -255,17 +257,12 @@ public class TimeMasterController {
   }
 
   private void updateEmployeeMenu() {
-    List<String> employeeList = timeMaster.getEmployees()
-        .stream()
-        .map(employee -> employee.getName())
-        .toList();
-
-    observableEmployeeList.setAll(employeeList);
+    observableEmployeeList.setAll(timeMaster.getEmployees());
   }
 
-  private void setChosenEmployee(int index) {
+  private void setChosenEmployee(Employee employee) {
     try {
-      timeMaster.setChosenEmployee(index);
+      timeMaster.setChosenEmployee(employee);
       updateDisplay();
     } catch (Exception e) {
       e.printStackTrace();

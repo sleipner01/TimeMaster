@@ -39,20 +39,21 @@ public class TimeMasterTest {
   @Test
   public void chooseEmployeeTest() {
     timeMaster.createEmployee("Anna");
-    assertDoesNotThrow(() -> timeMaster.setChosenEmployee(0));
+    timeMaster.getEmployees().get(0);
+    assertDoesNotThrow(() -> timeMaster.setChosenEmployee(timeMaster.getEmployees().get(0)));
     assertEquals("Anna", timeMaster.getChosenEmployee().getName());
   }
 
   @Test
   public void clockEmployeeInOutTest() {
     timeMaster.createEmployee("Anna");
-    assertDoesNotThrow(() -> timeMaster.setChosenEmployee(0));
+    assertDoesNotThrow(() -> timeMaster.setChosenEmployee(timeMaster.getEmployees().get(0)));
     assertDoesNotThrow(() -> timeMaster.clockEmployeeInOut(LocalDateTime.now()));
   }
 
   @Test void autoClockEmployeeInOutTest() {
     timeMaster.createEmployee("Anna");
-    assertDoesNotThrow(() -> timeMaster.setChosenEmployee(0));
+    assertDoesNotThrow(() -> timeMaster.setChosenEmployee(timeMaster.getEmployees().get(0)));
     assertDoesNotThrow(() -> timeMaster.autoClockEmployeeInOut());
   }
 

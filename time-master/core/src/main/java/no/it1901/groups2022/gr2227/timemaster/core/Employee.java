@@ -156,7 +156,7 @@ public class Employee {
     return !this.getLatestWorkday().isTimedOut();
   }
   
-  public void addWorkday(Workday workday) {
+  public void addWorkday(Workday workday) throws IllegalArgumentException {
     if (this.workdays.contains(workday)) { 
       throw new IllegalArgumentException("Workday is already added.");
     }
@@ -182,6 +182,17 @@ public class Employee {
 
     this.workdays.add(workday);
     this.sortWorkdaysAscending();
+  }
+
+  public void deleteWorkday(Workday workday) throws IllegalArgumentException {
+    if (!this.workdays.contains(workday)) { 
+      throw new IllegalArgumentException(
+        "Workday: " + workday.toString()
+        + " doesn't exist at " + this.toString()
+      );
+    }
+
+    this.workdays.remove(workday);
   }
   
   public ArrayList<Workday> getWorkdays() {

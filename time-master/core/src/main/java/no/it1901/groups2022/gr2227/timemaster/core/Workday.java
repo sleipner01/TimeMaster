@@ -51,6 +51,10 @@ public class Workday {
   }
 
   private boolean isValidInput(LocalDateTime input) {
+    // Checking for null to satify JSONParser setTimeOut()
+    if (input == null) {
+      return true;
+    }
     if (input.isBefore(this.timeIn)) {
       return false;
     }

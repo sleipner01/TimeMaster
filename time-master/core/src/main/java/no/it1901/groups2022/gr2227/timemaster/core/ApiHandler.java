@@ -38,7 +38,7 @@ public class ApiHandler {
    *
    * @return              a HttpURL Connection
    *
-   * @throws IOException
+   * @throws IOException  throws exception if can't connect to server
    */
   private HttpURLConnection setConnection(String path, String requestMethod) throws IOException { 
     HttpURLConnection connection = (HttpURLConnection) new URL(baseUrl + path).openConnection();
@@ -61,7 +61,7 @@ public class ApiHandler {
     return response;
   }
 
-  private void request(String path, String req, String reqMethod) throws IOException{
+  private void request(String path, String req, String reqMethod) throws IOException {
     HttpURLConnection connection = setConnection(path, reqMethod);
     connection.setDoOutput(true);
     connection.setRequestProperty("Content-Type", "application/json");
@@ -95,12 +95,12 @@ public class ApiHandler {
     return this.jsonParser.readWorkdays(this.getResponse(name));
   }
 
-  public void createEmployee(Employee employee) throws IOException{
-    request("employees", this.jsonParser.write(employee),"POST");
+  public void createEmployee(Employee employee) throws IOException {
+    request("employees", this.jsonParser.write(employee), "POST");
   }
 
   public void updateEmployee(Employee employee) throws IOException {
-    request("employees/" + employee.getId(), this.jsonParser.write(employee),"PUT");
+    request("employees/" + employee.getId(), this.jsonParser.write(employee), "PUT");
   }
 
   public void deleteEmployee(Employee employee) throws IOException {
@@ -117,27 +117,31 @@ public class ApiHandler {
     try {
       HttpURLConnection connection = setConnection("", "GET");
       int responseCode = connection.getResponseCode();
-      if(200 <= responseCode && responseCode < 300) {
+      if (200 <= responseCode && responseCode < 300) {
         System.out.println("********************" + "\n");
         String response = "";
-          Scanner scanner = new Scanner(connection.getInputStream());
-          while (scanner.hasNextLine()) {
-            response += scanner.nextLine();
-            response += "\n";
-          }
-          scanner.close();
+        Scanner scanner = new Scanner(connection.getInputStream());
+        while (scanner.hasNextLine()) {
+          response += scanner.nextLine();
+          response += "\n";
+        }
+        scanner.close();
         
-          System.out.println(response);
+        System.out.println(response);
         System.out.println("********************" + "\n");
         return true;
-      }
-      else {
-        System.err.println( "********************" + "\n" +
-          "The server isn't responding properly.\n" + 
-          "Reponse code: " + connection.getResponseCode() + "\n" +
-          "Response message: " + connection.getResponseMessage() + "\n" +
-          "********************"
-          );
+      } else {
+        System.err.println("********************" 
+            + "\n" 
+            + "The server isn't responding properly.\n" 
+            + "Reponse code: " 
+            + connection.getResponseCode() 
+            + "\n" 
+            + "Response message: " 
+            + connection.getResponseMessage() 
+            + "\n" 
+            + "********************"
+        );
         return false;
       }
     } catch (IOException e) {

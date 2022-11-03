@@ -192,7 +192,16 @@ public class TimeMaster {
       throw new IllegalStateException("No employee is chosen...");
     }
 
-
+    try {
+      System.out.println(chosenEmployee.getId());
+      this.apiHandler.deleteEmployee(chosenEmployee);
+      this.readEmployees();
+      this.chosenEmployee = null;
+    } catch (Exception e) {
+      // TODO: Handle exeption if server is offline
+      System.err.println("Server is probably offline");
+      e.printStackTrace();
+    }
   }
 
 }

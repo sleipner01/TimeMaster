@@ -21,6 +21,8 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -41,6 +43,8 @@ public class TimeMasterController {
   @FXML
   private Button autoRegisterTimeButton;
   @FXML
+  private Button removeEmployeeButton;
+  @FXML
   private DatePicker chooseDateButton;
   @FXML
   private TextField inputHour;
@@ -57,9 +61,15 @@ public class TimeMasterController {
   @FXML
   private Text statusText;
   @FXML
+  private Text addStatus;
+  @FXML
+  private Text removeStatus;
+  @FXML
   private Text clockInInfo;
   @FXML
   private Text historyEmployeeName;
+  @FXML 
+  private MenuButton removeEmployeeMenu;
   @FXML
   private ListView<Workday> workdayHistoryList;
   @FXML
@@ -73,6 +83,7 @@ public class TimeMasterController {
     workDayHistoryListenerSetup();
     limitTextFieldToTwoNumbers(inputHour);
     limitTextFieldToTwoNumbers(inputMinutes);
+    updateEmployees();
   }
 
   /**
@@ -206,7 +217,10 @@ public class TimeMasterController {
 
   private void updateDisplay() {
     setTimeRegisterInputs();
-    setEmployeeStatus();
+    if (timeMaster.employeeIsSet()) {
+      setEmployeeStatus();
+    }
+    updateRemoveEmployeeMenu();
   }
 
   private void setTimeRegisterInputs() {
@@ -271,6 +285,12 @@ public class TimeMasterController {
     this.inputMinutes.clear();
   }
 
+  private void updateEmployees() {
+    updateEmployeeMenu();
+    updateRemoveEmployeeMenu();
+  }
+
+
   private void updateEmployeeMenu() {
     observableEmployeeList.setAll(timeMaster.getEmployees());
   }
@@ -290,7 +310,7 @@ public class TimeMasterController {
     try {
       timeMaster.createEmployee(newEmployeeName.getText());
       newEmployeeName.clear();
-      updateEmployeeMenu();
+      updateEmployees();
     } catch (IllegalArgumentException e) {
       displayError(e.getMessage());
     } catch (Exception e) {
@@ -565,4 +585,20 @@ public class TimeMasterController {
 
   }
 
+  @FXML
+  private void handleRemoveEmployee() {
+    System.out.println("Skidadle");
+  }
+
+  private void updateRemoveEmployeeMenu() {
+    this.removeEmployeeMenu.getItems().clear();
+    
+    timeMaster.getEmployees().forEach((employee) -> {
+      MenuItem menuItem = new MenuItem(employee.getName());
+      // menuItem.setOnAction(a -> setChosenEmployee(index));
+      this.removeEmployeeMenu.getItems().add(menuItem);
+    });
+  }
+
 }
+

@@ -42,7 +42,7 @@ public class TimeMasterController {
   @FXML
   private Button autoRegisterTimeButton;
   @FXML
-  private Button removeEmployeeButton;
+  private Button deleteEmployeeButton;
   @FXML
   private DatePicker chooseDateButton;
   @FXML
@@ -62,13 +62,15 @@ public class TimeMasterController {
   @FXML
   private Text addStatus;
   @FXML
-  private Text removeStatus;
+  private Text deleteStatus;
   @FXML
-  private Text clockInInfo;
+  private Text clockInInfo;  
+  @FXML
+  private Text stampInEmployeeName;
   @FXML
   private Text historyEmployeeName;
   @FXML 
-  private MenuButton removeEmployeeMenu;
+  private MenuButton deleteEmployeeMenu;
   @FXML
   private ListView<Workday> workdayHistoryList;
   @FXML
@@ -82,7 +84,7 @@ public class TimeMasterController {
     workDayHistoryListenerSetup();
     limitTextFieldToTwoNumbers(inputHour);
     limitTextFieldToTwoNumbers(inputMinutes);
-    updateEmployeeMenu();
+    updateDisplay();
   }
 
   /**
@@ -216,9 +218,13 @@ public class TimeMasterController {
 
   private void updateDisplay() {
     setTimeRegisterInputs();
+    setDeleteButtonStatus();
     if (timeMaster.employeeIsSet()) {
       setEmployeeStatus();
     }
+    updateEmployeeMenu();
+    addStatus.setText(null);
+    deleteStatus.setText(null);
   }
 
   private void setTimeRegisterInputs() {
@@ -237,11 +243,24 @@ public class TimeMasterController {
     setTimeRegisterButtons();
     setClockInInfoLabel();
     showWorkdayHistory();
+    setStampInEmployeeName();
     setHistoryEmployeeName();
   }
 
   public void setHistoryEmployeeName() {
     this.historyEmployeeName.setText(timeMaster.getChosenEmployee().getName());
+  }
+
+  public void setStampInEmployeeName() {
+    this.stampInEmployeeName.setText(timeMaster.getChosenEmployee().getName());
+  }
+
+  private void setDeleteButtonStatus() {
+    if (!timeMaster.employeeIsSet()) {
+      deleteEmployeeButton.setDisable(true);
+    } else {
+      deleteEmployeeButton.setDisable(false);
+    }
   }
 
   private void setStatusIndicator() {
@@ -578,15 +597,26 @@ public class TimeMasterController {
   }
 
   @FXML
-  private void handleRemoveEmployee() {
+  private void handleDeleteEmployee() {
     if (!timeMaster.employeeIsSet()) {
       displayError("Employee is not set.");
       return;
     }
     System.out.println("Deleting " + timeMaster.getChosenEmployee().getName());
-    timeMaster.deleteChosenEmployee();
-    removeStatus.setText("Success! Employee was deleted");
-    updateEmployeeMenu();
+    try {
+      timeMaster.deleteChosenEmployee();
+      updateDisplay();
+      deleteStatus.setText("Success! Employee was deleted");
+      deleteStatus.setFill(Color.GREEN);
+    } catch (IllegalStateException e) {
+      displayError(e.getMessage());
+      deleteStatus.setText("Something went wrong...");
+      deleteStatus.setFill(Color.RED);
+    } 
+    catch (Exception e) {
+      displayError(e.getMessage());
+      e.printStackTrace();
+    }
   }
 
 }

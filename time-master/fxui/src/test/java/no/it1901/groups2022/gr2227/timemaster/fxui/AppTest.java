@@ -39,6 +39,7 @@ public class AppTest extends ApplicationTest {
     FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("timeMaster.fxml"));
     root = fxmlLoader.load();
     controller = fxmlLoader.getController();
+    controller.setupJsonParser();
     controller.setApplicationInTestState();
     stage.setScene(new Scene(root));
     stage.show();

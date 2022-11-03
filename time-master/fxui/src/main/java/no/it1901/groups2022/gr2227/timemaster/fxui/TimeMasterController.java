@@ -219,9 +219,7 @@ public class TimeMasterController {
   private void updateDisplay() {
     setTimeRegisterInputs();
     setDeleteButtonStatus();
-    if (timeMaster.employeeIsSet()) {
-      setEmployeeStatus();
-    }
+    setEmployeeStatus();
     updateEmployeeMenu();
     addStatus.setText(null);
     deleteStatus.setText(null);
@@ -248,23 +246,33 @@ public class TimeMasterController {
   }
 
   public void setHistoryEmployeeName() {
-    this.historyEmployeeName.setText(timeMaster.getChosenEmployee().getName());
+    if (timeMaster.employeeIsSet()) {
+      this.historyEmployeeName.setText(timeMaster.getChosenEmployee().getName());
+    } else {
+      this.historyEmployeeName.setText("Employee");
+    }
   }
 
   public void setStampInEmployeeName() {
-    this.stampInEmployeeName.setText(timeMaster.getChosenEmployee().getName());
+    if (timeMaster.employeeIsSet()) {
+      this.stampInEmployeeName.setText(timeMaster.getChosenEmployee().getName());
+    } else {
+      this.stampInEmployeeName.setText("Employee");
+    }
   }
 
   private void setDeleteButtonStatus() {
     if (!timeMaster.employeeIsSet()) {
       deleteEmployeeButton.setDisable(true);
+      deleteEmployeeButton.setText("Not available");
     } else {
       deleteEmployeeButton.setDisable(false);
+      deleteEmployeeButton.setText("Delete " + timeMaster.getChosenEmployee().getName());
     }
   }
 
   private void setStatusIndicator() {
-    if (timeMaster.getChosenEmployee().isAtWork()) {
+    if (timeMaster.employeeIsSet() && timeMaster.getChosenEmployee().isAtWork()) {
       statusIndicator.setFill(Color.GREEN);
     } else {
       statusIndicator.setFill(Color.GRAY);
@@ -272,7 +280,7 @@ public class TimeMasterController {
   }
 
   private void setStatusText() {
-    if (timeMaster.getChosenEmployee().isAtWork()) {
+    if (timeMaster.employeeIsSet() && timeMaster.getChosenEmployee().isAtWork()) {
       statusText.setText("Active");
     } else {
       statusText.setText("Off");
@@ -280,7 +288,7 @@ public class TimeMasterController {
   }
 
   private void setTimeRegisterButtons() {
-    if (timeMaster.getChosenEmployee().isAtWork()) {
+    if (timeMaster.employeeIsSet() && timeMaster.getChosenEmployee().isAtWork()) {
       registerTimeButton.setText("Check out");
       autoRegisterTimeButton.setText("Check out");
     } else {
@@ -290,7 +298,7 @@ public class TimeMasterController {
   }
 
   private void setClockInInfoLabel() {
-    if (timeMaster.getChosenEmployee().isAtWork()) {
+    if (timeMaster.employeeIsSet() && timeMaster.getChosenEmployee().isAtWork()) {
       clockInInfo.setText("Clocked in at: " + timeMaster.getChosenEmployee().getLatestClockIn());
     } else {
       clockInInfo.setText(null);

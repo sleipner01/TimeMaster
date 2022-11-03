@@ -6,8 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,20 +39,21 @@ public class TimeMasterTest {
   @Test
   public void chooseEmployeeTest() {
     timeMaster.createEmployee("Anna");
-    assertDoesNotThrow(() -> timeMaster.setChosenEmployee(0));
+    timeMaster.getEmployees().get(0);
+    assertDoesNotThrow(() -> timeMaster.setChosenEmployee(timeMaster.getEmployees().get(0)));
     assertEquals("Anna", timeMaster.getChosenEmployee().getName());
   }
 
   @Test
   public void clockEmployeeInOutTest() {
     timeMaster.createEmployee("Anna");
-    assertDoesNotThrow(() -> timeMaster.setChosenEmployee(0));
-    assertDoesNotThrow(() -> timeMaster.clockEmployeeInOut(LocalDate.EPOCH, LocalTime.MIDNIGHT));
+    assertDoesNotThrow(() -> timeMaster.setChosenEmployee(timeMaster.getEmployees().get(0)));
+    assertDoesNotThrow(() -> timeMaster.clockEmployeeInOut(LocalDateTime.now()));
   }
 
   @Test void autoClockEmployeeInOutTest() {
     timeMaster.createEmployee("Anna");
-    assertDoesNotThrow(() -> timeMaster.setChosenEmployee(0));
+    assertDoesNotThrow(() -> timeMaster.setChosenEmployee(timeMaster.getEmployees().get(0)));
     assertDoesNotThrow(() -> timeMaster.autoClockEmployeeInOut());
   }
 

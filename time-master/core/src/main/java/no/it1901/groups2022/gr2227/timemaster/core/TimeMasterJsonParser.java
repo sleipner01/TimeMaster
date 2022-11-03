@@ -9,7 +9,8 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import no.it1901.groups2022.gr2227.timemaster.mixin.Mixin;
+import no.it1901.groups2022.gr2227.timemaster.mixin.EmployeeMixin;
+import no.it1901.groups2022.gr2227.timemaster.mixin.WorkdayMixin;
 
 public class TimeMasterJsonParser {
   
@@ -19,7 +20,8 @@ public class TimeMasterJsonParser {
   public TimeMasterJsonParser(Path dir, String fileName) {
     this.mapper = new ObjectMapper();
     this.mapper.configure(Feature.AUTO_CLOSE_SOURCE, true);
-    this.mapper.addMixIn(Employee.class, Mixin.class);
+    this.mapper.addMixIn(Employee.class, EmployeeMixin.class);
+    this.mapper.addMixIn(Workday.class, WorkdayMixin.class);
     this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
     this.mapper.registerModule(new JavaTimeModule());
     this.filePath = Paths.get(dir.toString(), fileName).toString();

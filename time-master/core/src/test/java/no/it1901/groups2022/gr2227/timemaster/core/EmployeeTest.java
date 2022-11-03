@@ -6,8 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,8 @@ public class EmployeeTest {
 	String testName = "testName";
 	Employee employee1;
 	Employee employee2;
+	LocalDateTime dateTime1;
+	LocalDateTime dateTime2;
 	Workday workday1;
 	Workday workday2;
 	
@@ -24,13 +27,18 @@ public class EmployeeTest {
 	public void createEmployee() {
 		employee1 = new Employee(testName);
 		employee2 = new Employee(testName);
-		
 	}
 	
 	@BeforeEach
+	public void createDateTimes() {
+		dateTime1 = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
+		dateTime2 = LocalDateTime.of(1970, 1, 1, 2, 0, 0);;
+	}
+
+	@BeforeEach
 	public void createWorkdays() {
-		workday1 = new Workday(LocalDate.parse("2022-09-19"), LocalTime.parse("01:02"));
-		workday2 = new Workday(LocalDate.parse("2022-09-20"), LocalTime.parse("06:00"));
+		workday1 = new Workday(dateTime1);
+		workday2 = new Workday(dateTime2);
 	}
 	
 	@Test
@@ -45,33 +53,35 @@ public class EmployeeTest {
 	
 	@Test
 	public void checkInTest() {
-		employee1.checkIn(LocalDate.parse("1970-01-01"), LocalTime.parse("00:00"));
+		employee1.checkIn(dateTime1);
 		assertTrue(employee1.isAtWork());
 	}
 	
 	@Test
 	public void checkOutTest() {
-		employee1.checkIn(LocalDate.parse("1970-01-01"), LocalTime.parse("00:00"));
-		employee1.checkOut(LocalTime.parse("12:00"));
+		employee1.checkIn(dateTime1);
+		employee1.checkOut(dateTime2);
 		assertFalse(employee1.isAtWork());
 	}
 	
 	@Test
-	public void getDateTest() {
-		employee1.checkIn(LocalDate.parse("1970-01-01"), LocalTime.parse("00:00"));
-		assertEquals("1970-01-01", 
-		employee1.getDate(LocalDate.parse("1970-01-01")).getDate().toString());
+	public void getTimeInTest() {
+		employee1.checkIn(dateTime1);
+		assertEquals(dateTime1.toString(), 
+		employee1.getWorkdays().get(0).getTimeIn().toString());
 	}
 	
 	@Test
 	public void getLatestClockInTest() {
-		employee1.checkIn(LocalDate.parse("1970-01-01"), LocalTime.parse("00:00"));
-		assertEquals("1970-01-01 00:00", employee1.getLatestClockIn());
+		employee1.checkIn(dateTime1);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E. MMM dd yyyy - HH:mm", Locale.getDefault());
+		assertEquals(dateTime1.format(formatter), employee1.getLatestClockIn());
 	}
 	
 	@Test
 	public void addWorkdaysTest() {
 		employee1.addWorkday(workday1);
+		employee1.checkOut(dateTime1.plusHours(1));
 		assertTrue(employee1.getWorkdays().size() == 1);
 		assertTrue(employee1.getWorkdays().get(0).equals(workday1));
 		employee1.addWorkday(workday2);

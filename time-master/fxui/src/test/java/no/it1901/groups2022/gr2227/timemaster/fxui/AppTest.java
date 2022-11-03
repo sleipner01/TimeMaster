@@ -1,13 +1,11 @@
 package no.it1901.groups2022.gr2227.timemaster.fxui;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -16,12 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -89,19 +84,7 @@ public class AppTest extends ApplicationTest {
     clickOn("#addNewEmployeeButton");
     clickOn(LabeledMatchers.hasText("Stamp In"));
 
-    ArrayList<String> names = getEmployees();
-    assertTrue(names.contains(testName));
-  }
-
-  private ArrayList<String> getEmployees() {
-    MenuButton employeesButton = lookup("#chooseEmployeeButton").query();
-    ObservableList<MenuItem> employees = employeesButton.getItems();
-    
-    ArrayList<String> employeeNames = new ArrayList<>();
-    for (MenuItem employee : employees) {
-      employeeNames.add(employee.getText());
-    }
-    return employeeNames;
+    FxAssert.verifyThat(testName, LabeledMatchers.hasText(testName));
   }
 
   @Test
@@ -111,9 +94,6 @@ public class AppTest extends ApplicationTest {
     clickOn("#newEmployeeName").write(testName);
     clickOn("#addNewEmployeeButton");
     clickOn(LabeledMatchers.hasText("Stamp In"));
-
-    clickOn("#newEmployeeName").write(testName);
-    clickOn("#chooseEmployeeButton");
     clickOn(LabeledMatchers.hasText(testName));
     clickOn("#autoRegisterTimeButton");
 

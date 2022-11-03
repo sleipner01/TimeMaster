@@ -156,13 +156,7 @@
                      <VBox layoutY="188.0">
                         <children>
                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h1" text="Remove Employee" />
-                           <MenuButton fx:id="removeEmployeeMenu" mnemonicParsing="false" text="MenuButton">
-                             <items>
-                               <MenuItem mnemonicParsing="false" text="Action 1" />
-                               <MenuItem mnemonicParsing="false" text="Action 2" />
-                             </items>
-                           </MenuButton>
-                           <Button fx:id="removeEmployeeButton" mnemonicParsing="false" onAction="#handleRemoveEmployee" text="Remove Employee" />
+                           <Button fx:id="removeEmployeeButton" mnemonicParsing="false" onAction="#handleRemoveEmployee" text="Delete current employee" />
                            <Text fx:id="removeStatus" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                         </children>
                         <padding>

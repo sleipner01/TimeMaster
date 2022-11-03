@@ -2,7 +2,7 @@
 .DS_Store
 
 # Local VSCode settings
-#.vscode
+.vscode
 
 # ignore maven build folder
 time-master/*/target/
@@ -10,6 +10,7 @@ time-master/target/
 
 # Application save-files
 time-master/core/timeMasterSaveFiles/*.json
+time-master/rest/timeMasterSaveFiles/*.json
 
 # Log files
 *.log

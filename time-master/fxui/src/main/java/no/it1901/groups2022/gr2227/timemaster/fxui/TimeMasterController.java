@@ -1,5 +1,6 @@
 package no.it1901.groups2022.gr2227.timemaster.fxui;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -73,6 +74,21 @@ public class TimeMasterController {
     limitTextFieldToTwoNumbers(inputMinutes);
   }
 
+  /**
+   * For testing purposes. Turning off API calls.
+   */
+  public void setApplicationInTestState() {
+    timeMaster.setApplicationInTestState();
+  }
+
+  /**
+   * For testing purposes.
+   * Resetting to Production state if needed after testing.
+   */
+  public void setApplicationInProductionState() {
+    timeMaster.setApplicationInProductionState();
+  }
+
   private void workDayHistoryListenerSetup() {
     observableWorkdayList = FXCollections.observableArrayList();
     workdayHistoryList.setItems(observableWorkdayList);
@@ -82,7 +98,7 @@ public class TimeMasterController {
         @Override
         protected void updateItem(Workday item, boolean empty) {
           super.updateItem(item, empty);
-          if(item == null || empty) {
+          if (item == null || empty) {
             setText(null);
           } else {
             setText(item.toString());
@@ -136,9 +152,13 @@ public class TimeMasterController {
     });
   }
 
-  public void setupJsonParser(String fileName) {
-    this.timeMaster = new TimeMaster(fileName);
-    timeMaster.readEmployees();
+  public void setupJsonParser() {
+    this.timeMaster = new TimeMaster();
+    try {
+      timeMaster.readEmployees();
+    } catch (Exception e) {
+      displayError(e.getMessage());
+    }
     this.updateEmployeeMenu();
   }
 
@@ -306,7 +326,8 @@ public class TimeMasterController {
   }
 
   private void emptyWorkdayHistory() {
-    observableWorkdayList.clear();;
+    observableWorkdayList.clear();
+    ;
   }
 
   private boolean confirmationDialog(String body) {
@@ -530,7 +551,11 @@ public class TimeMasterController {
   }
 
   private void saveWorkdayEditChoices(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut) {
-    timeMaster.editWorkday(workday, timeIn, timeOut);
+    try {
+      timeMaster.editWorkday(workday, timeIn, timeOut);
+    } catch (IOException e) {
+      displayError(e.getMessage());
+    }
     showWorkdayHistory();
   }
 
@@ -548,6 +573,5 @@ public class TimeMasterController {
     }
 
   }
-  
 
 }

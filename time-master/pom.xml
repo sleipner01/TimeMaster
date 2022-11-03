@@ -25,6 +25,7 @@
     <module>fxui</module>
     <module>coverage</module>
     <module>mixin</module>
+    <module>rest</module>
   </modules>
 
   <build>
@@ -144,7 +145,6 @@
           </executions>
         </plugin>
       </plugins>
-
     </pluginManagement>
   </build>
 

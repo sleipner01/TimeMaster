@@ -8,12 +8,26 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+/**
+ * FileHandler is a class that reads to and from file.
+ * It encapulates 
+ * <ul>
+ *  <li> ObjectMapper reads to and writes from file. 
+ *  <li> String dir is the path to where write and read.
+ *  <li> String fileName name of the file that is read or written.
+ * </ul>
+ */
 public class FileHandler {
 
-  final ObjectMapper mapper;
-  final String dir;
-  String fileName;
+  private final ObjectMapper mapper;
+  private final String dir;
+  private final String fileName;
 
+  /**
+   * Makes a FileHandler object.
+   *
+   * @param name name of the file being written to or read from.
+   */
   public FileHandler(String name) {
     this.mapper = new ObjectMapper();
     this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -30,6 +44,11 @@ public class FileHandler {
     }
   }
 
+  /**
+   * Reads from a file.
+   *
+   * @return JsonNode of the information from mapper
+   */
   public JsonNode readFile() {
     try {
       return this.mapper.readTree(
@@ -41,6 +60,13 @@ public class FileHandler {
     }
   }
 
+  /**
+   * Parses a String to JsonNode.
+   *
+   * @param val the string being parsed to JsonNode
+   *
+   * @return JsonNode of the input string
+   */
   public JsonNode parseString(String val) {
     try {
       return this.mapper.readTree(val);
@@ -50,6 +76,11 @@ public class FileHandler {
     }
   }
 
+  /**
+   * Writes an object to the file.
+   *
+   * @param val the object being written to file.
+   */
   public void write(Object val) {
     try {
       this.mapper.writeValue(

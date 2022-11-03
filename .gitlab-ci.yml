@@ -6,6 +6,7 @@ variables:
 
 stages:
   - build
+  - serverSetup
   - test
   - coverage
   # - site
@@ -20,13 +21,20 @@ build:
   script:
     - cd time-master; mvn clean compile $MAVEN_CLI_OPTS
 
+apiServer:
+  stage: serverSetup
+  script:
+    - cd time-master/rest; nohup mvn exec:java &
+
 test:
   stage: test
+  needs: ["apiServer"]
   script:
     - cd time-master; mvn test $MAVEN_CLI_OPTS
 
 coverageReport:
   stage: coverage
+  needs: ["test"]
   coverage: '/Total.*?([0-9]{1,3})%/'
   script:
     - cd time-master; mvn verify $MAVEN_CLI_OPTS

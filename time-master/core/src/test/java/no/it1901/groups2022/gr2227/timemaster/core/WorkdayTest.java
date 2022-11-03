@@ -4,28 +4,21 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 
 public class WorkdayTest {
   
-  LocalDate testDate = LocalDate.parse("2022-09-19");
-  LocalTime testTimeIn = LocalTime.parse("01:02");
-  LocalTime testTimeOut = LocalTime.parse("06:00");
+  LocalDateTime testTimeIn = LocalDateTime.now();
+  LocalDateTime testTimeOut = LocalDateTime.now().plusHours(2);
   
   Workday workday;
   
   @BeforeEach
   public void createWorkday() {
-    workday = new Workday(testDate, testTimeIn);
-  }
-  
-  @Test
-  public void testGetDate() {
-    assertEquals(testDate, workday.getDate());
+    workday = new Workday(testTimeIn);
   }
   
   @Test
@@ -43,11 +36,15 @@ public class WorkdayTest {
   @Test
   @DisplayName("Test toString")
   public void testToString() {
-    String expectedStringNotTimeOut = testDate.toString() + "," + testTimeIn + "," + null;
-    String expectedStringTimeOut = testDate.toString() + "," + testTimeIn + "," + testTimeOut;
-    assertEquals(expectedStringNotTimeOut, workday.toString());
-    workday.setTimeOut(testTimeOut);
-    assertEquals(expectedStringTimeOut, workday.toString());
+    String correctTime1 = "THURSDAY 1 JANUARY 1970            |         00:00         |              ";
+    String correctTime2 = "THURSDAY 1 JANUARY 1970            |         00:00         |         01:00";
+    Workday workday = new Workday(LocalDateTime.of(1970, 1, 1, 0, 0, 0));
+
+    assertEquals(workday.toString(), correctTime1);
+
+    workday.setTimeOut(LocalDateTime.of(1970, 1, 1, 1, 0, 0));
+
+    assertEquals(workday.toString(), correctTime2);
   }
   
 }

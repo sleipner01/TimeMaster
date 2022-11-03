@@ -1,9 +1,10 @@
 package no.it1901.groups2022.gr2227.timemaster.mixin;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Mixin class for Workday.java.
- * Any special cases to handle while 
+ * Any special cases to handle while
  * saving to file via Jackson JSONparser.
  *
  * @author Magnus Byrkjeland
@@ -18,7 +19,8 @@ public abstract class WorkdayMixin {
    *
    * @return method to ignore when running Json parser.
    */
-  @JsonIgnore abstract boolean isTimedOut(); 
+  @JsonIgnore
+  abstract boolean isTimedOut();
 
   /**
    * There is no setter or field for this method,
@@ -26,7 +28,8 @@ public abstract class WorkdayMixin {
    *
    * @return method to ignore when running Json parser.
    */
-  @JsonIgnore abstract String getTimeInAsFormattedString();
+  @JsonIgnore
+  abstract String getTimeInAsFormattedString();
 
   /**
    * There is no setter or field for this method,
@@ -34,5 +37,6 @@ public abstract class WorkdayMixin {
    *
    * @return method to ignore when running Json parser.
    */
-  @JsonIgnore abstract String getTimeOutAsFormattedString();
+  @JsonIgnore
+  abstract String getTimeOutAsFormattedString();
 }

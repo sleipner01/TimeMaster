@@ -4,14 +4,54 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * Employee is a class to store data about employees in the application.
+ * It depends on Workday to store an employees working hours.
+ * An Employee object encapsulates the following:
+ *
+ * <ul>
+ * <li>The employees id
+ * <li>The employees name
+ * <li>The employees list of Workdays
+ * <li>The employees status (at work or not)
+ * </ul>
+ *
+ * <p>The id is generated with java.util.UUID
+ *
+ * <p>The name is supplied through the constructor as has to follow spesific rules.
+ * //TODO: Insert regex rule
+ * 
+ * <p>An employees Workdays are stored in an ArrayList.
+ * This makes it easy to access all listed workdays as the data
+ * should be easily altered.
+ *
+ * <p>The Employee object stores an atWork field to store the state
+ * across sessions. As long as the Employee object is stated at work,
+ * the latest workday has to be closed before a new one can be created.
+ *
+ * @author Amalie Erdal Mansåker
+ * @author Magnus Byrkjeland
+ * @version %I%, %G%
+ * @since 1.0
+ */
 public class Employee {
   
   private String id;
   private String name;
   private ArrayList<Workday> workdays = new ArrayList<>();
   
+  /**
+   * Used for JSON-parser.
+   */
   public Employee() {}
   
+  /**
+   * Creates an Employee object.
+   * An employee-id is automatically created using java.util.UUID.
+   *
+   * @param name Has to follow regex rule: //TODO: insert regex rule
+   */
+
   public Employee(String name) {
     this.id = generateId();
     this.name = name;
@@ -144,7 +184,22 @@ public class Employee {
     }
 
   }
-  
+
+  /**
+   * Creates a new workday with the supplied parameters.
+   * Will be stored in a list, accessable through <code>getWorkdays()</code>.
+   *
+   * <p>The Employee object atWork field will be set <code>true</code>.
+   *
+   * @param date the date of started workday.
+   * @param time the time if started workday.
+   * @throws IllegalStateException    if the Employee is at work.
+   * @throws IllegalArgumentException if the supplied parameters
+   *                                  comes in conflict with another saved
+   *                                  workday.
+   * @see java.time.LocalDate
+   * @see java.time.LocalTime
+   */
   public void checkIn(LocalDateTime dateTimeInput) 
       throws IllegalStateException, IllegalArgumentException {
     if (isAtWork()) { 
@@ -156,6 +211,16 @@ public class Employee {
     System.out.println(this.toString() + " checked in at: " + dateTimeInput);
   }
   
+  /**
+   * Ends the latest added workday with the supplied parameters.
+   *
+   * <p>The Employee object atWork field will be set <code>false</code>.
+   *
+   * @param time the time of the ending workday.
+   * @throws IllegalStateException if the Employee isn't at work..
+   * @see java.time.LocalDate
+   * @see java.time.LocalTime
+   */
   public void checkOut(LocalDateTime dateTimeInput) 
       throws IllegalStateException, IllegalArgumentException {
     if (!isAtWork()) { 
@@ -168,10 +233,22 @@ public class Employee {
     System.out.println(this.toString() + " checked out at: " + dateTimeInput);
   }
   
+  /**
+   * Id created with UUID.
+   *
+   * @return employee id as a string.
+   * @see java.util.UUID
+   */
   public String getId() { 
     return this.id; 
   }
   
+  /**
+   * The name is stored as a single field.
+   * Any prefixes or suffixes are already included.
+   *
+   * @return <code>String</code> with the employee's name.
+   */
   public String getName() { 
     return this.name; 
   }
@@ -183,6 +260,16 @@ public class Employee {
     return this.workdays.get(this.workdays.size() - 1);
   }
   
+  /**
+   * Important state for the employee which controls sertain methods.
+   *
+   * <p><code>false</code> enables {@link Employee#checkIn(LocalDate, LocalTime)}.
+   *
+   * <p><code>true</code> enables {@link Employee#checkOut(LocalTime)}.
+   *
+   * @return <code>true</code> with the employee is at work.
+   *         Otherwise: <code>false</code>
+   */
   public boolean isAtWork() { 
     if (this.workdays.size() < 1) { 
       return false;
@@ -190,6 +277,12 @@ public class Employee {
     return !this.getLatestWorkday().isTimedOut();
   }
   
+  /**
+   * Stores the workday in the Employee-object.
+   *
+   * @param workday @see Workday
+   * @throws IllegalStateException If the Workday-object is already added
+   */
   public void addWorkday(Workday workday) throws IllegalArgumentException {
     if (this.workdays.contains(workday)) { 
       throw new IllegalArgumentException("Workday is already added.");
@@ -218,6 +311,7 @@ public class Employee {
     this.sortWorkdaysAscending();
   }
 
+  // TODO: Javadoc
   public void editWorkday(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut)
       throws IllegalArgumentException {
     if (!this.workdays.contains(workday)) { 
@@ -241,6 +335,7 @@ public class Employee {
     }
   }
 
+  // TODO: Javadoc
   public void deleteWorkday(Workday workday) throws IllegalArgumentException {
     if (!this.workdays.contains(workday)) { 
       throw new IllegalArgumentException(
@@ -252,10 +347,21 @@ public class Employee {
     this.workdays.remove(workday);
   }
   
+  /**
+   * The returned list is mutable. Any actions performed won't affect the list in the object.
+   *
+   * @return List of Workday-objects added in the Employee-object
+   */
   public ArrayList<Workday> getWorkdays() {
     return new ArrayList<>(this.workdays);
   }
   
+  /**
+   * Uses the sorted Workdays-list to retrieve the latest workday.
+   *
+   * @return                        clock-in time represented as a string: Date Time
+   * @throws IllegalStateExeption   if there are no workdays.
+   */
   public String getLatestClockIn() {
     Workday latest = workdays.get(workdays.size() - 1);
     return latest.getTimeInAsFormattedString();
@@ -267,9 +373,13 @@ public class Employee {
     });
   }
   
+  /**
+   * Returns a string representation of the object.
+   *
+   * @return employee represented as: id,name
+   */
   @Override
   public String toString() {
     return this.id + "," + this.getName();
   }
-  
 }

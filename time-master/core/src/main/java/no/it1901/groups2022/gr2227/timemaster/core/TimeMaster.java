@@ -17,14 +17,16 @@ public class TimeMaster {
   public TimeMaster() {
     this.employees = new ArrayList<Employee>();
     this.apiHandler = new ApiHandler();
-    try {
-      this.readEmployees();
-    } catch (IOException e) {
-      System.err.println("Api is not responding...");
-    }
 
-    // Default state. Will be overwritten if needed.
+    // TODO: Check API status
     this.setApplicationInProductionState();
+  }
+
+  public TimeMaster(boolean test) {
+    this.employees = new ArrayList<Employee>();
+    this.apiHandler = new ApiHandler();
+
+    this.setApplicationInTestState();
   }
 
   /**
@@ -32,11 +34,13 @@ public class TimeMaster {
    */
   public void setApplicationInTestState() {
     this.state = State.TEST;
+    this.employees.clear();
   }
 
   /**
-   * For testing purposes.
-   * To reset TimeMaster state to production if needed after testing.
+   * Setting application in production mode to enable API.
+   * Also useful to reset TimeMaster state to production
+   * if needed after testing.
    */
   public void setApplicationInProductionState() {
     this.state = State.PRODUCTION;
@@ -67,7 +71,30 @@ public class TimeMaster {
   }
 
   public ArrayList<Employee> getEmployees() {
-    return new ArrayList<>(this.employees);
+    switch (state) {
+      case TEST:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
+        return new ArrayList<>(this.employees);
+
+      // TODO: Add APIOFF state
+
+      default:
+        // In case the Application have been started and need to refresh
+        if (this.employees.size() == 0) {
+          try {
+            this.readEmployees();
+          } catch (IOException e) {
+            System.out.println("Could not connect to the API");
+            // TODO: Set in APIOFF state
+            e.printStackTrace();
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        }
+      return new ArrayList<>(this.employees);
+    }
+
+    
   }
 
   public void createEmployee(String name) throws IllegalArgumentException, IOException {
@@ -85,7 +112,7 @@ public class TimeMaster {
 
       default:
         this.apiHandler.createEmployee(employee);
-        this.readEmployees(); // Updates the list of employees after a new employee has been added.
+        this.readEmployees();
         break;
     }
   }

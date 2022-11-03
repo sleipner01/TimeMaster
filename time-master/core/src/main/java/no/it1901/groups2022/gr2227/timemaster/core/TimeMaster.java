@@ -182,4 +182,17 @@ public class TimeMaster {
     this.apiHandler.updateEmployee(this.getChosenEmployee());
   }
 
+  /**
+   * Deleting the chosen employee.
+   * 
+   * @throws IllegalStateException if no employee is set.
+   */
+  public void deleteChosenEmployee() throws IllegalStateException {
+    if (!this.employeeIsSet()) {
+      throw new IllegalStateException("No employee is chosen...");
+    }
+
+
+  }
+
 }

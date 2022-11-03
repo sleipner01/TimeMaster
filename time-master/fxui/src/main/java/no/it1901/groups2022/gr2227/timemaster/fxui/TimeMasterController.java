@@ -68,6 +68,7 @@ public class TimeMasterController {
   @FXML
   private void initialize() {
     this.chooseDateButton.setValue(LocalDate.now());
+    this.timeMaster = new TimeMaster();
     chooseEmployeeListenerSetup();
     workDayHistoryListenerSetup();
     limitTextFieldToTwoNumbers(inputHour);
@@ -150,16 +151,6 @@ public class TimeMasterController {
     chooseEmployeeListView.setOnMouseClicked(e -> {
       System.out.println("You clicked on an empty cell");
     });
-  }
-
-  public void setupJsonParser() {
-    this.timeMaster = new TimeMaster();
-    try {
-      timeMaster.readEmployees();
-    } catch (Exception e) {
-      displayError(e.getMessage());
-    }
-    this.updateEmployeeMenu();
   }
 
   @FXML

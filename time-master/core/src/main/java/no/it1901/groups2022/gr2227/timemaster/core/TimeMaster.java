@@ -17,6 +17,11 @@ public class TimeMaster {
   public TimeMaster() {
     this.employees = new ArrayList<Employee>();
     this.apiHandler = new ApiHandler();
+    try {
+      this.readEmployees();
+    } catch (IOException e) {
+      System.err.println("Api is not responding...");
+    }
 
     // Default state. Will be overwritten if needed.
     this.setApplicationInProductionState();

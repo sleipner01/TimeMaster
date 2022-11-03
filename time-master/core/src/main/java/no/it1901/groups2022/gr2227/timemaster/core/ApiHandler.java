@@ -7,14 +7,41 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/** 
+ * ApiHandler is the client side of the REST API, and makes requests to the server. 
+ * It encapsulates 
+ * <ul>
+ *  <li> String baseURL which is the base URL for all requests
+ *  <li> @see TimeMasterJsonPaser
+ * </ul>
+ * 
+*/
 public class ApiHandler {
 
-  final String baseURL = "http://localhost:8080/api/";
-  private TimeMasterJsonParser jsonParser = new TimeMasterJsonParser();
+  private final String baseUrl;
+  private TimeMasterJsonParser jsonParser;
+
+  /**
+   * Creates an ApiHandler object.
+   */
+  public ApiHandler() {
+    this.baseUrl = "http://localhost:8080/api/";
+    this.jsonParser = new TimeMasterJsonParser();
+  }
   
-  // https://happycoding.io/tutorials/java-server/rest-api
+  /**
+   * Creates the connection needed for requests.
+   *
+   * @param path          the path to set the connection
+   *
+   * @param requestMethod the type of request
+   *
+   * @return              a HttpURL Connection
+   *
+   * @throws IOException
+   */
   private HttpURLConnection setConnection(String path, String requestMethod) throws IOException { 
-    HttpURLConnection connection = (HttpURLConnection) new URL(baseURL + path).openConnection();
+    HttpURLConnection connection = (HttpURLConnection) new URL(baseUrl + path).openConnection();
     connection.setRequestMethod(requestMethod);
     return connection;
   }

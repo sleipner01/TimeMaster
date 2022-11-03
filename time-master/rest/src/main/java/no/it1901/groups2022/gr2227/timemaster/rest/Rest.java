@@ -1,9 +1,3 @@
-/** 
- * Rest is the server side of the REST API, and responds to requests from the client. 
- * It encapsulates a filehandler object, which writes to and reads from a file.
- * 
-*/
-
 package no.it1901.groups2022.gr2227.timemaster.rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -24,6 +18,11 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/** 
+ * Rest is the server side of the REST API, and responds to requests from the client. 
+ * It encapsulates a filehandler object, which writes to and reads from a file.
+ * 
+*/
 @Path("api")
 public class Rest {
 
@@ -51,7 +50,7 @@ public class Rest {
 
   /**
    * Gets a list of all employees.
-   * 
+   *
    * @return Json node of all employees.
    */
   @Path("employees")
@@ -63,8 +62,9 @@ public class Rest {
 
   /**
    * Creates a new employee.
-   * 
+   *
    * @param req the employee object as JsonNode to be added.
+   *
    * @return 201 Created response.
    */
   @Path("employees")
@@ -80,9 +80,11 @@ public class Rest {
 
   /**
    * Updates an employee object.
-   * 
+   *
    * @param req the employee object to be updated as JsonNode.
+   *
    * @param id  the ID of the employee, works as path.
+   *
    * @return either a 200 OK or 404 Not Found response.
    */
   @Path("employees/{id}")
@@ -104,8 +106,9 @@ public class Rest {
 
   /**
    * Gets the given employee.
-   * 
+   *
    * @param id ID of employee, works as path.
+   *
    * @return employee by ID as node.
    */
   @Path("employees/{id}")
@@ -121,7 +124,8 @@ public class Rest {
   }
 
   /**
-   * @function checks if server is running.
+   * Checks if server is running.
+   *
    * @return 202 OK respons.
    */
   @Path("")
@@ -137,8 +141,10 @@ public class Rest {
   }
 
   /**
-   * @function deletes the given employee.
+   * Deletes the given employee.
+   *
    * @param id the ID of the employee, works as path.
+   *
    * @return either a 200 OK or 404 Not Found response.
    */
   @Path("employees/{id}")

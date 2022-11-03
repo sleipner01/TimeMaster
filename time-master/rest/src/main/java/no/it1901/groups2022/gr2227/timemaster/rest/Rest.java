@@ -13,6 +13,8 @@ import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+
+import jakarta.json.Json;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -106,13 +108,13 @@ public class Rest {
   @Path("employees/{id}")
   @Produces("application/json")
   @GET
-  public JsonNode getEmployeeById(@PathParam("id") String id) {
+  public Response getEmployeeById(@PathParam("id") String id) {
       for (JsonNode node : fileHandler.readFile()) {
         if (node.get("id").textValue().equals(id)) {
-          return node;
+          return Response.status(Status.OK).entity(node).build();
         }
       }
-    return null;
+      return Response.status(Status.NOT_FOUND).build();
   }
 
   /**

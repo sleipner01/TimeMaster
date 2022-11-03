@@ -1,3 +1,9 @@
+/** 
+ * Rest is the server side of the REST API, and responds to requests from the client. 
+ * It encapsulates a filehandler object, which writes to and reads from a file.
+ * 
+*/
+
 package no.it1901.groups2022.gr2227.timemaster.rest;
 
 import java.io.File;
@@ -23,6 +29,10 @@ public class Rest {
 
   FileHandler fileHandler;
 
+  /**
+   * Creates a Rest object.
+   * 
+   */
   public Rest() {
     if (new File(Paths.get(System.getProperty("user.dir"), "../rest/timeMasterSaveFiles").toString(), "employeesTest.json").exists()) {
       fileHandler = new FileHandler("employeesTest.json");
@@ -37,6 +47,12 @@ public class Rest {
     return "Hello, World!";
   }
 
+
+  
+  /**
+   * Gets a list of all employees.
+   * @return Json node of all employees.
+   */
   @Path("employees")
   @Produces("application/json")
   @GET
@@ -44,6 +60,12 @@ public class Rest {
       return fileHandler.readFile();
   }
 
+  
+  /**
+   * Creates a new employee.
+   * @param req the employee object as JsonNode to be added.
+   * @return 201 Created response.
+   */
   @Path("employees")
   @Consumes("application/json")
   @POST
@@ -54,6 +76,12 @@ public class Rest {
       return Response.status(Response.Status.CREATED).entity("Created employee with id:" + req.get("id")).build();
   }
 
+ /**
+  * Updates an employee object.
+  * @param req the employee object to be updated as JsonNode.
+  * @param id the ID of the employee, works as path.
+  * @return either a 200 OK or 404 Not Found response.
+  */
   @Path("employees/{id}")
   @Consumes("application/json")
   @PUT
@@ -70,6 +98,11 @@ public class Rest {
     return Response.status(Status.NOT_FOUND).entity(Status.NOT_FOUND.getReasonPhrase()).build();
   }
 
+  /**
+   * Gets the given employee.
+   * @param id ID of employee, works as path.
+   * @return employee by ID as node.
+   */
   @Path("employees/{id}")
   @Produces("application/json")
   @GET
@@ -82,6 +115,10 @@ public class Rest {
     return null;
   }
 
+  /**
+   * @function checks if server is running.
+   * @return 202 OK respons.
+   */
   @Path("")
   @Produces({ MediaType.TEXT_PLAIN })
   @GET
@@ -94,6 +131,11 @@ public class Rest {
       .build();
   }
 
+  /**
+   * @function deletes the given employee.
+   * @param id the ID of the employee, works as path. 
+   * @return either a 200 OK or 404 Not Found response.
+   */
   @Path("employees/{id}")
   @Consumes("application/json")
   @DELETE

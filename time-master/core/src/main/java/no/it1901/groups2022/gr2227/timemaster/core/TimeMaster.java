@@ -263,20 +263,57 @@ public class TimeMaster {
     this.apiHandler.updateEmployee(this.getChosenEmployee());
   }
 
+  /**
+   * Deletes the provided workday from the chosen employee.
+   * Conditional executions based on which state the application is set in.
+   *
+   * @param workday                     Workday to be deleted.
+   * @throws IllegalStateException      If no employee is set.
+   * @throws IllegalArgumentException   If the provided workday doesn't exist at the employee.
+   * @throws IOException                If API call fails
+   *
+   * @see TimeMaster#setChosenEmployee(Employee)
+   * @see TimeMaster#getChosenEmployee(Employee)
+   * @see TimeMaster#setApplicationInTestState()
+   * @see TimeMaster#setApplicationInLocalState()
+   * @see TimeMaster#setApplicationInProductionState()
+   */
   public void deleteWorkdayFromEmployee(Workday workday)
       throws IllegalStateException, IllegalArgumentException, IOException {
     if (this.chosenEmployee == null) {
       throw new IllegalStateException("No employee is selected");
     }
 
-    this.getChosenEmployee().deleteWorkday(workday);
-    this.apiHandler.updateEmployee(this.getChosenEmployee());
+    switch (state) {
+      case TEST:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
+        this.getChosenEmployee().deleteWorkday(workday);
+        break;
+    
+      case LOCAL:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
+        this.getChosenEmployee().deleteWorkday(workday);
+        break;
+
+      case PRODUCTION:
+        this.getChosenEmployee().deleteWorkday(workday);
+        this.apiHandler.updateEmployee(this.getChosenEmployee());
+        break;
+
+      default:
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
+        this.getChosenEmployee().deleteWorkday(workday);
+        break;
+    }
+
+
   }
 
   /**
    * Deleting the chosen employee.
    * 
-   * @throws IllegalStateException if no employee is set.
+   * @throws IllegalStateException  if no employee is set.
+   * @throws IOException            if the API fails
    */
   public void deleteChosenEmployee() throws IllegalStateException, IOException {
     if (!this.employeeIsSet()) {

@@ -323,11 +323,11 @@ public class TimeMasterController {
     observableEmployeeList.setAll(timeMaster.getEmployees());
   }
 
-  private boolean getAPIStatus() {
+  public boolean getAPIStatus() {
     return timeMaster.getAPIStatus();
   }
 
-  private boolean getIsUsingAPI() {
+  public boolean getIsUsingAPI() {
     return timeMaster.isUsingAPI();
   }
 

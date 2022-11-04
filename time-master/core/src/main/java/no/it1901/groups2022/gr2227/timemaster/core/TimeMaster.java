@@ -107,23 +107,27 @@ public class TimeMaster {
       case TEST:
         System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
         return new ArrayList<>(this.employees);
-
-      // TODO: Add APIOFF state
-
-      default:
+      case LOCAL:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
+        return new ArrayList<>(this.employees);
+      case PRODUCTION:
         // In case the Application have been started and need to refresh
         if (this.employees.size() == 0) {
           try {
             this.readEmployees();
           } catch (IOException e) {
             System.out.println("Could not connect to the API");
-            // TODO: Set in APIOFF state
             e.printStackTrace();
+            this.setApplicationInLocalState();
+
           } catch (Exception e) {
             e.printStackTrace();
           }
         }
-      return new ArrayList<>(this.employees);
+        return new ArrayList<>(this.employees);
+      default:
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
+        return new ArrayList<>(this.employees);
     }
 
     
@@ -135,17 +139,28 @@ public class TimeMaster {
       throw new IllegalArgumentException("Input required, please enter name");
     }
     Employee employee = new Employee(name);
-    this.employees.add(employee);
 
     switch (state) {
       case TEST:
         System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
+        this.employees.add(employee);
         break;
 
-      default:
+      case LOCAL:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
+        this.employees.add(employee);
+        break;
+
+      case PRODUCTION:
+        // Adding locally in case something goes wrong within the API implementation.
+        this.employees.add(employee);
+
         this.apiHandler.createEmployee(employee);
         this.readEmployees();
         break;
+      default:
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT IMPLEMENTATION***");
+        this.employees.add(employee);
     }
   }
 
@@ -178,8 +193,17 @@ public class TimeMaster {
         System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
         break;
 
-      default:
+      case LOCAL:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
+        break;
+
+      case PRODUCTION:
         this.apiHandler.updateEmployee(this.getChosenEmployee());
+        break;
+
+      default:
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
+
         break;
     }
 
@@ -206,8 +230,16 @@ public class TimeMaster {
         System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
         break;
 
-      default:
+      case LOCAL:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
+        break;
+
+      case PRODUCTION:
         this.apiHandler.updateEmployee(this.getChosenEmployee());
+        break;
+
+      default:
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
         break;
     }
 

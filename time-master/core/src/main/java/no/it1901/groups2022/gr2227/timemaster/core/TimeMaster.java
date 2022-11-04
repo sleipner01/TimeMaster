@@ -18,19 +18,20 @@ public class TimeMaster {
     this.employees = new ArrayList<Employee>();
     this.apiHandler = new ApiHandler();
 
-    if(this.getAPIStatus()) {
-      this.setApplicationInProductionState();
-    } else {
-      this.setApplicationInLocalState();
-    }
-      
+    this.setApplicationInProductionState();      
   }
 
   public TimeMaster(boolean test) {
     this.employees = new ArrayList<Employee>();
     this.apiHandler = new ApiHandler();
 
-    this.setApplicationInTestState();
+    // Since it's neccessary to check test,
+    // it's not possible to use this()
+    if(test) {
+      this.setApplicationInTestState();
+    } else {
+      this.setApplicationInProductionState();
+    }
   }
 
   /**
@@ -49,8 +50,13 @@ public class TimeMaster {
    * if needed after testing.
    */
   public void setApplicationInProductionState() {
-    this.state = State.PRODUCTION;
-    System.out.println("** Application set in production state **");
+    if(this.getAPIStatus()) {
+      this.state = State.PRODUCTION;
+      System.out.println("** Application set in production state **");
+    } else {
+      System.out.println("** Could not connect to the API. Setting to local state. **");
+      this.setApplicationInLocalState();
+    }
   }
 
   /**

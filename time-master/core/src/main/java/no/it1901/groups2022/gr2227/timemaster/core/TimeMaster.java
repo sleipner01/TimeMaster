@@ -311,9 +311,16 @@ public class TimeMaster {
 
   /**
    * Deleting the chosen employee.
+   * Conditional executions based on which state the application is set in.
    * 
    * @throws IllegalStateException  if no employee is set.
    * @throws IOException            if the API fails
+   *
+   * @see TimeMaster#setChosenEmployee(Employee)
+   * @see TimeMaster#getChosenEmployee(Employee)
+   * @see TimeMaster#setApplicationInTestState()
+   * @see TimeMaster#setApplicationInLocalState()
+   * @see TimeMaster#setApplicationInProductionState()
    */
   public void deleteChosenEmployee() throws IllegalStateException, IOException {
     if (!this.employeeIsSet()) {

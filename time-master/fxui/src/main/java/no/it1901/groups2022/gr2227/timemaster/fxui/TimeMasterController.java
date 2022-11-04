@@ -58,7 +58,11 @@ public class TimeMasterController {
   @FXML
   private Circle statusIndicator;
   @FXML
+  private Circle statusIndicatorAPI;
+  @FXML
   private Text statusText;
+  @FXML
+  private Text statusTextAPI;
   @FXML
   private Text addStatus;
   @FXML

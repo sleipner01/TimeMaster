@@ -16,6 +16,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -100,6 +102,16 @@ public class AppTest extends ApplicationTest {
 
     Text status = lookup("#statusText").query();
     FxAssert.verifyThat(status, s -> s.getText().equals("Active"));
+    Circle indicator = lookup("#statusIndicator").query();
+    FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GREEN));
+  }
+
+  @Test
+  public void testAPIStatus() {
+    Text status = lookup("#statusTextAPI").query();
+    FxAssert.verifyThat(status, s -> s.getText().equals("Offline"));
+    Circle indicator = lookup("#statusIndicatorAPI").query();
+    FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GRAY));
   }
 
 }

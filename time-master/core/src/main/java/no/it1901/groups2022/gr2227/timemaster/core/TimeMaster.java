@@ -18,8 +18,12 @@ public class TimeMaster {
     this.employees = new ArrayList<Employee>();
     this.apiHandler = new ApiHandler();
 
-    // TODO: Check API status
-    this.setApplicationInProductionState();
+    if(this.apiHandler.checkServerStatus()) {
+      this.setApplicationInProductionState();
+    } else {
+      this.setApplicationInLocalState();
+    }
+      
   }
 
   public TimeMaster(boolean test) {
@@ -44,6 +48,14 @@ public class TimeMaster {
    */
   public void setApplicationInProductionState() {
     this.state = State.PRODUCTION;
+  }
+
+  /**
+   * Disables API calls. Using internal lists. 
+   * No data will be saved if the application is closed.
+   */
+  public void setApplicationInLocalState() {
+    this.state = State.LOCAL;
   }
 
   public LocalDate getCurrentDate() {

@@ -631,5 +631,18 @@ public class TimeMasterController {
     }
   }
 
+
+  private boolean getAPIStatus() {
+    return timeMaster.getAPIStatus();
+  }
+
+  private void setAPIStatus() {
+    if(getAPIStatus()) {
+      // On
+    } else {
+      // Off
+    }
+  }
+
 }
 

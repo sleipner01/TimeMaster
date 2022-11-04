@@ -35,6 +35,7 @@ public class TimeMaster {
 
   /**
    * For testing purposes. Turns off API calls from TimeMaster.
+   * IMPORTANT: This methods clears internal lists.
    */
   public void setApplicationInTestState() {
     this.state = State.TEST;

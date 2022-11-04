@@ -325,11 +325,23 @@ public class TimeMasterController {
     return timeMaster.getAPIStatus();
   }
 
+  private boolean getIsUsingAPI() {
+    return timeMaster.isUsingAPI();
+  }
+
   private void setAPIStatus() {
-    if(this.getAPIStatus()) {
+    if(this.getAPIStatus() && getIsUsingAPI()) {
       // Online
       statusIndicatorAPI.setFill(Color.GREEN);
       statusTextAPI.setText("Online");
+    } else if (this.getAPIStatus() && (!this.getIsUsingAPI())) {
+      // Available
+      statusIndicatorAPI.setFill(Color.BLUE);
+      statusTextAPI.setText("Available");
+    } else if (((!this.getAPIStatus()) && this.getIsUsingAPI())) {
+      // Using API but API is unavailable
+      statusIndicatorAPI.setFill(Color.RED);
+      statusTextAPI.setText("Error");
     } else {
       // Offline
       statusIndicatorAPI.setFill(Color.GRAY);

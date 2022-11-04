@@ -78,7 +78,6 @@ public class TimeMaster {
    *          <code>false</code> if API is disconnected or not responding.
    */
   public boolean getAPIStatus() {
-
     return this.apiHandler.checkServerStatus();
   }
 

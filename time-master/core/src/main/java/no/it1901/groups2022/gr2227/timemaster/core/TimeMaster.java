@@ -39,6 +39,7 @@ public class TimeMaster {
   public void setApplicationInTestState() {
     this.state = State.TEST;
     this.employees.clear();
+    System.out.println("** Application set in testing state **");
   }
 
   /**
@@ -48,6 +49,7 @@ public class TimeMaster {
    */
   public void setApplicationInProductionState() {
     this.state = State.PRODUCTION;
+    System.out.println("** Application set in production state **");
   }
 
   /**
@@ -56,6 +58,7 @@ public class TimeMaster {
    */
   public void setApplicationInLocalState() {
     this.state = State.LOCAL;
+    System.out.println("** Application set in local state **");
   }
 
   /**

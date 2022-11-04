@@ -620,6 +620,10 @@ public class TimeMasterController {
       displayError(e.getMessage());
       deleteStatus.setText("Something went wrong...");
       deleteStatus.setFill(Color.RED);
+    } catch (IOException e) {
+      displayError(e.getMessage());
+      deleteStatus.setText("Something went wrong...");
+      deleteStatus.setFill(Color.RED);
     } 
     catch (Exception e) {
       displayError(e.getMessage());

@@ -278,21 +278,32 @@ public class TimeMaster {
    * 
    * @throws IllegalStateException if no employee is set.
    */
-  public void deleteChosenEmployee() throws IllegalStateException {
+  public void deleteChosenEmployee() throws IllegalStateException, IOException {
     if (!this.employeeIsSet()) {
       throw new IllegalStateException("No employee is chosen...");
     }
 
-    try {
-      System.out.println(chosenEmployee.getId());
-      this.apiHandler.deleteEmployee(chosenEmployee);
-      this.readEmployees();
-      this.chosenEmployee = null;
-    } catch (Exception e) {
-      // TODO: Handle exeption if server is offline
-      System.err.println("Server is probably offline");
-      e.printStackTrace();
-    }
+    switch (state) {
+
+      case TEST:
+        this.employees.remove(chosenEmployee);
+        break;
+
+      case LOCAL:
+        this.employees.remove(chosenEmployee);
+       break;
+
+      case PRODUCTION:
+        this.apiHandler.deleteEmployee(chosenEmployee);
+        this.readEmployees();
+        break;
+
+      default:
+        this.employees.remove(chosenEmployee);
+        break;
+      }
+
+    this.chosenEmployee = null;
   }
 
 }

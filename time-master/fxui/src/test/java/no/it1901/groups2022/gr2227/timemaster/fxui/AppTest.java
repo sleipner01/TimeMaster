@@ -109,7 +109,7 @@ public class AppTest extends ApplicationTest {
 
   @Test
   public void testAPIStatus() {
-    // assumeTrue(timeMasater);
+    // assumeTrue();
     Text status = lookup("#statusTextAPI").query();
     FxAssert.verifyThat(status, s -> s.getText().equals("Offline"));
     Circle indicator = lookup("#statusIndicatorAPI").query();

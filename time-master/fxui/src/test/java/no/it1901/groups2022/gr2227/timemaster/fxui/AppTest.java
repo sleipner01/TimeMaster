@@ -108,12 +108,30 @@ public class AppTest extends ApplicationTest {
   }
 
   @Test
-  public void testAPIStatus() {
-    // assumeTrue();
+  public void testAPIStatusOffline() {
+    assumeTrue((!controller.getAPIStatus()) && (!controller.getIsUsingAPI()));
     Text status = lookup("#statusTextAPI").query();
     FxAssert.verifyThat(status, s -> s.getText().equals("Offline"));
     Circle indicator = lookup("#statusIndicatorAPI").query();
     FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GRAY));
+  }
+
+  @Test
+  public void testAPIStatusAvailable() {
+    assumeTrue(controller.getAPIStatus() && (!controller.getIsUsingAPI()));
+    Text status = lookup("#statusTextAPI").query();
+    FxAssert.verifyThat(status, s -> s.getText().equals("Available"));
+    Circle indicator = lookup("#statusIndicatorAPI").query();
+    FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.BLUE));
+  }
+
+  @Test
+  public void testAPIStatusOnline() {
+    assumeTrue(controller.getAPIStatus() && controller.getIsUsingAPI());
+    Text status = lookup("#statusTextAPI").query();
+    FxAssert.verifyThat(status, s -> s.getText().equals("Online"));
+    Circle indicator = lookup("#statusIndicatorAPI").query();
+    FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GREEN));
   }
 
 }

@@ -97,6 +97,7 @@ public class TimeMasterController {
    */
   public void setApplicationInTestState() {
     timeMaster.setApplicationInTestState();
+    setAPIStatus();
   }
 
   /**
@@ -105,6 +106,7 @@ public class TimeMasterController {
    */
   public void setApplicationInProductionState() {
     timeMaster.setApplicationInProductionState();
+    setAPIStatus();
   }
 
   private void workDayHistoryListenerSetup() {

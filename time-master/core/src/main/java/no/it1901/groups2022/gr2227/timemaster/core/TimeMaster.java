@@ -286,10 +286,12 @@ public class TimeMaster {
     switch (state) {
 
       case TEST:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
         this.employees.remove(chosenEmployee);
         break;
 
       case LOCAL:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
         this.employees.remove(chosenEmployee);
        break;
 
@@ -299,6 +301,7 @@ public class TimeMaster {
         break;
 
       default:
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
         this.employees.remove(chosenEmployee);
         break;
       }

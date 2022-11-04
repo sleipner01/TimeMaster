@@ -88,7 +88,7 @@ public class TimeMasterController {
     workDayHistoryListenerSetup();
     limitTextFieldToTwoNumbers(inputHour);
     limitTextFieldToTwoNumbers(inputMinutes);
-    getAPIStatus();
+    setAPIStatus();
     updateDisplay();
   }
 
@@ -328,12 +328,12 @@ public class TimeMasterController {
   private void setAPIStatus() {
     if(getAPIStatus()) {
       // Online
-      statusIndicator.setFill(Color.GREEN);
-      statusText.setText("Online");
+      statusIndicatorAPI.setFill(Color.GREEN);
+      statusTextAPI.setText("Online");
     } else {
       // Offline
-      statusIndicator.setFill(Color.GRAY);
-      statusText.setText("Offline");
+      statusIndicatorAPI.setFill(Color.GRAY);
+      statusTextAPI.setText("Offline");
     }
   }
 

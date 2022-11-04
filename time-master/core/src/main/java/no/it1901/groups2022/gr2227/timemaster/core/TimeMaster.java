@@ -254,13 +254,52 @@ public class TimeMaster {
     return this.getChosenEmployee().getWorkdays();
   }
 
+
+  /**
+   * Edits the provided workday of the chosen employee.
+   * Conditional executions based on which state the application is set in.
+   * 
+   * @param workday                     Original workday.
+   * @param timeIn                      New timestamp for check in
+   * @param timeOut                     New timestamp for check out
+   * @throws IllegalStateException      If no employee is set
+   * @throws IllegalArgumentException   If the workday does not exist at the employee.
+   *                                    If the timestamps comes in conflict with some other
+   *                                    workdays at the employee or is not valid.
+   * @throws IOException                If the APU call fails.
+   *
+   * @see {@link Employee#editWorkday(Workday, LocalDateTime, LocalDateTime)}
+   * @see TimeMaster#setChosenEmployee(Employee)
+   * @see TimeMaster#getChosenEmployee(Employee)
+   * @see TimeMaster#setApplicationInTestState()
+   * @see TimeMaster#setApplicationInLocalState()
+   * @see TimeMaster#setApplicationInProductionState()
+   */
   public void editWorkday(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut)
       throws IllegalStateException, IllegalArgumentException, IOException {
     if (this.chosenEmployee == null) {
       throw new IllegalStateException("No employee is selected");
     }
+
     this.getChosenEmployee().editWorkday(workday, timeIn, timeOut);
-    this.apiHandler.updateEmployee(this.getChosenEmployee());
+
+    switch (state) {
+      case TEST:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
+        break;
+
+      case LOCAL:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
+        break;
+
+      case PRODUCTION:
+        this.apiHandler.updateEmployee(this.getChosenEmployee());
+        break;
+    
+      default:
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT EXECUTION***");
+        break;
+    }
   }
 
   /**

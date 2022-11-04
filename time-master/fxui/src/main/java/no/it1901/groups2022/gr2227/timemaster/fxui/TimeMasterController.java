@@ -88,6 +88,7 @@ public class TimeMasterController {
     workDayHistoryListenerSetup();
     limitTextFieldToTwoNumbers(inputHour);
     limitTextFieldToTwoNumbers(inputMinutes);
+    getAPIStatus();
     updateDisplay();
   }
 
@@ -204,6 +205,7 @@ public class TimeMasterController {
     } catch (Exception e) {
       e.printStackTrace();
       displayError(e.getMessage());
+      setAPIStatus();
     }
   }
 
@@ -217,6 +219,7 @@ public class TimeMasterController {
     } catch (Exception e) {
       e.printStackTrace();
       displayError(e.getMessage());
+      setAPIStatus();
     }
   }
 
@@ -318,6 +321,32 @@ public class TimeMasterController {
     observableEmployeeList.setAll(timeMaster.getEmployees());
   }
 
+  private boolean getAPIStatus() {
+    return timeMaster.getAPIStatus();
+  }
+
+  private void setAPIStatus() {
+    if(getAPIStatus()) {
+      // Online
+      statusIndicator.setFill(Color.GREEN);
+      statusText.setText("Online");
+    } else {
+      // Offline
+      statusIndicator.setFill(Color.GRAY);
+      statusText.setText("Offline");
+    }
+  }
+
+  private void setDeleteStatus(boolean success) {
+    if (success) {
+      deleteStatus.setText("Success! Employee was deleted");
+      deleteStatus.setFill(Color.GREEN);
+    } else {
+      deleteStatus.setText("Something went wrong...");
+      deleteStatus.setFill(Color.RED);
+    }
+  }
+
   private void setChosenEmployee(Employee employee) {
     try {
       timeMaster.setChosenEmployee(employee);
@@ -325,6 +354,7 @@ public class TimeMasterController {
     } catch (Exception e) {
       e.printStackTrace();
       displayError(e.getMessage());
+      setAPIStatus();
     }
   }
 
@@ -339,6 +369,7 @@ public class TimeMasterController {
     } catch (Exception e) {
       e.printStackTrace();
       displayError(e.getMessage());
+      setAPIStatus();
     }
 
   }
@@ -544,6 +575,7 @@ public class TimeMasterController {
     } catch (Exception e) {
       e.printStackTrace();
       displayError(e.getMessage());
+      setAPIStatus();
     }
 
   }
@@ -587,8 +619,17 @@ public class TimeMasterController {
   private void saveWorkdayEditChoices(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut) {
     try {
       timeMaster.editWorkday(workday, timeIn, timeOut);
+    } catch (IllegalArgumentException e) {
+      displayError(e.getMessage());
+    } catch (IllegalStateException e) {
+      displayError(e.getMessage());
     } catch (IOException e) {
       displayError(e.getMessage());
+      setAPIStatus();
+    } catch (Exception e) {
+      displayError(e.getMessage());
+      setAPIStatus();
+      e.printStackTrace();
     }
     showWorkdayHistory();
   }
@@ -604,6 +645,7 @@ public class TimeMasterController {
     } catch (Exception e) {
       displayError("Something went wrong!\n" + e.getMessage());
       e.printStackTrace();
+      setAPIStatus();
     }
 
   }
@@ -618,35 +660,20 @@ public class TimeMasterController {
     try {
       timeMaster.deleteChosenEmployee();
       updateDisplay();
-      deleteStatus.setText("Success! Employee was deleted");
-      deleteStatus.setFill(Color.GREEN);
+      setDeleteStatus(true);
     } catch (IllegalStateException e) {
       displayError(e.getMessage());
-      deleteStatus.setText("Something went wrong...");
-      deleteStatus.setFill(Color.RED);
+      setDeleteStatus(false);
     } catch (IOException e) {
       displayError(e.getMessage());
-      deleteStatus.setText("Something went wrong...");
-      deleteStatus.setFill(Color.RED);
+      setDeleteStatus(false);
+      setAPIStatus();
     } 
     catch (Exception e) {
       displayError(e.getMessage());
       e.printStackTrace();
-    }
-  }
-
-
-  private boolean getAPIStatus() {
-    return timeMaster.getAPIStatus();
-  }
-
-  private void setAPIStatus() {
-    if(getAPIStatus()) {
-      // On
-    } else {
-      // Off
+      setAPIStatus();
     }
   }
 
 }
-

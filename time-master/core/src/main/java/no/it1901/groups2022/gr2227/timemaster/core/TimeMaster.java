@@ -45,7 +45,7 @@ public class TimeMaster {
   }
 
   /**
-   * Setting application in production mode to enable API.
+   * Setting application in production mode. This will enable the API.
    * Also useful to reset TimeMaster state to production
    * if needed after testing.
    */
@@ -61,7 +61,10 @@ public class TimeMaster {
 
   /**
    * Disables API calls. Using internal lists. 
-   * No data will be saved if the application is closed.
+   * The API may still be running and available. 
+   * If API is wanted, see {@link TimeMaster#setApplicationInProductionState()}.
+   *
+   * <p> NOTE: No data will be saved if the application is closed.
    */
   public void setApplicationInLocalState() {
     this.state = State.LOCAL;
@@ -75,7 +78,33 @@ public class TimeMaster {
    *          <code>false</code> if API is disconnected or not responding.
    */
   public boolean getAPIStatus() {
+
     return this.apiHandler.checkServerStatus();
+  }
+
+  /**
+   * Depending on the state of the application, it will use the API or not.
+   *
+   * @return <code>true</code> if the application is using the API,
+   *         else <code>false</code>.
+   * @see TimeMaster#setApplicationInTestState()
+   * @see TimeMaster#setApplicationInLocalState()
+   * @see TimeMaster#setApplicationInProductionState()
+   */
+  public boolean isUsingAPI() {
+    switch (state) {
+      case TEST:
+        return false;
+
+      case LOCAL:
+        return false;
+
+      case PRODUCTION:
+        return true;
+      
+      default:
+        return false;
+    }
   }
 
   public LocalDate getCurrentDate() {

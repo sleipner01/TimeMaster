@@ -1,6 +1,7 @@
 package no.it1901.groups2022.gr2227.timemaster.fxui;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -108,6 +109,7 @@ public class AppTest extends ApplicationTest {
 
   @Test
   public void testAPIStatus() {
+    // assumeTrue(timeMasater);
     Text status = lookup("#statusTextAPI").query();
     FxAssert.verifyThat(status, s -> s.getText().equals("Offline"));
     Circle indicator = lookup("#statusIndicatorAPI").query();

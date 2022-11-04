@@ -326,7 +326,7 @@ public class TimeMasterController {
   }
 
   private void setAPIStatus() {
-    if(getAPIStatus()) {
+    if(this.getAPIStatus()) {
       // Online
       statusIndicatorAPI.setFill(Color.GREEN);
       statusTextAPI.setText("Online");

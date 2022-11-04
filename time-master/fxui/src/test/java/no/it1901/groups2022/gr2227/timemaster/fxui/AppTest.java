@@ -127,7 +127,8 @@ public class AppTest extends ApplicationTest {
 
   @Test
   public void testAPIStatusOnline() {
-    assumeTrue(controller.getAPIStatus() && controller.getIsUsingAPI());
+    assumeTrue(controller.getAPIStatus());
+    controller.setApplicationInProductionState();
     Text status = lookup("#statusTextAPI").query();
     FxAssert.verifyThat(status, s -> s.getText().equals("Online"));
     Circle indicator = lookup("#statusIndicatorAPI").query();

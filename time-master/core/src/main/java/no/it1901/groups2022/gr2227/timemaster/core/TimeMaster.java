@@ -93,14 +93,12 @@ public class TimeMaster {
   public boolean isUsingAPI() {
     switch (state) {
       case TEST:
-        System.out.println("Test");
         return false;
 
       case LOCAL:
         return false;
 
       case PRODUCTION:
-      System.out.println("Prod");
         return true;
       
       default:

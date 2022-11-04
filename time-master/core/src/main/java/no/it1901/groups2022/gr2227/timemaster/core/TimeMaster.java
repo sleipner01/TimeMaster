@@ -18,7 +18,7 @@ public class TimeMaster {
     this.employees = new ArrayList<Employee>();
     this.apiHandler = new ApiHandler();
 
-    if(this.apiHandler.checkServerStatus()) {
+    if(this.getAPIStatus()) {
       this.setApplicationInProductionState();
     } else {
       this.setApplicationInLocalState();
@@ -56,6 +56,16 @@ public class TimeMaster {
    */
   public void setApplicationInLocalState() {
     this.state = State.LOCAL;
+  }
+
+  /**
+   * Checking if the API is connected and returning a valid response.
+   *
+   * @return  <code>true</code> if API is connected and responding.
+   *          <code>false</code> if API is disconnected or not responding.
+   */
+  public boolean getAPIStatus() {
+    return this.apiHandler.checkServerStatus();
   }
 
   public LocalDate getCurrentDate() {

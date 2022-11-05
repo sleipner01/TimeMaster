@@ -3,8 +3,11 @@ package no.it1901.groups2022.gr2227.timemaster.core;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +22,32 @@ public class WorkdayTest {
   @BeforeEach
   public void createWorkday() {
     workday = new Workday(testTimeIn);
+  }
+
+  @Test
+  @DisplayName("Test the empty constructors")
+  public void testEmptyConstructor() {
+    workday = new Workday();
+    assertNull(workday.getTimeIn());
+    assertNull(workday.getTimeOut());
+  }
+
+  @Test
+  @DisplayName("Test the constructor that takes in LocalDate and LocalTime")
+  public void testDateConstructor() {
+    LocalDate testDate = LocalDate.now();
+    LocalTime testTime = LocalTime.now();
+    LocalDateTime testDateTime = LocalDateTime.of(testDate, testTime);
+    workday = new Workday(testDate, testTime);
+    assertEquals(testDateTime, workday.getTimeIn());
+    assertNull(workday.getTimeOut());
+  }
+
+  @Test
+  @DisplayName("Test the constructor that takes in LocalDateTime")
+  public void testDateTimeConstructor() {
+    assertEquals(testTimeIn, workday.getTimeIn());
+    assertNull(workday.getTimeOut()); 
   }
   
   @Test

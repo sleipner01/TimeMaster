@@ -50,7 +50,7 @@ public class TimeMaster {
    * if needed after testing.
    */
   public void setApplicationInProductionState() {
-    if(this.getAPIStatus()) {
+    if(this.getApiStatus()) {
       this.state = State.PRODUCTION;
       System.out.println("** Application set in production state **");
     } else {
@@ -77,7 +77,7 @@ public class TimeMaster {
    * @return  <code>true</code> if API is connected and responding.
    *          <code>false</code> if API is disconnected or not responding.
    */
-  public boolean getAPIStatus() {
+  public boolean getApiStatus() {
     return this.apiHandler.checkServerStatus();
   }
 
@@ -90,7 +90,7 @@ public class TimeMaster {
    * @see TimeMaster#setApplicationInLocalState()
    * @see TimeMaster#setApplicationInProductionState()
    */
-  public boolean isUsingAPI() {
+  public boolean isUsingApi() {
     switch (state) {
       case TEST:
         return false;

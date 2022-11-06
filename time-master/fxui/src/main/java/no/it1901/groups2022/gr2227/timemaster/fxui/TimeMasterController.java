@@ -31,7 +31,21 @@ import no.it1901.groups2022.gr2227.timemaster.core.TimeMaster;
 import no.it1901.groups2022.gr2227.timemaster.core.Workday;
 
 /**
- * TODO: JAVADOC
+ * Controller for the TimeMaster application.
+ * Connects the FXUI module with the Core module.
+ *
+ * <p> The controller aims to follow the MVC principle (Model-View-Controller).
+ * No logic around the application is stored in this class. 
+ * Any overhead logic will be stored in {@link TimeMaster}.
+ *
+ * <p> The methods in this controller will include:
+ * <ul>
+ * <li>Initialization
+ * <li>Conditional information about other modules or similar  
+ * <li>Input validation
+ * <li>On-action handling
+ * <li>UI updating 
+ * </ul>
  *
  * @author Amalie Erdal Mansåker
  * @author Magnus Byrkjeland
@@ -263,10 +277,7 @@ public class TimeMasterController {
     setHistoryEmployeeName();
   }
 
-  /**
-   * TODO: Javadoc
-   */
-  public void setHistoryEmployeeName() {
+  private void setHistoryEmployeeName() {
     if (timeMaster.employeeIsSet()) {
       this.historyEmployeeName.setText(timeMaster.getChosenEmployee().getName());
     } else {
@@ -274,10 +285,7 @@ public class TimeMasterController {
     }
   }
 
-  /**
-   * TODO: Javadoc
-   */
-  public void setStampInEmployeeName() {
+  private void setStampInEmployeeName() {
     if (timeMaster.employeeIsSet()) {
       this.stampInEmployeeName.setText(timeMaster.getChosenEmployee().getName());
     } else {

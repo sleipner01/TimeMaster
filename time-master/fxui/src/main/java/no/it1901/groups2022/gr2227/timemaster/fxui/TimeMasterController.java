@@ -252,12 +252,14 @@ public class TimeMasterController {
 
   private void setTimeRegisterInputs() {
     if (!timeMaster.employeeIsSet()) {
-      autoCheckInOutBox.setDisable(true);
-      manualCheckInOutBox.setDisable(true);
+      // autoCheckInOutBox.setDisable(true);
+      // manualCheckInOutBox.setDisable(true);
     } else {
       autoCheckInOutBox.setDisable(false);
       manualCheckInOutBox.setDisable(false);
     }
+    autoCheckInOutBox.setDisable(false);
+    manualCheckInOutBox.setDisable(false);
   }
 
   private void setEmployeeStatus() {

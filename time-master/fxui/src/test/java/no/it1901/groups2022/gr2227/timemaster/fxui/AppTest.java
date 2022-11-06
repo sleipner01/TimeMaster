@@ -2,6 +2,7 @@ package no.it1901.groups2022.gr2227.timemaster.fxui;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
@@ -69,10 +70,6 @@ public class AppTest extends ApplicationTest {
   @AfterEach
   public void cleanUp() {
     file.delete();
-  }
-
-  public Parent getRootNode() {
-    return root;
   }
 
 
@@ -180,7 +177,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  @Test
+  // @Test
   public void clickEmployee() {
     final ListView<Workday> listView = lookup("#workdayHistoryList").query();
     final Text stampInEmployeeName = lookup("#stampInEmployeeName").query();
@@ -218,12 +215,13 @@ public class AppTest extends ApplicationTest {
 
   @Test
   public void testAutoStampInOut() {
-    final Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").query();
-    final Text status = lookup("#statusText").query();
+    Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").queryButton();
+    final Text status = lookup("#statusText").queryText();
     final Circle indicator = lookup("#statusIndicator").query();
 
     addNewEmployee(testName);
     clickOn(LabeledMatchers.hasText("Stamp In"));
+
     clickOn(LabeledMatchers.hasText(testName));
 
     // Stamp in
@@ -237,6 +235,21 @@ public class AppTest extends ApplicationTest {
     FxAssert.verifyThat(autoRegisterTimeButton, b -> b.getText().equals("Check in"));
     FxAssert.verifyThat(status, s -> s.getText().equals("Off"));
     FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GRAY));
+  }
+
+
+
+  @Test
+  public void testStampInException() {
+    Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").queryButton();
+
+    addNewEmployee(testName);
+    clickOn(LabeledMatchers.hasText("Stamp In"));
+    autoRegisterTimeButton.getParent().setDisable(false);
+    clickOn("#autoRegisterTimeButton");
+
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
   }
 
 

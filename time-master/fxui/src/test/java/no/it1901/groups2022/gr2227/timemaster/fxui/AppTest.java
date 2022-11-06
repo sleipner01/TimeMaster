@@ -1,5 +1,6 @@
 package no.it1901.groups2022.gr2227.timemaster.fxui;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
@@ -64,6 +65,11 @@ public class AppTest extends ApplicationTest {
 
   public Parent getRootNode() {
     return root;
+  }
+
+  @Test
+  public void testAppConstructor() {
+    assertDoesNotThrow(() -> new App());
   }
 
   @Test

@@ -318,6 +318,15 @@ public class Employee {
     this.sortWorkdaysAscending();
   }
 
+  private void hasWorkday(Workday workday) throws IllegalArgumentException {
+    if (!this.workdays.contains(workday)) { 
+      throw new IllegalArgumentException(
+        "Workday: " + workday.toString()
+        + " doesn't exist at " + this.toString()
+      );
+    }
+  }
+
   /**
    * Edits the provided workday as long as it exists at the employee.
    * The new timestamps must not come in conflict with any other workday
@@ -333,12 +342,7 @@ public class Employee {
    */
   public void editWorkday(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut)
       throws IllegalArgumentException {
-    if (!this.workdays.contains(workday)) { 
-      throw new IllegalArgumentException(
-        "Workday: " + workday.toString()
-        + " doesn't exist at " + this.toString()
-      );
-    }
+    this.hasWorkday(workday);
 
     this.deleteWorkday(workday);
     Workday editedWorkday = new Workday(timeIn);
@@ -361,12 +365,7 @@ public class Employee {
    * @throws IllegalArgumentException   if the workday doesn't exist at the employee.
    */
   public void deleteWorkday(Workday workday) throws IllegalArgumentException {
-    if (!this.workdays.contains(workday)) { 
-      throw new IllegalArgumentException(
-        "Workday: " + workday.toString()
-        + " doesn't exist at " + this.toString()
-      );
-    }
+    this.hasWorkday(workday);
 
     this.workdays.remove(workday);
   }

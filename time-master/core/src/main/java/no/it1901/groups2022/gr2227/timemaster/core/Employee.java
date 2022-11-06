@@ -191,8 +191,10 @@ public class Employee {
    *
    * <p>The Employee object atWork field will be set <code>true</code>.
    *
-   * @param date the date of started workday.
-   * @param time the time if started workday.
+   * <p>If the timestamp is in the middle of another workday at the employee,
+   * the timestamp isn't considered valid.
+   *
+   * @param dateTimeInput the timestamp of the started workday.
    * @throws IllegalStateException    if the Employee is at work.
    * @throws IllegalArgumentException if the supplied parameters
    *                                  comes in conflict with another saved
@@ -216,8 +218,13 @@ public class Employee {
    *
    * <p>The Employee object atWork field will be set <code>false</code>.
    *
-   * @param time the time of the ending workday.
-   * @throws IllegalStateException if the Employee isn't at work..
+   * <p>If the timestamp is in the middle of another workday at the employee,
+   * the timestamp isn't considered valid. If another workday at the employee
+   * lies in between check in and this timestamp, it isn't considered valid.
+   *
+   * @param dateTimeInput               the timestamp of the ending workday.
+   * @throws IllegalArgumentException   if the timestamp isn't valid.
+   * @throws IllegalStateException      if the Employee isn't at work.
    * @see java.time.LocalDate
    * @see java.time.LocalTime
    */
@@ -311,15 +318,31 @@ public class Employee {
     this.sortWorkdaysAscending();
   }
 
-  // TODO: Javadoc
-  public void editWorkday(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut)
-      throws IllegalArgumentException {
+  private void hasWorkday(Workday workday) throws IllegalArgumentException {
     if (!this.workdays.contains(workday)) { 
       throw new IllegalArgumentException(
         "Workday: " + workday.toString()
         + " doesn't exist at " + this.toString()
       );
     }
+  }
+
+  /**
+   * Edits the provided workday as long as it exists at the employee.
+   * The new timestamps must not come in conflict with any other workday
+   * at the employee.
+   *
+   * @param workday                     workday to be edited.
+   * @param timeIn                      new timestamp for check-in.
+   * @param timeOut                     new timestamp for check-out.
+   * @throws IllegalArgumentException   If the editing workday isn't at the employee,
+   *                                    or the timestamps aren't valid.
+   * @see Employee#checkIn(LocalDateTime)
+   * @see Employee#checkOut(LocalDateTime)                               
+   */
+  public void editWorkday(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut)
+      throws IllegalArgumentException {
+    this.hasWorkday(workday);
 
     this.deleteWorkday(workday);
     Workday editedWorkday = new Workday(timeIn);
@@ -335,14 +358,14 @@ public class Employee {
     }
   }
 
-  // TODO: Javadoc
+  /**
+   * Deletes the provided workday from the employee.
+   *
+   * @param workday                     workday to be deleted.
+   * @throws IllegalArgumentException   if the workday doesn't exist at the employee.
+   */
   public void deleteWorkday(Workday workday) throws IllegalArgumentException {
-    if (!this.workdays.contains(workday)) { 
-      throw new IllegalArgumentException(
-        "Workday: " + workday.toString()
-        + " doesn't exist at " + this.toString()
-      );
-    }
+    this.hasWorkday(workday);
 
     this.workdays.remove(workday);
   }

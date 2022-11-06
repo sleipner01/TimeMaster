@@ -233,6 +233,7 @@ public class AppTest extends ApplicationTest {
 
     // Stamp out
     clickOn("#autoRegisterTimeButton");
+    FxAssert.verifyThat(autoRegisterTimeButton, b -> b.getText().equals("Check in"));
     FxAssert.verifyThat(status, s -> s.getText().equals("Off"));
     FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GRAY));
   }

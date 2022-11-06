@@ -392,6 +392,8 @@ public class TimeMasterController {
   private void handleCreateEmployee() {
     try {
       timeMaster.createEmployee(newEmployeeName.getText());
+      addStatus.setText("Created " + newEmployeeName.getText());
+      addStatus.setFill(Color.GREEN);
       newEmployeeName.clear();
       updateEmployeeMenu();
     } catch (IllegalArgumentException e) {

@@ -159,11 +159,6 @@ public class TimeMasterController {
       });
       return cell;
     });
-
-    workdayHistoryList.setOnMouseClicked(e -> {
-      System.out.println("You clicked on an empty cell");
-    });
-
   }
 
   private void chooseEmployeeListenerSetup() {
@@ -190,10 +185,6 @@ public class TimeMasterController {
         }
       });
       return cell;
-    });
-
-    chooseEmployeeListView.setOnMouseClicked(e -> {
-      System.out.println("You clicked on an empty cell");
     });
   }
 

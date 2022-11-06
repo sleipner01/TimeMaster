@@ -90,7 +90,7 @@ public class WorkdayTest {
     workday.setTimeOut(testDate, testTime);
 
     LocalTime outBeforeIn = LocalTime.now();
-    LocalTime inAfterOut = LocalTime.now();
+    LocalTime inAfterOut = LocalTime.now().plusNanos(1);
     workday = new Workday(testDate, inAfterOut);
     assertThrows(IllegalArgumentException.class, () -> {
       workday.setTimeOut(testDate, outBeforeIn);
@@ -104,7 +104,7 @@ public class WorkdayTest {
     assertEquals(testTimeOut, workday.getTimeOut());
 
     LocalDateTime outBeforeIn = LocalDateTime.now();
-    LocalDateTime inAfterOut = LocalDateTime.now();
+    LocalDateTime inAfterOut = LocalDateTime.now().plusNanos(1);
     workday = new Workday(inAfterOut);
     assertThrows(IllegalArgumentException.class, () -> {
       workday.setTimeOut(outBeforeIn);

@@ -8,9 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.Month;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -33,17 +31,6 @@ public class WorkdayTest {
   public void testEmptyConstructor() {
     workday = new Workday();
     assertNull(workday.getTimeIn());
-    assertNull(workday.getTimeOut());
-  }
-
-  @Test
-  @DisplayName("Test the constructor that takes in LocalDate and LocalTime")
-  public void testDateConstructor() {
-    LocalDate testDate = LocalDate.now();
-    LocalTime testTime = LocalTime.now();
-    LocalDateTime testDateTime = LocalDateTime.of(testDate, testTime);
-    workday = new Workday(testDate, testTime);
-    assertEquals(testDateTime, workday.getTimeIn());
     assertNull(workday.getTimeOut());
   }
 
@@ -80,21 +67,6 @@ public class WorkdayTest {
     });
     workday.setTimeOut(timeOut);
     assertEquals(correctFormat, workday.getTimeOutAsFormattedString());
-  }
-
-  @Test
-  @DisplayName("Test setTimeOut that takes in LocalDate and LocalTime")
-  public void testSetTimeOutDateAndTime() {
-    LocalDate testDate = LocalDate.now();
-    LocalTime testTime = LocalTime.now();
-    workday.setTimeOut(testDate, testTime);
-
-    LocalTime outBeforeIn = LocalTime.now();
-    LocalTime inAfterOut = LocalTime.now().plusNanos(1);
-    workday = new Workday(testDate, inAfterOut);
-    assertThrows(IllegalArgumentException.class, () -> {
-      workday.setTimeOut(testDate, outBeforeIn);
-    });
   }
   
   @Test

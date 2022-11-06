@@ -34,11 +34,11 @@ import no.it1901.groups2022.gr2227.timemaster.core.Workday;
  * Controller for the TimeMaster application.
  * Connects the FXUI module with the Core module.
  *
- * <p> The controller aims to follow the MVC principle (Model-View-Controller).
+ * <p>The controller aims to follow the MVC principle (Model-View-Controller).
  * No logic around the application is stored in this class. 
  * Any overhead logic will be stored in {@link TimeMaster}.
  *
- * <p> The methods in this controller will include:
+ * <p>The methods in this controller will include:
  * <ul>
  * <li>Initialization
  * <li>Conditional information about other modules or similar  

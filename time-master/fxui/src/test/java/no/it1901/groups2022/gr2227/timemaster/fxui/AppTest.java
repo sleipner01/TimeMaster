@@ -20,6 +20,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -27,6 +28,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import no.it1901.groups2022.gr2227.timemaster.core.Employee;
+import no.it1901.groups2022.gr2227.timemaster.core.Workday;
 
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -92,9 +94,11 @@ public class AppTest extends ApplicationTest {
   @Test
   public void testApiStatusOffline() {
     assumeTrue((!controller.getApiStatus()) && (!controller.getIsUsingApi()));
+    
     Text status = lookup("#statusTextApi").query();
-    FxAssert.verifyThat(status, s -> s.getText().equals("Offline"));
     Circle indicator = lookup("#statusIndicatorApi").query();
+    
+    FxAssert.verifyThat(status, s -> s.getText().equals("Offline"));
     FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GRAY));
   }
 
@@ -103,9 +107,11 @@ public class AppTest extends ApplicationTest {
   @Test
   public void testApiStatusAvailable() {
     assumeTrue(controller.getApiStatus() && (!controller.getIsUsingApi()));
+    
     Text status = lookup("#statusTextApi").query();
-    FxAssert.verifyThat(status, s -> s.getText().equals("Available"));
     Circle indicator = lookup("#statusIndicatorApi").query();
+    
+    FxAssert.verifyThat(status, s -> s.getText().equals("Available"));
     FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.BLUE));
   }
 
@@ -114,10 +120,12 @@ public class AppTest extends ApplicationTest {
   @Test
   public void testApiStatusOnline() {
     assumeTrue(controller.getApiStatus());
+
+    final Text status = lookup("#statusTextApi").query();
+    final Circle indicator = lookup("#statusIndicatorApi").query();
+    
     controller.setApplicationInProductionState();
-    Text status = lookup("#statusTextApi").query();
     FxAssert.verifyThat(status, s -> s.getText().equals("Online"));
-    Circle indicator = lookup("#statusIndicatorApi").query();
     FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GREEN));
   }
 
@@ -137,22 +145,23 @@ public class AppTest extends ApplicationTest {
 
   @Test
   public void testAddEmployee() {
+    final ListView<Employee> listView = lookup("#chooseEmployeeListView").query();
+    final TextField nameInput = lookup("#newEmployeeName").query();
+    final Text status = lookup("#addStatus").query();
+
     // Add valid employee
     clickOn(LabeledMatchers.hasText("Add New Employee"));
     clickOn("#newEmployeeName").write(testName);
     clickOn("#addNewEmployeeButton");
 
     // Input is empty
-    TextField nameInput = lookup("#newEmployeeName").query();
     FxAssert.verifyThat(nameInput, n -> n.getText().length() == 0);
 
     // Status updates and is green 
-    Text status = lookup("#addStatus").query();
     FxAssert.verifyThat(status, s -> s.getFill().equals(Color.GREEN));
     FxAssert.verifyThat(status, s -> s.getText().length() > 0);
 
     // Listview updates with the name of the employee
-    ListView<Employee> listView = lookup("#chooseEmployeeListView").query();
     ObservableList<Employee> employeesList = listView.getItems();
     assertTrue(employeesList.size() > 0);
     assertTrue(employeesList.get(0).getName().equals(testName));
@@ -160,49 +169,82 @@ public class AppTest extends ApplicationTest {
     // Add invalid employee
     clickOn("#addNewEmployeeButton");
     FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+
   }
 
 
 
   @Test
   public void clickEmployee() {
-    
+    final ListView<Workday> listView = lookup("#workdayHistoryList").query();
+    final Text stampInEmployeeName = lookup("#stampInEmployeeName").query();
+    final Text historyEmployeeName = lookup("#historyEmployeeName").query();
+
+
+    // Add valid employee
+    clickOn(LabeledMatchers.hasText("Add New Employee"));
+    clickOn("#newEmployeeName").write(testName);
+    clickOn("#addNewEmployeeButton");
+
+    // Before click
+    FxAssert.verifyThat("#deleteEmployeeButton", NodeMatchers.isDisabled());
+    FxAssert.verifyThat("#autoRegisterTimeButton", NodeMatchers.isDisabled());
+    FxAssert.verifyThat("#registerTimeButton", NodeMatchers.isDisabled());
+    FxAssert.verifyThat("#chooseDateButton", NodeMatchers.isDisabled());
+    FxAssert.verifyThat("#inputHour", NodeMatchers.isDisabled());
+    FxAssert.verifyThat("#inputMinutes", NodeMatchers.isDisabled());
+    ObservableList<Workday> workdayList = listView.getItems();
+    assertTrue(workdayList.size() == 0);
+
+    clickOn(LabeledMatchers.hasText(testName));
+
+    // After click
+    FxAssert.verifyThat("#deleteEmployeeButton", NodeMatchers.isEnabled());
+    FxAssert.verifyThat("#autoRegisterTimeButton", NodeMatchers.isEnabled());
+    FxAssert.verifyThat("#registerTimeButton", NodeMatchers.isEnabled());
+    FxAssert.verifyThat("#chooseDateButton", NodeMatchers.isEnabled());
+    FxAssert.verifyThat("#inputHour", NodeMatchers.isEnabled());
+    FxAssert.verifyThat("#inputMinutes", NodeMatchers.isEnabled());
+    FxAssert.verifyThat(stampInEmployeeName, s -> s.getText().equals(testName));    
+    FxAssert.verifyThat(historyEmployeeName, h -> h.getText().equals(testName));
+
   }
 
 
 
   @Test
   public void testAutoStampInOut() {
+    final Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").query();
+    final Text status = lookup("#statusText").query();
+    final Circle indicator = lookup("#statusIndicator").query();
+
     // Adding an employee
     clickOn(LabeledMatchers.hasText("Add New Employee"));
     clickOn("#newEmployeeName").write(testName);
     clickOn("#addNewEmployeeButton");
-
-    // UI before stamp in
     clickOn(LabeledMatchers.hasText("Stamp In"));
-    FxAssert.verifyThat("#autoRegisterTimeButton", NodeMatchers.isDisabled());
     clickOn(LabeledMatchers.hasText(testName));
-    FxAssert.verifyThat("#autoRegisterTimeButton", NodeMatchers.isEnabled());
-    
+
     // Stamp in
     clickOn("#autoRegisterTimeButton");
-    Text status = lookup("#statusText").query();
+    FxAssert.verifyThat(autoRegisterTimeButton, b -> b.getText().equals("Check out"));
     FxAssert.verifyThat(status, s -> s.getText().equals("Active"));
-    Circle indicator = lookup("#statusIndicator").query();
     FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GREEN));
 
     // Stamp out
     clickOn("#autoRegisterTimeButton");
-    Text status2 = lookup("#statusText").query();
-    FxAssert.verifyThat(status2, s -> s.getText().equals("Off"));
-    Circle indicator2 = lookup("#statusIndicator").query();
-    FxAssert.verifyThat(indicator2, i -> i.getFill().equals(Color.GRAY));
+    FxAssert.verifyThat(status, s -> s.getText().equals("Off"));
+    FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GRAY));
   }
 
 
 
   @Test
   public void testManualStampIn() {
+    final Text status = lookup("#statusText").query();
+    final Circle indicator = lookup("#statusIndicator").query();
+
+
     // Adding an employee
     clickOn(LabeledMatchers.hasText("Add New Employee"));
     clickOn("#newEmployeeName").write(testName);
@@ -211,9 +253,7 @@ public class AppTest extends ApplicationTest {
     clickOn(LabeledMatchers.hasText(testName));
     clickOn("#autoRegisterTimeButton");
 
-    Text status = lookup("#statusText").query();
     FxAssert.verifyThat(status, s -> s.getText().equals("Active"));
-    Circle indicator = lookup("#statusIndicator").query();
     FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GREEN));
   }
 

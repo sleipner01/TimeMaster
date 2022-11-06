@@ -77,6 +77,15 @@ public class AppTest extends ApplicationTest {
 
 
 
+  // Private methods
+  private void addNewEmployee(String name) {
+    clickOn(LabeledMatchers.hasText("Add New Employee"));
+    clickOn("#newEmployeeName").write(name);
+    clickOn("#addNewEmployeeButton");
+  }
+
+
+
   @Test
   public void testAppConstructor() {
     assertDoesNotThrow(() -> new App());
@@ -149,10 +158,7 @@ public class AppTest extends ApplicationTest {
     final TextField nameInput = lookup("#newEmployeeName").query();
     final Text status = lookup("#addStatus").query();
 
-    // Add valid employee
-    clickOn(LabeledMatchers.hasText("Add New Employee"));
-    clickOn("#newEmployeeName").write(testName);
-    clickOn("#addNewEmployeeButton");
+    addNewEmployee(testName);
 
     // Input is empty
     FxAssert.verifyThat(nameInput, n -> n.getText().length() == 0);
@@ -181,10 +187,8 @@ public class AppTest extends ApplicationTest {
     final Text historyEmployeeName = lookup("#historyEmployeeName").query();
 
 
-    // Add valid employee
-    clickOn(LabeledMatchers.hasText("Add New Employee"));
-    clickOn("#newEmployeeName").write(testName);
-    clickOn("#addNewEmployeeButton");
+    addNewEmployee(testName);
+
 
     // Before click
     FxAssert.verifyThat("#deleteEmployeeButton", NodeMatchers.isDisabled());
@@ -218,10 +222,7 @@ public class AppTest extends ApplicationTest {
     final Text status = lookup("#statusText").query();
     final Circle indicator = lookup("#statusIndicator").query();
 
-    // Adding an employee
-    clickOn(LabeledMatchers.hasText("Add New Employee"));
-    clickOn("#newEmployeeName").write(testName);
-    clickOn("#addNewEmployeeButton");
+    addNewEmployee(testName);
     clickOn(LabeledMatchers.hasText("Stamp In"));
     clickOn(LabeledMatchers.hasText(testName));
 
@@ -245,11 +246,7 @@ public class AppTest extends ApplicationTest {
     final Text status = lookup("#statusText").query();
     final Circle indicator = lookup("#statusIndicator").query();
 
-
-    // Adding an employee
-    clickOn(LabeledMatchers.hasText("Add New Employee"));
-    clickOn("#newEmployeeName").write(testName);
-    clickOn("#addNewEmployeeButton");
+    addNewEmployee(testName);
     clickOn(LabeledMatchers.hasText("Stamp In"));
     clickOn(LabeledMatchers.hasText(testName));
     clickOn("#autoRegisterTimeButton");

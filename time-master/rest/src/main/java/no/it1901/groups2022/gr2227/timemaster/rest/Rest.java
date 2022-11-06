@@ -30,6 +30,7 @@ public class Rest {
 
   /**
    * Creates a Rest object.
+   * The fileHandler object is depending on if a file already exists or not.
    * 
    */
   public Rest() {
@@ -40,12 +41,6 @@ public class Rest {
     } else {
       fileHandler = new FileHandler("employees.json");
     }
-  }
-
-  @Path("test")
-  @GET
-  public String helloWorld() {
-    return "Hello, World!";
   }
 
   /**

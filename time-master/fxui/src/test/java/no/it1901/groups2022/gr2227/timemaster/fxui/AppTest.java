@@ -142,18 +142,22 @@ public class AppTest extends ApplicationTest {
     clickOn("#newEmployeeName").write(testName);
     clickOn("#addNewEmployeeButton");
 
+    // Input is empty
     TextField nameInput = lookup("#newEmployeeName").query();
     FxAssert.verifyThat(nameInput, n -> n.getText().length() == 0);
+
+    // Status updates and is green 
     Text status = lookup("#addStatus").query();
     FxAssert.verifyThat(status, s -> s.getFill().equals(Color.GREEN));
     FxAssert.verifyThat(status, s -> s.getText().length() > 0);
+
+    // Listview updates with the name of the employee
     ListView<Employee> listView = lookup("#chooseEmployeeListView").query();
     ObservableList<Employee> employeesList = listView.getItems();
     assertTrue(employeesList.size() > 0);
     assertTrue(employeesList.get(0).getName().equals(testName));
 
     // Add invalid employee
-    // clickOn("#newEmployeeName").write(testName);
     clickOn("#addNewEmployeeButton");
     FxAssert.verifyThat("OK", NodeMatchers.isVisible());
   }

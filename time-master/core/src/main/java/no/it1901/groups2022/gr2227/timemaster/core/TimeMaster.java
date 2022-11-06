@@ -73,7 +73,7 @@ public class TimeMaster {
 
     // Since it's neccessary to check test,
     // it's not possible to use this()
-    if(test) {
+    if (test) {
       this.setApplicationInTestState();
     } else {
       this.setApplicationInProductionState();
@@ -96,7 +96,7 @@ public class TimeMaster {
    * if needed after testing.
    */
   public void setApplicationInProductionState() {
-    if(this.getApiStatus()) {
+    if (this.getApiStatus()) {
       this.state = State.PRODUCTION;
       System.out.println("** Application set in production state **");
     } else {
@@ -110,7 +110,7 @@ public class TimeMaster {
    * The API may still be running and available. 
    * If API is wanted, see {@link TimeMaster#setApplicationInProductionState()}.
    *
-   * <p> NOTE: No data will be saved if the application is closed.
+   * <p>NOTE: No data will be saved if the application is closed.
    */
   public void setApplicationInLocalState() {
     this.state = State.LOCAL;
@@ -288,8 +288,7 @@ public class TimeMaster {
    *
    * <p>The name of the employee has to follow spesific rules.
    * {@link Employee#Employee(String)}
-   * 
-   * @return                            List of employees at the TimeMaster-object.
+   *
    * @throws  IOException               If the API-call fails.
    * @throws  IllegalArgumentExeption   If the parameter is invalid.
    * @see Employee
@@ -341,7 +340,7 @@ public class TimeMaster {
   /**
    * This method is to check if an employee is set.
    * If no employee is set many of the methods in the TimeMaster-object won't work.
-   * 
+   *
    * @return  <code>true</code> if an employee is set,
    *          else <code>false</code>
    * @see TimeMaster#setChosenEmployee(Employee)
@@ -388,7 +387,8 @@ public class TimeMaster {
    * @see TimeMaster#setApplicationInLocalState()
    * @see TimeMaster#setApplicationInProductionState()
    */
-  public boolean clockEmployeeInOut(LocalDateTime dateTimeInput) throws IllegalStateException, IOException {
+  public boolean clockEmployeeInOut(LocalDateTime dateTimeInput) 
+      throws IllegalStateException, IOException {
     if (!this.employeeIsSet()) {
       throw new IllegalStateException("No employee is selected");
     }
@@ -510,7 +510,7 @@ public class TimeMaster {
   /**
    * Edits the provided workday of the chosen employee.
    * Conditional executions based on which state the application is set in.
-   * 
+   *
    * @param workday                     Original workday.
    * @param timeIn                      New timestamp for check in
    * @param timeOut                     New timestamp for check out
@@ -520,7 +520,7 @@ public class TimeMaster {
    *                                    workdays at the employee or is not valid.
    * @throws IOException                If the APU call fails.
    *
-   * @see {@link Employee#editWorkday(Workday, LocalDateTime, LocalDateTime)}
+   * @see Employee#editWorkday(Workday, LocalDateTime, LocalDateTime)
    * @see TimeMaster#setChosenEmployee(Employee)
    * @see TimeMaster#getChosenEmployee(Employee)
    * @see TimeMaster#setApplicationInTestState()
@@ -603,7 +603,7 @@ public class TimeMaster {
   /**
    * Deleting the chosen employee.
    * Conditional executions based on which state the application is set in.
-   * 
+   *
    * @throws IllegalStateException  if no employee is set.
    * @throws IOException            if the API fails
    *
@@ -628,7 +628,7 @@ public class TimeMaster {
       case LOCAL:
         System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
         this.employees.remove(chosenEmployee);
-       break;
+        break;
 
       case PRODUCTION:
         this.apiHandler.deleteEmployee(chosenEmployee);
@@ -639,7 +639,7 @@ public class TimeMaster {
         System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
         this.employees.remove(chosenEmployee);
         break;
-      }
+    }
 
     this.chosenEmployee = null;
   }

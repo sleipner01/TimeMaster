@@ -165,19 +165,38 @@ public class AppTest extends ApplicationTest {
 
 
   @Test
-  public void testAutoStampIn() {
+  public void clickEmployee() {
+    
+  }
+
+
+
+  @Test
+  public void testAutoStampInOut() {
     // Adding an employee
     clickOn(LabeledMatchers.hasText("Add New Employee"));
     clickOn("#newEmployeeName").write(testName);
     clickOn("#addNewEmployeeButton");
-    clickOn(LabeledMatchers.hasText("Stamp In"));
-    clickOn(LabeledMatchers.hasText(testName));
-    clickOn("#autoRegisterTimeButton");
 
+    // UI before stamp in
+    clickOn(LabeledMatchers.hasText("Stamp In"));
+    FxAssert.verifyThat("#autoRegisterTimeButton", NodeMatchers.isDisabled());
+    clickOn(LabeledMatchers.hasText(testName));
+    FxAssert.verifyThat("#autoRegisterTimeButton", NodeMatchers.isEnabled());
+    
+    // Stamp in
+    clickOn("#autoRegisterTimeButton");
     Text status = lookup("#statusText").query();
     FxAssert.verifyThat(status, s -> s.getText().equals("Active"));
     Circle indicator = lookup("#statusIndicator").query();
     FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GREEN));
+
+    // Stamp out
+    clickOn("#autoRegisterTimeButton");
+    Text status2 = lookup("#statusText").query();
+    FxAssert.verifyThat(status2, s -> s.getText().equals("Off"));
+    Circle indicator2 = lookup("#statusIndicator").query();
+    FxAssert.verifyThat(indicator2, i -> i.getFill().equals(Color.GRAY));
   }
 
 

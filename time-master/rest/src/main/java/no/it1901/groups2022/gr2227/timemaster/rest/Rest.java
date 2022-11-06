@@ -6,11 +6,6 @@
 
 package no.it1901.groups2022.gr2227.timemaster.rest;
 
-import java.io.File;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import jakarta.ws.rs.Consumes;
@@ -24,6 +19,11 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
+import java.io.File;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Path("api")
 public class Rest {
 
@@ -34,7 +34,9 @@ public class Rest {
    * 
    */
   public Rest() {
-    if (new File(Paths.get(System.getProperty("user.dir"), "../rest/timeMasterSaveFiles").toString(), "employeesTest.json").exists()) {
+    if (new File(Paths.get(System.getProperty("user.dir"),
+        "../rest/timeMasterSaveFiles").toString(),
+        "employeesTest.json").exists()) {
       fileHandler = new FileHandler("employeesTest.json");
     } else {
       fileHandler = new FileHandler("employees.json");
@@ -47,22 +49,21 @@ public class Rest {
     return "Hello, World!";
   }
 
-
-  
   /**
    * Gets a list of all employees.
+   * 
    * @return Json node of all employees.
    */
   @Path("employees")
   @Produces("application/json")
   @GET
   public JsonNode getEmployees() {
-      return fileHandler.readFile();
+    return fileHandler.readFile();
   }
 
-  
   /**
    * Creates a new employee.
+   * 
    * @param req the employee object as JsonNode to be added.
    * @return 201 Created response.
    */
@@ -70,18 +71,20 @@ public class Rest {
   @Consumes("application/json")
   @POST
   public Response createEmployee(JsonNode req) {
-      ArrayNode file = (ArrayNode) fileHandler.readFile();
-      file.add(req);
-      fileHandler.write(file);
-      return Response.status(Response.Status.CREATED).entity("Created employee with id:" + req.get("id")).build();
+    ArrayNode file = (ArrayNode) fileHandler.readFile();
+    file.add(req);
+    fileHandler.write(file);
+    return Response.status(Response.Status.CREATED)
+        .entity("Created employee with id:" + req.get("id")).build();
   }
 
- /**
-  * Updates an employee object.
-  * @param req the employee object to be updated as JsonNode.
-  * @param id the ID of the employee, works as path.
-  * @return either a 200 OK or 404 Not Found response.
-  */
+  /**
+   * Updates an employee object.
+   * 
+   * @param req the employee object to be updated as JsonNode.
+   * @param id  the ID of the employee, works as path.
+   * @return either a 200 OK or 404 Not Found response.
+   */
   @Path("employees/{id}")
   @Consumes("application/json")
   @PUT
@@ -92,7 +95,8 @@ public class Rest {
         file.remove(i);
         file.insert(i, req);
         fileHandler.write(file);
-        return Response.status(Status.OK).entity("Updated employee with id:" + req.get("id")).build();
+        return Response.status(Status.OK)
+            .entity("Updated employee with id:" + req.get("id")).build();
       }
     }
     return Response.status(Status.NOT_FOUND).entity(Status.NOT_FOUND.getReasonPhrase()).build();
@@ -100,19 +104,20 @@ public class Rest {
 
   /**
    * Gets the given employee.
+   * 
    * @param id ID of employee, works as path.
    * @return employee by ID as node.
    */
   @Path("employees/{id}")
   @Produces("application/json")
   @GET
-  public JsonNode getEmployeeById(@PathParam("id") String id) {
-      for (JsonNode node : fileHandler.readFile()) {
-        if (node.get("id").textValue().equals(id)) {
-          return node;
-        }
+  public Response getEmployeeById(@PathParam("id") String id) {
+    for (JsonNode node : fileHandler.readFile()) {
+      if (node.get("id").textValue().equals(id)) {
+        return Response.status(Status.OK).entity(node).build();
       }
-    return null;
+    }
+    return Response.status(Status.NOT_FOUND).build();
   }
 
   /**
@@ -124,23 +129,23 @@ public class Rest {
   @GET
   public Response systemStatus() {
     return Response.status(Response.Status.OK)
-      .entity("** System running **\n" +
-      "Status code: " + Response.Status.OK + "\n" +
-      "DateTime: " + LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "\n" +
-      "Ready for requests...")
-      .build();
+        .entity("** System running **\n"
+            + "Status code: " + Response.Status.OK + "\n"
+            + "DateTime: " + LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME) + "\n"
+            + "Ready for requests...")
+        .build();
   }
 
   /**
    * @function deletes the given employee.
-   * @param id the ID of the employee, works as path. 
+   * @param id the ID of the employee, works as path.
    * @return either a 200 OK or 404 Not Found response.
    */
   @Path("employees/{id}")
   @Consumes("application/json")
   @DELETE
   public Response deleteEmployee(@PathParam("id") String id) {
-    ArrayNode file = (ArrayNode)fileHandler.readFile();
+    ArrayNode file = (ArrayNode) fileHandler.readFile();
     for (int i = 0; i < file.size(); i++) {
       System.out.println(file.get(i).get("id").textValue());
       System.out.println(id);
@@ -151,5 +156,5 @@ public class Rest {
       }
     }
     return Response.status(Status.NOT_FOUND).entity(Status.NOT_FOUND.getReasonPhrase()).build();
-    }
   }
+}

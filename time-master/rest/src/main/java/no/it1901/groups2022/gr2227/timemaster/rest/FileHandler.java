@@ -1,13 +1,12 @@
 package no.it1901.groups2022.gr2227.timemaster.rest;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class FileHandler {
 
@@ -33,7 +32,9 @@ public class FileHandler {
 
   public JsonNode readFile() {
     try {
-      return this.mapper.readTree(new File(Paths.get(this.dir.toString(), this.fileName).toString()));
+      return this.mapper.readTree(
+          new File(Paths.get(this.dir.toString(),
+              this.fileName).toString()));
     } catch (Exception e) {
       e.printStackTrace();
       return null;
@@ -51,7 +52,10 @@ public class FileHandler {
 
   public void write(Object val) {
     try {
-      this.mapper.writeValue(new File(Paths.get(this.dir.toString(), this.fileName).toString()), val);
+      this.mapper.writeValue(
+          new File(Paths.get(this.dir.toString(),
+              this.fileName).toString()),
+          val);
     } catch (Exception e) {
       e.printStackTrace();
     }

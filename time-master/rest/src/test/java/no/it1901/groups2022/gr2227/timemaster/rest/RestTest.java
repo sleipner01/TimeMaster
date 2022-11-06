@@ -64,8 +64,8 @@ public class RestTest extends JerseyTest {
     target("api/employees").request().post(Entity.json(employeeJson));
     String res1 = target("api/employees/0").request().get(String.class);
     assertEquals(employeeJson, res1);
-    String res2 = target("api/employees/NaN").request().get(String.class);
-    assertEquals("", res2);
+    Response res2 = target("api/employees/NaN").request().get();
+    assertEquals(Status.NOT_FOUND.getStatusCode(), res2.getStatus());
 
   }
 

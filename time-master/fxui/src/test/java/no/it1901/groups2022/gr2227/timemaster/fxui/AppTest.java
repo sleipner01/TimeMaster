@@ -627,7 +627,7 @@ public class AppTest extends ApplicationTest {
     Workday workday = workdaysListView.getItems().get(0);
     clickOn(LabeledMatchers.hasText("Check Hours Worked"));
     clickOn(LabeledMatchers.hasText(workday.toString()));
-    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Ok", NodeMatchers.isVisible());
     FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
     FxAssert.verifyThat("Delete", NodeMatchers.isVisible());
   }
@@ -729,6 +729,35 @@ public class AppTest extends ApplicationTest {
     assertTrue(workdaysListView.getItems().size() == 1);
     assertTrue(workdaysListView.getItems().get(0).equals(workday3));
     assertTrue(workdaysListView.getItems().get(0).equals(workday3));
+
+    // Add another employee with similar workday
+    addNewEmployee(testName2);
+    clickOn(LabeledMatchers.hasText("Stamp In"));
+    clickOn(LabeledMatchers.hasText(testName2));
+    clickOn("#inputHour").write("04");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    clickOn("#inputHour").write("05");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    assertTrue(workdaysListView.getItems().size() == 1);
+
+    // Delete the similar workday from employee1
+    clickOn(LabeledMatchers.hasText(testName));
+    clickOn(LabeledMatchers.hasText("Check Hours Worked"));
+    clickOn(LabeledMatchers.hasText(workday3.toString()));
+    FxAssert.verifyThat("Ok", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Delete", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("Delete"));
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    assertTrue(workdaysListView.getItems().size() == 0);
+
+    // Check that the workday still exists at employee2
+    clickOn(LabeledMatchers.hasText(testName2));
+    assertTrue(workdaysListView.getItems().size() == 1);
   }
 
 }

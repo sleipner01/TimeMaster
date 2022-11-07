@@ -682,6 +682,7 @@ public class TimeMasterController {
       e.printStackTrace();
     }
     showWorkdayHistory();
+    setEmployeeStatus();
   }
 
   private void deleteWorkday(Workday workday) {

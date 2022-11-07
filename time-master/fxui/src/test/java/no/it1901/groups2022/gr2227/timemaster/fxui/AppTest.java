@@ -375,6 +375,56 @@ public class AppTest extends ApplicationTest {
     FxAssert.verifyThat("OK", NodeMatchers.isVisible());
     clickOn(LabeledMatchers.hasText("OK"));
 
+    // Invalid minute-input
+    clickOn("#inputHour").write("23");
+    clickOn("#inputMinutes").write("60");
+    clickOn("#registerTimeButton");
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+
+    // Reset
+    hourField.setText("");
+    minuteField.setText("");
+    
+    // Invalid hour-input
+    clickOn("#inputHour").write("24");
+    clickOn("#inputMinutes").write("59");
+    clickOn("#registerTimeButton");
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+
+    // Reset
+    hourField.setText("");
+    minuteField.setText("");
+
+    // Too long minute-input
+    clickOn("#inputMinutes").write("599");
+    FxAssert.verifyThat(minuteField, h -> h.getText().equals("59"));
+
+    // Reset
+    minuteField.setText("");
+    
+    // Too long hour-input
+    clickOn("#inputHour").write("234");
+    FxAssert.verifyThat(hourField, h -> h.getText().equals("23"));
+
+    // Reset
+    hourField.setText("");
+
+    // Not allowing string in minute-input
+    clickOn("#inputMinutes").write("-a");
+    FxAssert.verifyThat(minuteField, h -> h.getText().equals(""));
+
+    // Reset
+    minuteField.setText("");
+    
+    // Not allowing string in hour-input
+    clickOn("#inputHour").write("-b");
+    FxAssert.verifyThat(hourField, h -> h.getText().equals(""));
+
+    // Reset
+    hourField.setText("");
+
     // Conflicting check-in timestamp
     clickOn("#inputHour").write("01");
     clickOn("#inputMinutes").write("30");

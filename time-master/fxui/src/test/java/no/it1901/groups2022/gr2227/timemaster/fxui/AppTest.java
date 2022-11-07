@@ -43,7 +43,8 @@ public class AppTest extends ApplicationTest {
 
   private Parent root;
   private TimeMasterController controller;
-  String testName = "Test";
+  String testName = "John Smith";
+  String testName2 = "Elizabeth Swann";
   File file;
 
   @Override
@@ -203,7 +204,32 @@ public class AppTest extends ApplicationTest {
     FxAssert.verifyThat("#inputMinutes", NodeMatchers.isEnabled());
     FxAssert.verifyThat(stampInEmployeeName, s -> s.getText().equals(testName));    
     FxAssert.verifyThat(historyEmployeeName, h -> h.getText().equals(testName));
+  }
 
+
+
+  @Test
+  public void testDeleteEmployee() {
+    final ListView<Employee> employeeListView = lookup("#chooseEmployeeListView").query();
+    
+    addNewEmployee(testName);
+    addNewEmployee(testName2);
+    assertTrue(employeeListView.getItems().size() == 2);
+    // Try to click when no employee is selected
+    clickOn("#deleteEmployeeButton");
+    assertTrue(employeeListView.getItems().size() == 2);
+    clickOn(LabeledMatchers.hasText(testName));
+    clickOn("#deleteEmployeeButton");
+    // TODO: Confirmation to come here
+    assertTrue(employeeListView.getItems().size() == 1);
+    assertTrue(employeeListView.getItems().get(0).getName().equals(testName2));
+    addNewEmployee(testName);
+    assertTrue(employeeListView.getItems().size() == 2);
+    clickOn(LabeledMatchers.hasText(testName2));
+    clickOn("#deleteEmployeeButton");
+    // TODO: Confirmation to come here
+    assertTrue(employeeListView.getItems().size() == 1);
+    assertTrue(employeeListView.getItems().get(0).getName().equals(testName));
   }
 
 

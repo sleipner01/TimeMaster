@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -21,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -289,7 +291,18 @@ public class AppTest extends ApplicationTest {
     FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GREEN));
     FxAssert.verifyThat(clockInInfo, c -> c.getText().length() > 0);
 
-    // Check out
+    // Add another employee to check that the display updates
+    addNewEmployee(testName2);
+    clickOn(LabeledMatchers.hasText("Stamp In"));
+    clickOn(LabeledMatchers.hasText(testName2));
+    FxAssert.verifyThat(autoRegisterTimeButton, b -> b.getText().equals("Check in"));
+    FxAssert.verifyThat(registerTimeButton, b -> b.getText().equals("Check in"));
+    FxAssert.verifyThat(status, s -> s.getText().equals("Off"));
+    FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GRAY));
+    FxAssert.verifyThat(clockInInfo, c -> c.getText().length() == 0);
+
+    // Check out employee1
+    clickOn(LabeledMatchers.hasText(testName));
     clickOn("#autoRegisterTimeButton");
     FxAssert.verifyThat(autoRegisterTimeButton, b -> b.getText().equals("Check in"));
     FxAssert.verifyThat(registerTimeButton, b -> b.getText().equals("Check in"));
@@ -309,6 +322,7 @@ public class AppTest extends ApplicationTest {
     final Text status = lookup("#statusText").query();
     final Circle indicator = lookup("#statusIndicator").query();
     final Text clockInInfo = lookup("#clockInInfo").query();
+    final DatePicker datePicker = lookup("#chooseDateButton").query();
 
     addNewEmployee(testName);
     clickOn(LabeledMatchers.hasText("Stamp In"));
@@ -327,7 +341,6 @@ public class AppTest extends ApplicationTest {
     clickOn("#inputHour").write("01");
     clickOn("#inputMinutes").write("00");
     clickOn("#registerTimeButton");
-
     FxAssert.verifyThat(registerTimeButton, b -> b.getText().equals("Check out"));
     FxAssert.verifyThat(autoRegisterTimeButton, b -> b.getText().equals("Check out"));
     FxAssert.verifyThat(status, s -> s.getText().equals("Active"));
@@ -336,7 +349,18 @@ public class AppTest extends ApplicationTest {
     FxAssert.verifyThat(hourField, h -> h.getText().length() == 0);
     FxAssert.verifyThat(minuteField, m -> m.getText().length() == 0);
 
+    // Add another employee to check that the display updates
+    addNewEmployee(testName2);
+    clickOn(LabeledMatchers.hasText("Stamp In"));
+    clickOn(LabeledMatchers.hasText(testName2));
+    FxAssert.verifyThat(autoRegisterTimeButton, b -> b.getText().equals("Check in"));
+    FxAssert.verifyThat(registerTimeButton, b -> b.getText().equals("Check in"));
+    FxAssert.verifyThat(status, s -> s.getText().equals("Off"));
+    FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GRAY));
+    FxAssert.verifyThat(clockInInfo, c -> c.getText().length() == 0);
+
     // Check out
+    clickOn(LabeledMatchers.hasText(testName));
     clickOn("#inputHour").write("02");
     clickOn("#inputMinutes").write("00");
     clickOn("#registerTimeButton");
@@ -348,6 +372,15 @@ public class AppTest extends ApplicationTest {
     FxAssert.verifyThat(hourField, h -> h.getText().length() == 0);
     FxAssert.verifyThat(minuteField, m -> m.getText().length() == 0);
     
+    // Add same time but different date
+    datePicker.setValue(datePicker.getValue().plusDays(1));
+    clickOn("#inputHour").write("01");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    clickOn("#inputHour").write("02");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+
     // No hour-input
     clickOn("#inputMinutes").write("00");
     clickOn("#registerTimeButton");
@@ -496,11 +529,20 @@ public class AppTest extends ApplicationTest {
   @Test
   public void testWorkdayRegistration() {
     final ListView<Workday> workdaysListView = lookup("#workdayHistoryList").query();
+    final DatePicker datePicker = lookup("#chooseDateButton").query();
+    final LocalDate date = datePicker.getValue();
 
     // Initialize employees
     addNewEmployee(testName);
     addNewEmployee(testName2);
     clickOn(LabeledMatchers.hasText("Stamp In"));
+
+    // DateString
+    String dayOfWeek = date.getDayOfWeek().toString();
+    String dayOfMonth = String.valueOf(date.getDayOfMonth());
+    String month = date.getMonth().toString();
+    String year = String.valueOf(date.getYear());
+    String dateString = dayOfWeek + " " + dayOfMonth + " " + month + " " + year;
 
     // Workdaylist employee1
     clickOn(LabeledMatchers.hasText(testName));
@@ -515,6 +557,9 @@ public class AppTest extends ApplicationTest {
     clickOn("#inputMinutes").write("00");
     clickOn("#registerTimeButton");
     assertTrue(workdaysListView.getItems().size() == 1);
+    Workday workday = workdaysListView.getItems().get(0);
+    assertTrue(workday.toString().contains(dateString));
+    assertTrue(workday.toString().contains("01:00"));
 
     // Workdaylist employee1
     clickOn(LabeledMatchers.hasText(testName));
@@ -526,6 +571,9 @@ public class AppTest extends ApplicationTest {
     clickOn("#inputMinutes").write("00");
     clickOn("#registerTimeButton");
     assertTrue(workdaysListView.getItems().size() == 1);
+    Workday workday1p2 = workdaysListView.getItems().get(0);
+    assertTrue(workday1p2.toString().contains(dateString));
+    assertTrue(workday1p2.toString().contains("02:00"));
 
     // Workdaylist employee1
     clickOn(LabeledMatchers.hasText(testName));
@@ -557,6 +605,17 @@ public class AppTest extends ApplicationTest {
     // Workdaylist employee2
     clickOn(LabeledMatchers.hasText(testName2));
     assertTrue(workdaysListView.getItems().size() == 2);
+  }
+
+
+
+  @Test
+  public void testEditWorkday() {
+    final ListView<Workday> workdaysListView = lookup("#workdayHistoryList").query();
+
+    // Initialize employee with workday
+    addNewEmployee(testName);
+    clickOn(LabeledMatchers.hasText("Stamp In"));
 
   }
 

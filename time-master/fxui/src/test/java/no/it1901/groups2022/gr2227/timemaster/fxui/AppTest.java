@@ -211,25 +211,37 @@ public class AppTest extends ApplicationTest {
   @Test
   public void testDeleteEmployee() {
     final ListView<Employee> employeeListView = lookup("#chooseEmployeeListView").query();
+    final Text deleteStatus = lookup("#deleteStatus").query();
     
     addNewEmployee(testName);
     addNewEmployee(testName2);
     assertTrue(employeeListView.getItems().size() == 2);
+
     // Try to click when no employee is selected
     clickOn("#deleteEmployeeButton");
     assertTrue(employeeListView.getItems().size() == 2);
+    FxAssert.verifyThat(deleteStatus, d -> d.getText().length() == 0);
+    
+    // Delete one
     clickOn(LabeledMatchers.hasText(testName));
     clickOn("#deleteEmployeeButton");
     // TODO: Confirmation to come here
     assertTrue(employeeListView.getItems().size() == 1);
     assertTrue(employeeListView.getItems().get(0).getName().equals(testName2));
+    FxAssert.verifyThat(deleteStatus, d -> d.getText().length() > 0);
+    FxAssert.verifyThat(deleteStatus, d -> d.getFill().equals(Color.GREEN));
+
+    // Add a new and delete the other
     addNewEmployee(testName);
     assertTrue(employeeListView.getItems().size() == 2);
     clickOn(LabeledMatchers.hasText(testName2));
+    FxAssert.verifyThat(deleteStatus, d -> d.getText().length() == 0);
     clickOn("#deleteEmployeeButton");
     // TODO: Confirmation to come here
     assertTrue(employeeListView.getItems().size() == 1);
     assertTrue(employeeListView.getItems().get(0).getName().equals(testName));
+    FxAssert.verifyThat(deleteStatus, d -> d.getText().length() > 0);
+    FxAssert.verifyThat(deleteStatus, d -> d.getFill().equals(Color.GREEN));
   }
 
 
@@ -237,11 +249,15 @@ public class AppTest extends ApplicationTest {
   @Test
   public void testDeleteEmployeeWithNoChosenEmployee() {
     final Button button = lookup("#deleteEmployeeButton").query();
+    final Text deleteStatus = lookup("#deleteStatus").query();
     
     clickOn(LabeledMatchers.hasText("Add New Employee"));
     button.setDisable(false);
     clickOn("#deleteEmployeeButton");
     FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    FxAssert.verifyThat(deleteStatus, d -> d.getText().length() > 0);
+    FxAssert.verifyThat(deleteStatus, d -> d.getFill().equals(Color.RED));
   }
 
 

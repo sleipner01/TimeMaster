@@ -696,11 +696,6 @@ public class TimeMasterController {
 
   @FXML
   private void handleDeleteEmployee() {
-    if (!timeMaster.employeeIsSet()) {
-      displayError("Employee is not set.");
-      return;
-    }
-    System.out.println("Deleting " + timeMaster.getChosenEmployee().getName());
     try {
       timeMaster.deleteChosenEmployee();
       updateDisplay();
@@ -710,6 +705,7 @@ public class TimeMasterController {
       setDeleteStatus(false);
     } catch (IOException e) {
       displayError(e.getMessage());
+      e.printStackTrace();
       setDeleteStatus(false);
       setApiStatus();
     } catch (Exception e) {

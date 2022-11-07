@@ -614,7 +614,18 @@ public class AppTest extends ApplicationTest {
 
   @Test
   public void testEditWorkday() {
+    final Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").queryButton();
+    final Button registerTimeButton = lookup("#registerTimeButton").queryButton();
+    final Text status = lookup("#statusText").queryText();
+    final Circle indicator = lookup("#statusIndicator").query();
+    final Text clockInInfo = lookup("#clockInInfo").query();
     final ListView<Workday> workdaysListView = lookup("#workdayHistoryList").query();
+    DatePicker dateIn;
+    TextField timeInHour;
+    TextField timeInMinute;
+    DatePicker dateOut;
+    TextField timeOutHour;
+    TextField timeOutMinute;
 
     // Initialize employee with two workdays
     addNewEmployee(testName);
@@ -641,10 +652,11 @@ public class AppTest extends ApplicationTest {
     Workday workday1 = workdaysListView.getItems().get(0);
     Workday workday2 = workdaysListView.getItems().get(1);
 
-
     // Open workday 1
     clickOn(LabeledMatchers.hasText("Check Hours Worked"));
     clickOn(LabeledMatchers.hasText(workday1.toString()));
+
+    // Verify that all elements are visible
     FxAssert.verifyThat("#editDialogDateIn", NodeMatchers.isVisible());
     FxAssert.verifyThat("#editDialogTimeInHour", NodeMatchers.isVisible());
     FxAssert.verifyThat("#editDialogTimeInMinute", NodeMatchers.isVisible());
@@ -654,6 +666,101 @@ public class AppTest extends ApplicationTest {
     FxAssert.verifyThat("Ok", NodeMatchers.isVisible());
     FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
     FxAssert.verifyThat("Delete", NodeMatchers.isVisible());
+
+    // Get autofill
+    dateIn = lookup("#editDialogDateIn").query();
+    timeInHour = lookup("#editDialogTimeInHour").query();
+    timeInMinute = lookup("#editDialogTimeInMinute").query();
+    dateOut = lookup("#editDialogDateOut").query();
+    timeOutHour = lookup("#editDialogTimeOutHour").query();
+    timeOutMinute = lookup("#editDialogTimeOutMinute").query();
+    assertTrue(dateIn.getValue().equals(workday1.getTimeIn().toLocalDate()));
+    assertTrue(timeInHour.getText().equals(Integer.toString(workday1.getTimeIn().getHour())));
+    assertTrue(timeInMinute.getText().equals(Integer.toString(workday1.getTimeIn().getMinute())));
+    assertTrue(dateOut.getValue().equals(workday1.getTimeOut().toLocalDate()));
+    assertTrue(timeOutHour.getText().equals(Integer.toString(workday1.getTimeOut().getHour())));
+    assertTrue(timeOutMinute.getText().equals(Integer.toString(workday1.getTimeOut().getMinute())));
+
+    // TODO: Temporary
+    clickOn(LabeledMatchers.hasText("Cancel"));
+
+    // Test invalid input
+    clickOn(LabeledMatchers.hasText(workday1.toString()));
+    timeInHour = lookup("#editDialogTimeInHour").query();
+    timeInMinute = lookup("#editDialogTimeInMinute").query();
+    timeOutHour = lookup("#editDialogTimeOutHour").query();
+    timeOutMinute = lookup("#editDialogTimeOutMinute").query();
+    //Clear Inputs
+    clickOn("#editDialogTimeInHour").eraseText(2);
+    clickOn("#editDialogTimeInMinute").eraseText(2);
+    clickOn("#editDialogTimeOutHour").eraseText(2);
+    clickOn("#editDialogTimeOutMinute").eraseText(2);
+    // Too long
+    clickOn("#editDialogTimeInHour").write("234");
+    FxAssert.verifyThat(timeInHour, h -> h.getText().equals("23"));
+    clickOn("#editDialogTimeInMinute").write("234");
+    FxAssert.verifyThat(timeInMinute, h -> h.getText().equals("23"));
+    clickOn("#editDialogTimeOutHour").write("234");
+    FxAssert.verifyThat(timeOutHour, h -> h.getText().equals("23"));
+    clickOn("#editDialogTimeOutMinute").write("234");
+    FxAssert.verifyThat(timeOutMinute, h -> h.getText().equals("23"));
+    //Clear Inputs
+    clickOn("#editDialogTimeInHour").eraseText(2);
+    clickOn("#editDialogTimeInMinute").eraseText(2);
+    clickOn("#editDialogTimeOutHour").eraseText(2);
+    clickOn("#editDialogTimeOutMinute").eraseText(2);
+    // Strings
+    clickOn("#editDialogTimeInHour").write("-a");
+    FxAssert.verifyThat(timeInHour, h -> h.getText().equals(""));
+    clickOn("#editDialogTimeInMinute").write("-a");
+    FxAssert.verifyThat(timeInMinute, h -> h.getText().equals(""));
+    clickOn("#editDialogTimeOutHour").write("-a");
+    FxAssert.verifyThat(timeOutHour, h -> h.getText().equals(""));
+    clickOn("#editDialogTimeOutMinute").write("-a");
+    FxAssert.verifyThat(timeOutMinute, h -> h.getText().equals(""));
+    // Too big numbers
+    clickOn("#editDialogTimeInHour").write("24");
+    clickOn("#editDialogTimeInMinute").write("60");
+    clickOn("#editDialogTimeOutHour").write("24");
+    clickOn("#editDialogTimeOutMinute").write("60");
+    clickOn(LabeledMatchers.hasText("Ok"));
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    assertTrue(workdaysListView.getItems().get(0).equals(workday1));
+    
+
+    // TODO: Temporary
+    clickOn(LabeledMatchers.hasText("Cancel"));
+
+
+    // Open and edit an open workday and check that the UI updates
+    clickOn(LabeledMatchers.hasText("Stamp In"));
+    clickOn(LabeledMatchers.hasText(testName));
+    clickOn("#inputHour").write("06");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    clickOn(LabeledMatchers.hasText("Check Hours Worked"));
+    Workday workday3 = workdaysListView.getItems().get(2);
+    clickOn(LabeledMatchers.hasText(workday3.toString()));
+    dateOut = lookup("#editDialogDateOut").query();
+    timeOutHour = lookup("#editDialogTimeOutHour").query();
+    timeOutMinute = lookup("#editDialogTimeOutMinute").query();
+    dateOut.setValue(LocalDate.now());
+    timeOutHour.setText("07");
+    timeOutMinute.setText("00");
+    clickOn(LabeledMatchers.hasText("Ok"));
+    clickOn(LabeledMatchers.hasText("OK"));
+    FxAssert.verifyThat(autoRegisterTimeButton, b -> b.getText().equals("Check in"));
+    FxAssert.verifyThat(registerTimeButton, b -> b.getText().equals("Check in"));
+    FxAssert.verifyThat(status, s -> s.getText().equals("Off"));
+    FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GRAY));
+    FxAssert.verifyThat(clockInInfo, c -> c.getText().length() == 0);
   }
 
 

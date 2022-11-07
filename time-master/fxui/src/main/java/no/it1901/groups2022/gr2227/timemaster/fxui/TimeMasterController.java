@@ -630,10 +630,9 @@ public class TimeMasterController {
   }
 
   private boolean isValidNumberInput(String input) {
-    if (input.length() <= 0 || 2 < input.length()) {
+    if (2 < input.length()) {
       return false;
     }
-
     return true;
   }
 
@@ -641,13 +640,10 @@ public class TimeMasterController {
     if (!isValidNumberInput(input)) {
       return false;
     }
-
     int integer = Integer.parseInt(input);
-
     if (integer < 0 || 23 < integer) {
       return false;
     }
-
     return true;
   }
 

@@ -83,7 +83,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  // @Test
+  @Test
   public void testAppConstructor() {
     // Assert that controller is present
     assertNotNull(this.controller);
@@ -94,7 +94,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  // @Test
+  @Test
   public void testApiStatusOffline() {
     assumeTrue((!controller.getApiStatus()) && (!controller.getIsUsingApi()));
     
@@ -107,7 +107,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  // @Test
+  @Test
   public void testApiStatusAvailable() {
     assumeTrue(controller.getApiStatus() && (!controller.getIsUsingApi()));
     
@@ -120,7 +120,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  // @Test
+  @Test
   public void testApiStatusOnline() {
     assumeTrue(controller.getApiStatus());
 
@@ -134,8 +134,8 @@ public class AppTest extends ApplicationTest {
 
 
 
-  // @ParameterizedTest
-  // @MethodSource
+  @ParameterizedTest
+  @MethodSource
   public void testTabs(String input) {
       assertDoesNotThrow(() -> clickOn(LabeledMatchers.hasText(input)));
   }
@@ -146,7 +146,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  // @Test
+  @Test
   public void testAddEmployee() {
     final ListView<Employee> listView = lookup("#chooseEmployeeListView").query();
     final TextField nameInput = lookup("#newEmployeeName").query();
@@ -173,7 +173,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  // @Test
+  @Test
   public void clickEmployee() {
     final ListView<Workday> listView = lookup("#workdayHistoryList").query();
     final Text stampInEmployeeName = lookup("#stampInEmployeeName").query();
@@ -234,7 +234,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  // @Test
+  @Test
   public void testAutoCheckInOut() {
     final Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").queryButton();
     final Button registerTimeButton = lookup("#registerTimeButton").queryButton();
@@ -272,7 +272,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  // @Test
+  @Test
   public void testManualCheckInOut() {
     final Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").queryButton();
     final Button registerTimeButton = lookup("#registerTimeButton").queryButton();
@@ -389,7 +389,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  // @Test
+  @Test
   public void testCheckInOutWithNoEmployeeSet() {
     final Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").queryButton();
     final Button registerTimeButton = lookup("#registerTimeButton").queryButton();
@@ -414,7 +414,5 @@ public class AppTest extends ApplicationTest {
   }
 
 
-
-
-
+  
 }

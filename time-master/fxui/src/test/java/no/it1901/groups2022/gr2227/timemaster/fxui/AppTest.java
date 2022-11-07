@@ -82,7 +82,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  @Test
+  // @Test
   public void testAppConstructor() {
     // Assert that controller is present
     assertNotNull(this.controller);
@@ -93,7 +93,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  @Test
+  // @Test
   public void testApiStatusOffline() {
     assumeTrue((!controller.getApiStatus()) && (!controller.getIsUsingApi()));
     
@@ -106,7 +106,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  @Test
+  // @Test
   public void testApiStatusAvailable() {
     assumeTrue(controller.getApiStatus() && (!controller.getIsUsingApi()));
     
@@ -119,7 +119,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  @Test
+  // @Test
   public void testApiStatusOnline() {
     assumeTrue(controller.getApiStatus());
 
@@ -145,7 +145,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  @Test
+  // @Test
   public void testAddEmployee() {
     final ListView<Employee> listView = lookup("#chooseEmployeeListView").query();
     final TextField nameInput = lookup("#newEmployeeName").query();
@@ -168,12 +168,11 @@ public class AppTest extends ApplicationTest {
     // Add invalid employee
     clickOn("#addNewEmployeeButton");
     FxAssert.verifyThat("OK", NodeMatchers.isVisible());
-
   }
 
 
 
-  @Test
+  // @Test
   public void clickEmployee() {
     final ListView<Workday> listView = lookup("#workdayHistoryList").query();
     final Text stampInEmployeeName = lookup("#stampInEmployeeName").query();
@@ -209,7 +208,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  @Test
+  // @Test
   public void testAutoCheckInOut() {
     final Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").queryButton();
     final Button registerTimeButton = lookup("#registerTimeButton").queryButton();
@@ -247,7 +246,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  // @Test
+  @Test
   public void testManualCheckInOut() {
     final Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").queryButton();
     final Button registerTimeButton = lookup("#registerTimeButton").queryButton();
@@ -284,7 +283,7 @@ public class AppTest extends ApplicationTest {
     FxAssert.verifyThat(minuteField, m -> m.getText().length() == 0);
 
     // Check out
-    clickOn("#inputHour").write("00");
+    clickOn("#inputHour").write("01");
     clickOn("#inputMinutes").write("00");
     clickOn("#registerTimeButton");
     FxAssert.verifyThat(registerTimeButton, b -> b.getText().equals("Check in"));
@@ -294,11 +293,37 @@ public class AppTest extends ApplicationTest {
     FxAssert.verifyThat(clockInInfo, c -> c.getText().length() == 0);
     FxAssert.verifyThat(hourField, h -> h.getText().length() == 0);
     FxAssert.verifyThat(minuteField, m -> m.getText().length() == 0);
+    
+    // No hour-input
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    FxAssert.verifyThat(minuteField, m -> m.getText().equals("00"));
+
+    // Reset
+    minuteField.setText("");
+    
+    // No minute-input
+    clickOn("#inputHour").write("00");
+    clickOn("#registerTimeButton");
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    FxAssert.verifyThat(hourField, h -> h.getText().equals("00"));
+
+    // Reset
+    hourField.setText("");
+
+    // No input
+    clickOn("#registerTimeButton");
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+
   }
 
 
 
-  @Test
+  // @Test
   public void testCheckInOutWithNoEmployeeSet() {
     final Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").queryButton();
     final Button registerTimeButton = lookup("#registerTimeButton").queryButton();

@@ -215,10 +215,11 @@ public class TimeMasterController {
 
     try {
       timeMaster.clockEmployeeInOut(dateTime);
-
       this.clearTimeInputs();
       updateDisplay();
     } catch (IllegalStateException e) {
+      displayError(e.getMessage());
+    } catch (IllegalArgumentException e) {
       displayError(e.getMessage());
     } catch (Exception e) {
       e.printStackTrace();

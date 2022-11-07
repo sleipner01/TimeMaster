@@ -1,9 +1,7 @@
 package no.it1901.groups2022.gr2227.timemaster.core;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -35,14 +33,6 @@ public class TimeMaster {
    */
   public void setApplicationInProductionState() {
     this.state = State.PRODUCTION;
-  }
-
-  public LocalDate getCurrentDate() {
-    return LocalDate.now();
-  }
-
-  public LocalTime getCurrentTime() {
-    return LocalTime.now();
   }
 
   public LocalDateTime getNow() {
@@ -164,7 +154,16 @@ public class TimeMaster {
       throw new IllegalStateException("No employee is selected");
     }
     this.getChosenEmployee().editWorkday(workday, timeIn, timeOut);
-    this.apiHandler.updateEmployee(this.getChosenEmployee());
+
+    switch (state) {
+      case TEST:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
+        break;
+
+      default:
+        this.apiHandler.updateEmployee(this.getChosenEmployee());
+        break;
+    }
   }
 
   public void deleteWorkdayFromEmployee(Workday workday)
@@ -174,7 +173,16 @@ public class TimeMaster {
     }
 
     this.getChosenEmployee().deleteWorkday(workday);
-    this.apiHandler.updateEmployee(this.getChosenEmployee());
+
+    switch (state) {
+      case TEST:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
+        break;
+
+      default:
+        this.apiHandler.updateEmployee(this.getChosenEmployee());
+        break;
+    }
   }
 
 }

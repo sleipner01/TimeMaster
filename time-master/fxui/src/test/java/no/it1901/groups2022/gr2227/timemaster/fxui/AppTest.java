@@ -2,7 +2,6 @@ package no.it1901.groups2022.gr2227.timemaster.fxui;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
@@ -85,14 +84,11 @@ public class AppTest extends ApplicationTest {
 
   @Test
   public void testAppConstructor() {
-    assertDoesNotThrow(() -> new App());
-  }
-
-
-
-  @Test
-  public void testThatControllerIsPresent() {
+    // Assert that controller is present
     assertNotNull(this.controller);
+
+    // Temporarily creating a new App object
+    assertDoesNotThrow(() -> new App());
   }
 
 
@@ -177,7 +173,7 @@ public class AppTest extends ApplicationTest {
 
 
 
-  // @Test
+  @Test
   public void clickEmployee() {
     final ListView<Workday> listView = lookup("#workdayHistoryList").query();
     final Text stampInEmployeeName = lookup("#stampInEmployeeName").query();
@@ -214,58 +210,116 @@ public class AppTest extends ApplicationTest {
 
 
   @Test
-  public void testAutoStampInOut() {
-    Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").queryButton();
+  public void testAutoCheckInOut() {
+    final Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").queryButton();
+    final Button registerTimeButton = lookup("#registerTimeButton").queryButton();
     final Text status = lookup("#statusText").queryText();
     final Circle indicator = lookup("#statusIndicator").query();
+    final Text clockInInfo = lookup("#clockInInfo").query();
 
     addNewEmployee(testName);
     clickOn(LabeledMatchers.hasText("Stamp In"));
-
     clickOn(LabeledMatchers.hasText(testName));
 
-    // Stamp in
+    // Before Check in
+    FxAssert.verifyThat(autoRegisterTimeButton, b -> b.getText().equals("Check in"));
+    FxAssert.verifyThat(registerTimeButton, b -> b.getText().equals("Check in"));
+    FxAssert.verifyThat(status, s -> s.getText().equals("Off"));
+    FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GRAY));
+    FxAssert.verifyThat(clockInInfo, c -> c.getText().length() == 0);
+
+    // Check in
     clickOn("#autoRegisterTimeButton");
     FxAssert.verifyThat(autoRegisterTimeButton, b -> b.getText().equals("Check out"));
+    FxAssert.verifyThat(registerTimeButton, b -> b.getText().equals("Check out"));
     FxAssert.verifyThat(status, s -> s.getText().equals("Active"));
     FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GREEN));
+    FxAssert.verifyThat(clockInInfo, c -> c.getText().length() > 0);
 
-    // Stamp out
+    // Check out
     clickOn("#autoRegisterTimeButton");
+    FxAssert.verifyThat(autoRegisterTimeButton, b -> b.getText().equals("Check in"));
+    FxAssert.verifyThat(registerTimeButton, b -> b.getText().equals("Check in"));
+    FxAssert.verifyThat(status, s -> s.getText().equals("Off"));
+    FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GRAY));
+    FxAssert.verifyThat(clockInInfo, c -> c.getText().length() == 0);
+  }
+
+
+
+  // @Test
+  public void testManualCheckInOut() {
+    final Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").queryButton();
+    final Button registerTimeButton = lookup("#registerTimeButton").queryButton();
+    final TextField hourField = lookup("#inputHour").query();
+    final TextField minuteField = lookup("#inputMinutes").query();
+    final Text status = lookup("#statusText").query();
+    final Circle indicator = lookup("#statusIndicator").query();
+    final Text clockInInfo = lookup("#clockInInfo").query();
+
+    addNewEmployee(testName);
+    clickOn(LabeledMatchers.hasText("Stamp In"));
+    clickOn(LabeledMatchers.hasText(testName));
+
+    // Before check in
+    FxAssert.verifyThat(registerTimeButton, b -> b.getText().equals("Check in"));
     FxAssert.verifyThat(autoRegisterTimeButton, b -> b.getText().equals("Check in"));
     FxAssert.verifyThat(status, s -> s.getText().equals("Off"));
     FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GRAY));
+    FxAssert.verifyThat(clockInInfo, c -> c.getText().length() == 0);
+    FxAssert.verifyThat(hourField, h -> h.getText().length() == 0);
+    FxAssert.verifyThat(minuteField, m -> m.getText().length() == 0);
+
+    // Check in in
+    clickOn("#inputHour").write("00");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+
+    FxAssert.verifyThat(registerTimeButton, b -> b.getText().equals("Check out"));
+    FxAssert.verifyThat(autoRegisterTimeButton, b -> b.getText().equals("Check out"));
+    FxAssert.verifyThat(status, s -> s.getText().equals("Active"));
+    FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GREEN));
+    FxAssert.verifyThat(clockInInfo, c -> c.getText().length() > 0);
+    FxAssert.verifyThat(hourField, h -> h.getText().length() == 0);
+    FxAssert.verifyThat(minuteField, m -> m.getText().length() == 0);
+
+    // Check out
+    clickOn("#inputHour").write("00");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    FxAssert.verifyThat(registerTimeButton, b -> b.getText().equals("Check in"));
+    FxAssert.verifyThat(autoRegisterTimeButton, b -> b.getText().equals("Check in"));
+    FxAssert.verifyThat(status, s -> s.getText().equals("Off"));
+    FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GRAY));
+    FxAssert.verifyThat(clockInInfo, c -> c.getText().length() == 0);
+    FxAssert.verifyThat(hourField, h -> h.getText().length() == 0);
+    FxAssert.verifyThat(minuteField, m -> m.getText().length() == 0);
   }
 
 
 
   @Test
-  public void testStampInException() {
-    Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").queryButton();
+  public void testCheckInOutWithNoEmployeeSet() {
+    final Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").queryButton();
+    final Button registerTimeButton = lookup("#registerTimeButton").queryButton();
 
-    addNewEmployee(testName);
     clickOn(LabeledMatchers.hasText("Stamp In"));
+
+    // Auto check in
     autoRegisterTimeButton.getParent().setDisable(false);
     clickOn("#autoRegisterTimeButton");
 
     FxAssert.verifyThat("OK", NodeMatchers.isVisible());
     clickOn(LabeledMatchers.hasText("OK"));
-  }
 
+    // Manual check in
+    registerTimeButton.getParent().setDisable(false);
+    clickOn("#inputHour").write("00");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
 
-
-  @Test
-  public void testManualStampIn() {
-    final Text status = lookup("#statusText").query();
-    final Circle indicator = lookup("#statusIndicator").query();
-
-    addNewEmployee(testName);
-    clickOn(LabeledMatchers.hasText("Stamp In"));
-    clickOn(LabeledMatchers.hasText(testName));
-    clickOn("#autoRegisterTimeButton");
-
-    FxAssert.verifyThat(status, s -> s.getText().equals("Active"));
-    FxAssert.verifyThat(indicator, i -> i.getFill().equals(Color.GREEN));
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
   }
 
 

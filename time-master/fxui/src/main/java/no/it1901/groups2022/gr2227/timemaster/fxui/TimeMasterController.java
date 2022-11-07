@@ -490,20 +490,26 @@ public class TimeMasterController {
     // Time in inputs
     final Label labelIn = new Label("Time in");
     DatePicker dateIn = new DatePicker();
+    dateIn.setId("editDialogDateIn");
     TextField timeInHour = new TextField();
+    timeInHour.setId("editDialogTimeInHour");
     limitTextFieldToTwoNumbers(timeInHour);
     timeInHour.setPromptText("Hour: 0-23");
     TextField timeInMinute = new TextField();
+    timeInMinute.setId("editDialogTimeInMinute");
     limitTextFieldToTwoNumbers(timeInMinute);
     timeInMinute.setPromptText("Min: 0-59");
 
     // Time out inputs
     final Label labelOut = new Label("Time Out");
     DatePicker dateOut = new DatePicker();
+    dateOut.setId("editDialogDateOut");
     TextField timeOutHour = new TextField();
+    timeOutHour.setId("editDialogTimeOutHour");
     limitTextFieldToTwoNumbers(timeOutHour);
     timeOutHour.setPromptText("Hour: 0-23");
     TextField timeOutMinute = new TextField();
+    timeOutMinute.setId("editDialogTimeOutMinute");
     limitTextFieldToTwoNumbers(timeOutMinute);
     timeOutMinute.setPromptText("Min: 0-59");
 

@@ -616,17 +616,41 @@ public class AppTest extends ApplicationTest {
   public void testEditWorkday() {
     final ListView<Workday> workdaysListView = lookup("#workdayHistoryList").query();
 
-    // Initialize employee with workday
+    // Initialize employee with two workdays
     addNewEmployee(testName);
     clickOn(LabeledMatchers.hasText("Stamp In"));
     clickOn(LabeledMatchers.hasText(testName));
-    clickOn("#autoRegisterTimeButton");
-    clickOn("#autoRegisterTimeButton");
+    // Workday 1
+    clickOn("#inputHour").write("01");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    clickOn("#inputHour").write("02");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    // Workday 2
+    clickOn("#inputHour").write("04");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    clickOn("#inputHour").write("05");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
 
-    // Open workday
-    Workday workday = workdaysListView.getItems().get(0);
+    assertTrue(workdaysListView.getItems().size() == 2);
+
+    // Workdays
+    Workday workday1 = workdaysListView.getItems().get(0);
+    Workday workday2 = workdaysListView.getItems().get(1);
+
+
+    // Open workday 1
     clickOn(LabeledMatchers.hasText("Check Hours Worked"));
-    clickOn(LabeledMatchers.hasText(workday.toString()));
+    clickOn(LabeledMatchers.hasText(workday1.toString()));
+    FxAssert.verifyThat("#editDialogDateIn", NodeMatchers.isVisible());
+    FxAssert.verifyThat("#editDialogTimeInHour", NodeMatchers.isVisible());
+    FxAssert.verifyThat("#editDialogTimeInMinute", NodeMatchers.isVisible());
+    FxAssert.verifyThat("#editDialogDateOut", NodeMatchers.isVisible());
+    FxAssert.verifyThat("#editDialogTimeOutHour", NodeMatchers.isVisible());
+    FxAssert.verifyThat("#editDialogTimeOutMinute", NodeMatchers.isVisible());
     FxAssert.verifyThat("Ok", NodeMatchers.isVisible());
     FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
     FxAssert.verifyThat("Delete", NodeMatchers.isVisible());

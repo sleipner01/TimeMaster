@@ -1,9 +1,7 @@
 package no.it1901.groups2022.gr2227.timemaster.core;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -150,24 +148,6 @@ public class TimeMaster {
       default:
         return false;
     }
-  }
-
-  /**
-   * Uses {@link java.time.LocalDate#now()} to get the system clock date.
-   *
-   * @return current date
-   */
-  public LocalDate getCurrentDate() {
-    return LocalDate.now();
-  }
-
-  /**
-   * Uses {@link java.time.LocalTime#now()} to get the system clock time.
-   *
-   * @return current time
-   */
-  public LocalTime getCurrentTime() {
-    return LocalTime.now();
   }
 
   /**

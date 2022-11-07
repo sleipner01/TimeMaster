@@ -235,6 +235,18 @@ public class AppTest extends ApplicationTest {
 
 
   @Test
+  public void testDeleteEmployeeWithNoChosenEmployee() {
+    final Button button = lookup("#deleteEmployeeButton").query();
+    
+    clickOn(LabeledMatchers.hasText("Add New Employee"));
+    button.setDisable(false);
+    clickOn("#deleteEmployeeButton");
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+  }
+
+
+
+  @Test
   public void testAutoCheckInOut() {
     final Button autoRegisterTimeButton = lookup("#autoRegisterTimeButton").queryButton();
     final Button registerTimeButton = lookup("#registerTimeButton").queryButton();
@@ -414,5 +426,5 @@ public class AppTest extends ApplicationTest {
   }
 
 
-  
+
 }

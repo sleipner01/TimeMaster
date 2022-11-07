@@ -493,4 +493,73 @@ public class AppTest extends ApplicationTest {
 
 
 
+  @Test
+  public void testWorkdayRegistration() {
+    final ListView<Workday> workdaysListView = lookup("#workdayHistoryList").query();
+
+    // Initialize employees
+    addNewEmployee(testName);
+    addNewEmployee(testName2);
+    clickOn(LabeledMatchers.hasText("Stamp In"));
+
+    // Workdaylist employee1
+    clickOn(LabeledMatchers.hasText(testName));
+    assertTrue(workdaysListView.getItems().size() == 0);
+
+    // Workdaylist employee2
+    clickOn(LabeledMatchers.hasText(testName2));
+    assertTrue(workdaysListView.getItems().size() == 0);
+
+    // Check in employee2
+    clickOn("#inputHour").write("01");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    assertTrue(workdaysListView.getItems().size() == 1);
+
+    // Workdaylist employee1
+    clickOn(LabeledMatchers.hasText(testName));
+    assertTrue(workdaysListView.getItems().size() == 0);
+
+    // Check out employee2
+    clickOn(LabeledMatchers.hasText(testName2));
+    clickOn("#inputHour").write("02");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    assertTrue(workdaysListView.getItems().size() == 1);
+
+    // Workdaylist employee1
+    clickOn(LabeledMatchers.hasText(testName));
+    assertTrue(workdaysListView.getItems().size() == 0);
+
+    // Check in and out employee2
+    clickOn(LabeledMatchers.hasText(testName2));
+    clickOn("#inputHour").write("03");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    clickOn("#inputHour").write("04");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    assertTrue(workdaysListView.getItems().size() == 2);
+
+    // Workdaylist employee1
+    clickOn(LabeledMatchers.hasText(testName));
+    assertTrue(workdaysListView.getItems().size() == 0);
+
+    // Check in and out employee1 in the same timeperiod
+    clickOn("#inputHour").write("01");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    clickOn("#inputHour").write("02");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    assertTrue(workdaysListView.getItems().size() == 1);
+
+    // Workdaylist employee2
+    clickOn(LabeledMatchers.hasText(testName2));
+    assertTrue(workdaysListView.getItems().size() == 2);
+
+  }
+
+
+
 }

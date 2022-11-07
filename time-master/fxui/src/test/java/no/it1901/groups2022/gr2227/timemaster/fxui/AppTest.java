@@ -627,8 +627,108 @@ public class AppTest extends ApplicationTest {
     Workday workday = workdaysListView.getItems().get(0);
     clickOn(LabeledMatchers.hasText("Check Hours Worked"));
     clickOn(LabeledMatchers.hasText(workday.toString()));
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Delete", NodeMatchers.isVisible());
   }
 
 
+
+  @Test
+  public void testDeleteWorkday() {
+    final ListView<Workday> workdaysListView = lookup("#workdayHistoryList").query();
+
+    // Initialize employee with workday
+    addNewEmployee(testName);
+    clickOn(LabeledMatchers.hasText("Stamp In"));
+    clickOn(LabeledMatchers.hasText(testName));
+    clickOn("#inputHour").write("01");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    clickOn("#inputHour").write("02");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    assertTrue(workdaysListView.getItems().size() == 1);
+
+    // Go to tab
+    clickOn(LabeledMatchers.hasText("Check Hours Worked"));
+
+    // Get first workday
+    Workday workday = workdaysListView.getItems().get(0);
+
+    // Open workday and cancel
+    clickOn(LabeledMatchers.hasText(workday.toString()));
+    FxAssert.verifyThat("Ok", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Delete", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("Cancel"));
+    assertTrue(workdaysListView.getItems().size() == 1);
+
+    // Open workday and cancel delete
+    clickOn(LabeledMatchers.hasText(workday.toString()));
+    FxAssert.verifyThat("Ok", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Delete", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("Delete"));
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("Cancel"));
+    FxAssert.verifyThat("Ok", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Delete", NodeMatchers.isVisible());
+    assertTrue(workdaysListView.getItems().size() == 1);
+    clickOn(LabeledMatchers.hasText("Cancel"));
+
+    // Delete workday
+    clickOn(LabeledMatchers.hasText(workday.toString()));
+    FxAssert.verifyThat("Ok", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Delete", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("Delete"));
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    assertTrue(workdaysListView.getItems().size() == 0);
+
+    // Make sure the workday can be added again
+    clickOn(LabeledMatchers.hasText("Stamp In"));
+    clickOn("#inputHour").write("01");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    clickOn("#inputHour").write("02");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    assertTrue(workdaysListView.getItems().size() == 1);
+
+    // Add another workday
+    clickOn("#inputHour").write("04");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    clickOn("#inputHour").write("05");
+    clickOn("#inputMinutes").write("00");
+    clickOn("#registerTimeButton");
+    assertTrue(workdaysListView.getItems().size() == 2);
+
+    // Get the workdays
+    Workday workday2 = workdaysListView.getItems().get(0);
+    Workday workday3 = workdaysListView.getItems().get(1);
+
+    // Go to tab
+    clickOn(LabeledMatchers.hasText("Check Hours Worked"));
+
+    // Delete workday2
+    clickOn(LabeledMatchers.hasText(workday2.toString()));
+    FxAssert.verifyThat("Ok", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Delete", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("Delete"));
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    // Check that workday3 still exists
+    assertTrue(workdaysListView.getItems().size() == 1);
+    assertTrue(workdaysListView.getItems().get(0).equals(workday3));
+    assertTrue(workdaysListView.getItems().get(0).equals(workday3));
+  }
 
 }

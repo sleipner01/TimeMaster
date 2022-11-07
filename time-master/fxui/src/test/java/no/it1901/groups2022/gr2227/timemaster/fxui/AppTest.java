@@ -589,6 +589,9 @@ public class AppTest extends ApplicationTest {
     clickOn("#registerTimeButton");
     assertTrue(workdaysListView.getItems().size() == 2);
 
+    // TODO: Assert that new newest element is the first element in the list
+    // Issue: #112
+
     // Workdaylist employee1
     clickOn(LabeledMatchers.hasText(testName));
     assertTrue(workdaysListView.getItems().size() == 0);
@@ -616,7 +619,14 @@ public class AppTest extends ApplicationTest {
     // Initialize employee with workday
     addNewEmployee(testName);
     clickOn(LabeledMatchers.hasText("Stamp In"));
+    clickOn(LabeledMatchers.hasText(testName));
+    clickOn("#autoRegisterTimeButton");
+    clickOn("#autoRegisterTimeButton");
 
+    // Open workday
+    Workday workday = workdaysListView.getItems().get(0);
+    clickOn(LabeledMatchers.hasText("Check Hours Worked"));
+    clickOn(LabeledMatchers.hasText(workday.toString()));
   }
 
 

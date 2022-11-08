@@ -77,7 +77,7 @@ public class ApiHandler {
   }
 
   public void deleteEmployee(Employee employee) throws IOException {
-    request("employees/" + employee.getId(), null, "DELETE");
+    request("employees/" + employee.getId(), "", "DELETE");
   }
 
   /**

@@ -58,6 +58,7 @@ public class ApiHandler {
       }
       scanner.close();
     }
+    System.out.println(response);
     return response;
   }
 
@@ -85,15 +86,15 @@ public class ApiHandler {
   }
 
   public Employee getEmployee(Employee employee) throws IOException {
-    return this.jsonParser.readEmployee(this.getResponse(employee.getId()));
+    return this.jsonParser.readEmployee(this.getResponse("employees/" + employee.getId()));
   }
 
   public ArrayList<Employee> getEmployees() throws IOException {
     return this.jsonParser.readEmployees(this.getResponse("employees"));
   }
 
-  public ArrayList<Workday> getWorkdays(String name) throws IOException {
-    return this.jsonParser.readWorkdays(this.getResponse(name));
+  public ArrayList<Workday> getWorkdays(Employee employee) throws IOException {
+    return this.jsonParser.readWorkdays(this.getResponse("employees/" + employee.getId()));
   }
 
   public int createEmployee(Employee employee) throws IOException {
@@ -105,7 +106,7 @@ public class ApiHandler {
   }
 
   public int deleteEmployee(Employee employee) throws IOException {
-    return request("employees/" + employee.getId(), null, "DELETE");
+    return request("employees/" + employee.getId(), "", "DELETE");
   }
 
   /**

@@ -344,18 +344,15 @@ public class Employee {
       throws IllegalArgumentException {
     this.hasWorkday(workday);
 
-    this.deleteWorkday(workday);
-    Workday editedWorkday = new Workday(timeIn);
-    editedWorkday.setTimeOut(timeOut);
     try {
+      this.deleteWorkday(workday);
+      Workday editedWorkday = new Workday(timeIn);
+      editedWorkday.setTimeOut(timeOut);
       this.addWorkday(editedWorkday);
     } catch (IllegalArgumentException e) {
       this.addWorkday(workday);
       throw new IllegalArgumentException(e.getMessage());
-    } catch (Exception e) {
-      this.addWorkday(workday);
-      throw new IllegalArgumentException(e.getMessage());
-    }
+    } 
   }
 
   /**

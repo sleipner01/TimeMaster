@@ -73,7 +73,9 @@ public class Employee {
       Workday tempWorkday = workdays.get(i);
 
       // If the last workday isn't checked out - Error
-      if (tempWorkday.equals(this.getLatestWorkday()) && !tempWorkday.isTimedOut()) {
+      if (i == this.workdays.size()-1 
+          && !tempWorkday.isTimedOut()
+          && input.isAfter(tempWorkday.getTimeIn())) {
         throw new IllegalArgumentException(
             "Your last workday isn't clocked out yet...\n"
             + "Workday: " + tempWorkday.toString()

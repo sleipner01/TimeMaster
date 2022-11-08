@@ -159,11 +159,6 @@ public class TimeMasterController {
       });
       return cell;
     });
-
-    workdayHistoryList.setOnMouseClicked(e -> {
-      System.out.println("You clicked on an empty cell");
-    });
-
   }
 
   private void chooseEmployeeListenerSetup() {
@@ -190,10 +185,6 @@ public class TimeMasterController {
         }
       });
       return cell;
-    });
-
-    chooseEmployeeListView.setOnMouseClicked(e -> {
-      System.out.println("You clicked on an empty cell");
     });
   }
 
@@ -224,10 +215,11 @@ public class TimeMasterController {
 
     try {
       timeMaster.clockEmployeeInOut(dateTime);
-
       this.clearTimeInputs();
       updateDisplay();
     } catch (IllegalStateException e) {
+      displayError(e.getMessage());
+    } catch (IllegalArgumentException e) {
       displayError(e.getMessage());
     } catch (Exception e) {
       e.printStackTrace();
@@ -498,20 +490,26 @@ public class TimeMasterController {
     // Time in inputs
     final Label labelIn = new Label("Time in");
     DatePicker dateIn = new DatePicker();
+    dateIn.setId("editDialogDateIn");
     TextField timeInHour = new TextField();
+    timeInHour.setId("editDialogTimeInHour");
     limitTextFieldToTwoNumbers(timeInHour);
     timeInHour.setPromptText("Hour: 0-23");
     TextField timeInMinute = new TextField();
+    timeInMinute.setId("editDialogTimeInMinute");
     limitTextFieldToTwoNumbers(timeInMinute);
     timeInMinute.setPromptText("Min: 0-59");
 
     // Time out inputs
     final Label labelOut = new Label("Time Out");
     DatePicker dateOut = new DatePicker();
+    dateOut.setId("editDialogDateOut");
     TextField timeOutHour = new TextField();
+    timeOutHour.setId("editDialogTimeOutHour");
     limitTextFieldToTwoNumbers(timeOutHour);
     timeOutHour.setPromptText("Hour: 0-23");
     TextField timeOutMinute = new TextField();
+    timeOutMinute.setId("editDialogTimeOutMinute");
     limitTextFieldToTwoNumbers(timeOutMinute);
     timeOutMinute.setPromptText("Min: 0-59");
 
@@ -632,24 +630,20 @@ public class TimeMasterController {
   }
 
   private boolean isValidNumberInput(String input) {
-    if (input.length() <= 0 || 2 < input.length()) {
-      return false;
+    if (0 < input.length() && input.length() < 3) {
+      return true;
     }
-
-    return true;
+    return false;
   }
 
   private boolean isValidHourInput(String input) {
     if (!isValidNumberInput(input)) {
       return false;
     }
-
     int integer = Integer.parseInt(input);
-
     if (integer < 0 || 23 < integer) {
       return false;
     }
-
     return true;
   }
 
@@ -684,6 +678,7 @@ public class TimeMasterController {
       e.printStackTrace();
     }
     showWorkdayHistory();
+    setEmployeeStatus();
   }
 
   private void deleteWorkday(Workday workday) {
@@ -704,11 +699,6 @@ public class TimeMasterController {
 
   @FXML
   private void handleDeleteEmployee() {
-    if (!timeMaster.employeeIsSet()) {
-      displayError("Employee is not set.");
-      return;
-    }
-    System.out.println("Deleting " + timeMaster.getChosenEmployee().getName());
     try {
       timeMaster.deleteChosenEmployee();
       updateDisplay();
@@ -718,6 +708,7 @@ public class TimeMasterController {
       setDeleteStatus(false);
     } catch (IOException e) {
       displayError(e.getMessage());
+      e.printStackTrace();
       setDeleteStatus(false);
       setApiStatus();
     } catch (Exception e) {

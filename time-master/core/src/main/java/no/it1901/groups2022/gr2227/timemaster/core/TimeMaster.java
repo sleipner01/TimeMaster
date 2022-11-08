@@ -378,6 +378,7 @@ public class TimeMaster {
    * @param dateTimeInput           Timestamp of clock in or out.
    * @return                        {@link Employee#isAtWork()}
    * @throws IllegalStateException  If an employee isn't set.
+   * @throws IllegalArgumentException  If the timestamp is invalid.
    * @throws IOException            If the API-call fails.
    * @see Employee
    * @see State
@@ -388,7 +389,7 @@ public class TimeMaster {
    * @see TimeMaster#setApplicationInProductionState()
    */
   public boolean clockEmployeeInOut(LocalDateTime dateTimeInput) 
-      throws IllegalStateException, IOException {
+      throws IllegalStateException, IllegalArgumentException, IOException {
     if (!this.employeeIsSet()) {
       throw new IllegalStateException("No employee is selected");
     }

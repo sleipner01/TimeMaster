@@ -19,12 +19,10 @@ public class TimeMasterTest {
   public void setup() {
     timeMaster = new TimeMaster();
     timeMaster.setApplicationInTestState();
-    try {
-      timeMaster.createEmployee(testName);
-    } catch (Exception e) {
-      // Should never run
-      System.err.println("Somehow the API calls are on...");
-    }
+  }
+
+  private void createTestingEmployee() {
+    assertDoesNotThrow(() -> timeMaster.createEmployee(testName));
   }
 
   @Test
@@ -46,6 +44,7 @@ public class TimeMasterTest {
 
   @Test
   public void chooseEmployeeTest() {
+    createTestingEmployee();
     assertDoesNotThrow(() -> timeMaster.setChosenEmployee(timeMaster.getEmployees().get(0)));
     assertEquals(testName, timeMaster.getChosenEmployee().getName());
     assertThrows(IllegalArgumentException.class, () -> timeMaster.setChosenEmployee(new Employee()));
@@ -53,6 +52,7 @@ public class TimeMasterTest {
 
   @Test
   public void clockEmployeeInOutTest() {
+    assertDoesNotThrow(() -> timeMaster.createEmployee(testName));
     assertThrows(IllegalStateException.class, () -> timeMaster.clockEmployeeInOut(LocalDateTime.MIN));
     assertDoesNotThrow(() -> timeMaster.setChosenEmployee(timeMaster.getEmployees().get(0)));
     assertDoesNotThrow(() -> timeMaster.clockEmployeeInOut(LocalDateTime.MIN));
@@ -60,6 +60,7 @@ public class TimeMasterTest {
 
   @Test
   void autoClockEmployeeInOutTest() {
+    assertDoesNotThrow(() -> timeMaster.createEmployee(testName));
     assertThrows(IllegalStateException.class, () -> timeMaster.autoClockEmployeeInOut());
     assertDoesNotThrow(() -> timeMaster.setChosenEmployee(timeMaster.getEmployees().get(0)));
     assertDoesNotThrow(() -> timeMaster.autoClockEmployeeInOut());
@@ -68,6 +69,7 @@ public class TimeMasterTest {
 
   @Test
   void getEmployeeWorkdayHistoryTest() {
+    assertDoesNotThrow(() -> timeMaster.createEmployee(testName));
     assertThrows(IllegalStateException.class, () -> timeMaster.getEmployeeWorkdayHistory());
     assertDoesNotThrow(() -> timeMaster.setChosenEmployee(timeMaster.getEmployees().get(0)));
     assertDoesNotThrow(() -> timeMaster.getEmployeeWorkdayHistory());
@@ -75,6 +77,7 @@ public class TimeMasterTest {
 
   @Test
   void editWorkdayTest() {
+    assertDoesNotThrow(() -> timeMaster.createEmployee(testName));
     assertThrows(IllegalStateException.class, () -> timeMaster.editWorkday(null, null, null));
     assertDoesNotThrow(() -> timeMaster.setChosenEmployee(timeMaster.getEmployees().get(0)));
     assertDoesNotThrow(() -> timeMaster.clockEmployeeInOut(LocalDateTime.MIN));
@@ -86,6 +89,7 @@ public class TimeMasterTest {
 
   @Test
   void deleteWorkdayFromEmployeeTest() {
+    assertDoesNotThrow(() -> timeMaster.createEmployee(testName));
     assertThrows(IllegalStateException.class, () -> timeMaster.deleteWorkdayFromEmployee(null));
     assertDoesNotThrow(() -> timeMaster.setChosenEmployee(timeMaster.getEmployees().get(0)));
     assertDoesNotThrow(() -> timeMaster.clockEmployeeInOut(LocalDateTime.MIN));

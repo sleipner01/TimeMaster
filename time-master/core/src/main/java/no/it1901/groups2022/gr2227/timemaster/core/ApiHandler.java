@@ -7,14 +7,41 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/** 
+ * ApiHandler is the client side of the REST API, and makes requests to the server. 
+ * It encapsulates 
+ * <ul>
+ *  <li> String baseURL which is the base URL for all requests
+ *  <li> @see TimeMasterJsonPaser
+ * </ul>
+ * 
+*/
 public class ApiHandler {
 
-  final String baseURL = "http://localhost:8080/api/";
-  private TimeMasterJsonParser jsonParser = new TimeMasterJsonParser();
+  private final String baseUrl;
+  private TimeMasterJsonParser jsonParser;
+
+  /**
+   * Creates an ApiHandler object.
+   */
+  public ApiHandler() {
+    this.baseUrl = "http://localhost:8080/api/";
+    this.jsonParser = new TimeMasterJsonParser();
+  }
   
-  // https://happycoding.io/tutorials/java-server/rest-api
+  /**
+   * Creates the connection needed for requests.
+   *
+   * @param path          the path to set the connection
+   *
+   * @param requestMethod the type of request
+   *
+   * @return              a HttpURL Connection
+   *
+   * @throws IOException  throws exception if can't connect to server
+   */
   private HttpURLConnection setConnection(String path, String requestMethod) throws IOException { 
-    HttpURLConnection connection = (HttpURLConnection) new URL(baseURL + path).openConnection();
+    HttpURLConnection connection = (HttpURLConnection) new URL(baseUrl + path).openConnection();
     connection.setRequestMethod(requestMethod);
     return connection;
   }
@@ -92,27 +119,31 @@ public class ApiHandler {
     try {
       HttpURLConnection connection = setConnection("", "GET");
       int responseCode = connection.getResponseCode();
-      if(200 <= responseCode && responseCode < 300) {
+      if (200 <= responseCode && responseCode < 300) {
         System.out.println("********************" + "\n");
         String response = "";
-          Scanner scanner = new Scanner(connection.getInputStream());
-          while (scanner.hasNextLine()) {
-            response += scanner.nextLine();
-            response += "\n";
-          }
-          scanner.close();
+        Scanner scanner = new Scanner(connection.getInputStream());
+        while (scanner.hasNextLine()) {
+          response += scanner.nextLine();
+          response += "\n";
+        }
+        scanner.close();
         
-          System.out.println(response);
+        System.out.println(response);
         System.out.println("********************" + "\n");
         return true;
-      }
-      else {
-        System.err.println( "********************" + "\n" +
-          "The server isn't responding properly.\n" + 
-          "Reponse code: " + connection.getResponseCode() + "\n" +
-          "Response message: " + connection.getResponseMessage() + "\n" +
-          "********************"
-          );
+      } else {
+        System.err.println("********************" 
+            + "\n" 
+            + "The server isn't responding properly.\n" 
+            + "Reponse code: " 
+            + connection.getResponseCode() 
+            + "\n" 
+            + "Response message: " 
+            + connection.getResponseMessage() 
+            + "\n" 
+            + "********************"
+        );
         return false;
       }
     } catch (IOException e) {

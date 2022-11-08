@@ -1,6 +1,7 @@
 package no.it1901.groups2022.gr2227.timemaster.fxui;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
@@ -801,10 +802,141 @@ public class AppTest extends ApplicationTest {
 
 
 
+    // Test valid edit
+    clickOn(LabeledMatchers.hasText(workday2.toString()));
+    timeInHour = lookup("#editDialogTimeInHour").query();
+    timeInMinute = lookup("#editDialogTimeInMinute").query();
+    timeOutHour = lookup("#editDialogTimeOutHour").query();
+    timeOutMinute = lookup("#editDialogTimeOutMinute").query();
+    //Clear Inputs
+    clickOn("#editDialogTimeInHour").eraseText(2);
+    clickOn("#editDialogTimeInMinute").eraseText(2);
+    clickOn("#editDialogTimeOutHour").eraseText(2);
+    clickOn("#editDialogTimeOutMinute").eraseText(2);
+    // Add values
+    clickOn("#editDialogTimeInHour").write("06");
+    clickOn("#editDialogTimeInMinute").write("00");
+    clickOn("#editDialogTimeOutHour").write("07");
+    clickOn("#editDialogTimeOutMinute").write("00");
+    // Confirm
+    clickOn(LabeledMatchers.hasText("Ok"));
+    clickOn(LabeledMatchers.hasText("OK"));
+    // Assertions
+    Workday workday2p2 = workdaysListView.getItems().get(1);
+    assertFalse(workday2p2.equals(workday2));
+    assertTrue(workday2p2.toString().contains("06:00"));
+    assertTrue(workday2p2.toString().contains("07:00"));
+
+
+
+    // Test valid edit, shrink workday
+    clickOn(LabeledMatchers.hasText(workday1.toString()));
+    timeInHour = lookup("#editDialogTimeInHour").query();
+    timeInMinute = lookup("#editDialogTimeInMinute").query();
+    timeOutHour = lookup("#editDialogTimeOutHour").query();
+    timeOutMinute = lookup("#editDialogTimeOutMinute").query();
+    //Clear Inputs
+    clickOn("#editDialogTimeInHour").eraseText(2);
+    clickOn("#editDialogTimeInMinute").eraseText(2);
+    clickOn("#editDialogTimeOutHour").eraseText(2);
+    clickOn("#editDialogTimeOutMinute").eraseText(2);
+    // Add values
+    clickOn("#editDialogTimeInHour").write("01");
+    clickOn("#editDialogTimeInMinute").write("15");
+    clickOn("#editDialogTimeOutHour").write("01");
+    clickOn("#editDialogTimeOutMinute").write("45");
+    // Confirm
+    clickOn(LabeledMatchers.hasText("Ok"));
+    clickOn(LabeledMatchers.hasText("OK"));
+    // Assertions
+    Workday workday1p2 = workdaysListView.getItems().get(0);
+    assertFalse(workday1p2.equals(workday2));
+    assertTrue(workday1p2.toString().contains("01:15"));
+    assertTrue(workday1p2.toString().contains("01:45"));
+
+
+
+    // Test invalid edit, conflicting timeout
+    clickOn(LabeledMatchers.hasText(workday1p2.toString()));
+    timeInHour = lookup("#editDialogTimeInHour").query();
+    timeInMinute = lookup("#editDialogTimeInMinute").query();
+    timeOutHour = lookup("#editDialogTimeOutHour").query();
+    timeOutMinute = lookup("#editDialogTimeOutMinute").query();
+    //Clear Inputs
+    clickOn("#editDialogTimeOutHour").eraseText(2);
+    clickOn("#editDialogTimeOutMinute").eraseText(2);
+    // Add values
+    clickOn("#editDialogTimeOutHour").write("06");
+    clickOn("#editDialogTimeOutMinute").write("30");
+    // Confirm
+    clickOn(LabeledMatchers.hasText("Ok"));
+    clickOn(LabeledMatchers.hasText("OK"));
+    // Confirm Error
+    clickOn(LabeledMatchers.hasText("OK"));
+    // Assertions
+    Workday workday1p3 = workdaysListView.getItems().get(0);
+    assertTrue(workday1p2.toString().equals(workday1p3.toString()));
+ 
+
+
+    // Test invalid edit, conflicting timein
+    clickOn(LabeledMatchers.hasText(workday1p3.toString()));
+    timeInHour = lookup("#editDialogTimeInHour").query();
+    timeInMinute = lookup("#editDialogTimeInMinute").query();
+    timeOutHour = lookup("#editDialogTimeOutHour").query();
+    timeOutMinute = lookup("#editDialogTimeOutMinute").query();
+    //Clear Inputs
+    clickOn("#editDialogTimeInHour").eraseText(2);
+    clickOn("#editDialogTimeInMinute").eraseText(2);
+    clickOn("#editDialogTimeOutHour").eraseText(2);
+    clickOn("#editDialogTimeOutMinute").eraseText(2);
+    // Add values
+    clickOn("#editDialogTimeInHour").write("06");
+    clickOn("#editDialogTimeInMinute").write("30");
+    clickOn("#editDialogTimeOutHour").write("07");
+    clickOn("#editDialogTimeOutMinute").write("30");
+    // Confirm
+    clickOn(LabeledMatchers.hasText("Ok"));
+    clickOn(LabeledMatchers.hasText("OK"));
+    // Confirm Error
+    clickOn(LabeledMatchers.hasText("OK"));
+    // Assertions
+    Workday workday1p4 = workdaysListView.getItems().get(0);
+    assertTrue(workday1p3.toString().equals(workday1p4.toString()));
+
+
+
+    // Test invalid edit, overlapping
+    clickOn(LabeledMatchers.hasText(workday1p3.toString()));
+    timeInHour = lookup("#editDialogTimeInHour").query();
+    timeInMinute = lookup("#editDialogTimeInMinute").query();
+    timeOutHour = lookup("#editDialogTimeOutHour").query();
+    timeOutMinute = lookup("#editDialogTimeOutMinute").query();
+    //Clear Inputs
+    clickOn("#editDialogTimeInHour").eraseText(2);
+    clickOn("#editDialogTimeInMinute").eraseText(2);
+    clickOn("#editDialogTimeOutHour").eraseText(2);
+    clickOn("#editDialogTimeOutMinute").eraseText(2);
+    // Add values
+    clickOn("#editDialogTimeInHour").write("05");
+    clickOn("#editDialogTimeInMinute").write("30");
+    clickOn("#editDialogTimeOutHour").write("07");
+    clickOn("#editDialogTimeOutMinute").write("30");
+    // Confirm
+    clickOn(LabeledMatchers.hasText("Ok"));
+    clickOn(LabeledMatchers.hasText("OK"));
+    // Confirm Error
+    clickOn(LabeledMatchers.hasText("OK"));
+    // Assertions
+    Workday workday1p5 = workdaysListView.getItems().get(0);
+    assertTrue(workday1p4.toString().equals(workday1p5.toString()));
+    
+
+
     // Open and edit an open workday and check that the UI updates
     clickOn(LabeledMatchers.hasText("Stamp In"));
     clickOn(LabeledMatchers.hasText(testName));
-    clickOn("#inputHour").write("06");
+    clickOn("#inputHour").write("12");
     clickOn("#inputMinutes").write("00");
     clickOn("#registerTimeButton");
     clickOn(LabeledMatchers.hasText("Check Hours Worked"));
@@ -814,7 +946,7 @@ public class AppTest extends ApplicationTest {
     timeOutHour = lookup("#editDialogTimeOutHour").query();
     timeOutMinute = lookup("#editDialogTimeOutMinute").query();
     dateOut.setValue(LocalDate.now());
-    timeOutHour.setText("07");
+    timeOutHour.setText("13");
     timeOutMinute.setText("00");
     clickOn(LabeledMatchers.hasText("Ok"));
     clickOn(LabeledMatchers.hasText("OK"));

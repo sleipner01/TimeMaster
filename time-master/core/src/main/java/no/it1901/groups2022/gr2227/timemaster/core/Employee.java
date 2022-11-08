@@ -154,31 +154,13 @@ public class Employee {
         return;
       }
 
-      // If we are at the first workday and the checkout comes in conflict with the workday
-      if (i == 0) {
-        if (input.isAfter(tempWorkday.getTimeIn())) {
-          throw new IllegalArgumentException(
-            "** Input comes in conflict with the following workday **\n"
-            + "Check in: " + tempWorkday.getTimeIn().toString() + "\n"
-            + "Check out: " + tempWorkday.getTimeOut().toString() + "\n"
-            + "Input: " + input.toString()
-          );
-        }
-      }
-
-      if (workday.getTimeIn().isBefore(tempWorkday.getTimeIn())) {
-        continue;
-      }
-
       if (input.isAfter(tempWorkday.getTimeIn())) {
         throw new IllegalArgumentException(
           "** Input comes in conflict with the following workday **\n"
           + "Check in: " + tempWorkday.getTimeIn().toString() + "\n"
           + "Check out: " + tempWorkday.getTimeOut().toString() + "\n"
-          + "Input: " + input.toString() + "\n"
+          + "Input: " + input.toString()
         );
-      } else {
-        return;
       }
 
     }

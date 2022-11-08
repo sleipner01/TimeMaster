@@ -630,10 +630,10 @@ public class TimeMasterController {
   }
 
   private boolean isValidNumberInput(String input) {
-    if (2 < input.length()) {
-      return false;
+    if (0 < input.length() && input.length() < 3) {
+      return true;
     }
-    return true;
+    return false;
   }
 
   private boolean isValidHourInput(String input) {

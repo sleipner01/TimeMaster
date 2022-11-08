@@ -287,13 +287,13 @@ public class Employee {
   /**
    * Stores the workday in the Employee-object.
    *
-   * @param workday @see Workday
+   * @param workday
    * @throws IllegalStateException If the Workday-object is already added
+   * @see Workday
    */
   public void addWorkday(Workday workday) throws IllegalArgumentException {
-    if (this.workdays.contains(workday)) { 
-      throw new IllegalArgumentException("Workday is already added.");
-    }
+    this.hasWorkday(workday);
+
     if (!workday.isTimedOut() && 0 < this.workdays.size()) {
       if (!this.getLatestWorkday().isTimedOut()) {
         throw new IllegalArgumentException(

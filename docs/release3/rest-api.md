@@ -11,13 +11,6 @@
 Returns `200 OK` and a message containing status code and current time.  
 Used for connection verification with client, and for testing purposes.
 
-### /api/test
-
-#### GET
-
-Returns `200 OK` and a message containing `Hello, World!`.  
-Used for testing purposes.
-
 ### /api/employees
 
 #### GET

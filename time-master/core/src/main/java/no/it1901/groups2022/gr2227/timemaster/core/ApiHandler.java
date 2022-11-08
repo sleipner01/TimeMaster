@@ -31,10 +31,11 @@ public class ApiHandler {
       }
       scanner.close();
     }
+    System.out.println(response);
     return response;
   }
 
-  private void request(String path, String req, String reqMethod) throws IOException{
+  private int request(String path, String req, String reqMethod) throws IOException {
     HttpURLConnection connection = setConnection(path, reqMethod);
     connection.setDoOutput(true);
     connection.setRequestProperty("Content-Type", "application/json");
@@ -54,30 +55,31 @@ public class ApiHandler {
         System.out.println(reqMethod + " request was not successful.");
         break;
     }
+    return responseCode;
   }
 
   public Employee getEmployee(Employee employee) throws IOException {
-    return this.jsonParser.readEmployee(this.getResponse(employee.getId()));
+    return this.jsonParser.readEmployee(this.getResponse("employees/" + employee.getId()));
   }
 
   public ArrayList<Employee> getEmployees() throws IOException {
     return this.jsonParser.readEmployees(this.getResponse("employees"));
   }
 
-  public ArrayList<Workday> getWorkdays(String name) throws IOException {
-    return this.jsonParser.readWorkdays(this.getResponse(name));
+  public ArrayList<Workday> getWorkdays(Employee employee) throws IOException {
+    return this.jsonParser.readWorkdays(this.getResponse("employees/" + employee.getId()));
   }
 
-  public void createEmployee(Employee employee) throws IOException{
-    request("employees", this.jsonParser.write(employee),"POST");
+  public int createEmployee(Employee employee) throws IOException {
+    return request("employees", this.jsonParser.write(employee), "POST");
   }
 
-  public void updateEmployee(Employee employee) throws IOException {
-    request("employees/" + employee.getId(), this.jsonParser.write(employee),"PUT");
+  public int updateEmployee(Employee employee) throws IOException {
+    return request("employees/" + employee.getId(), this.jsonParser.write(employee), "PUT");
   }
 
-  public void deleteEmployee(Employee employee) throws IOException {
-    request("employees/" + employee.getId(), "", "DELETE");
+  public int deleteEmployee(Employee employee) throws IOException {
+    return request("employees/" + employee.getId(), "", "DELETE");
   }
 
   /**

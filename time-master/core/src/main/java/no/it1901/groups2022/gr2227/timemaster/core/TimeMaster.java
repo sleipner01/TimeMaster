@@ -550,7 +550,8 @@ public class TimeMaster {
         break;
     
       default:
-        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT EXECUTION***");
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
+        this.apiHandler.updateEmployee(this.getChosenEmployee());
         break;
     }
   }
@@ -641,8 +642,6 @@ public class TimeMaster {
         this.employees.remove(chosenEmployee);
         break;
     }
-
-    this.chosenEmployee = null;
   }
 
 }

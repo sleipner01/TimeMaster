@@ -137,11 +137,9 @@ public class Employee {
 
       // If we are at the latest workday which is not closed,
       // the new workday must be before the latest workday.
-      if (tempWorkday.equals(this.getLatestWorkday()) 
-          || 
-          input.isAfter(tempWorkday.getTimeIn())) {
+      if (tempWorkday.equals(this.getLatestWorkday())) {
         if (!tempWorkday.isTimedOut()) {
-          if (workday.getTimeIn().isAfter(tempWorkday.getTimeIn())) {
+          if (workday.getTimeIn().isAfter(tempWorkday.getTimeIn()) || input.isAfter(tempWorkday.getTimeIn())) {
             throw new IllegalArgumentException(
               "** Input comes in conflict with the following workday **\n"
               + "Check in: " + tempWorkday.getTimeIn().toString() + "\n"
@@ -168,7 +166,7 @@ public class Employee {
         }
       }
 
-      if (workday.getTimeIn().isAfter(tempWorkday.getTimeIn())) {
+      if (workday.getTimeIn().isBefore(tempWorkday.getTimeIn())) {
         continue;
       }
 

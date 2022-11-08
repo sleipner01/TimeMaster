@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -13,8 +12,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
@@ -27,10 +26,36 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import no.it1901.groups2022.gr2227.timemaster.core.Employee;
 import no.it1901.groups2022.gr2227.timemaster.core.TimeMaster;
 import no.it1901.groups2022.gr2227.timemaster.core.Workday;
-import no.it1901.groups2022.gr2227.timemaster.core.Employee;
 
+/**
+ * Controller for the TimeMaster application.
+ * Connects the FXUI module with the Core module.
+ * Initializing this class will create a TimeMaster-object 
+ * and start the core-module.
+ *
+ * <p>The controller aims to follow the MVC principle (Model-View-Controller).
+ * No logic around the application is stored in this class. 
+ * Any overhead logic will be stored in {@link TimeMaster}.
+ *
+ * <p>The methods in this controller will include:
+ * <ul>
+ * <li>Initialization
+ * <li>Conditional information about other modules or similar  
+ * <li>Input validation
+ * <li>On-action handling
+ * <li>UI updating 
+ * </ul>
+ *
+ * @author Amalie Erdal Mansåker
+ * @author Magnus Byrkjeland
+ * @author Håvard Solberg Nybøe
+ * @author Karen Gjersem Bakke
+ * @version %I%, %G%
+ * @since 1.0
+ */
 public class TimeMasterController {
 
   private TimeMaster timeMaster;
@@ -58,11 +83,11 @@ public class TimeMasterController {
   @FXML
   private Circle statusIndicator;
   @FXML
-  private Circle statusIndicatorAPI;
+  private Circle statusIndicatorApi;
   @FXML
   private Text statusText;
   @FXML
-  private Text statusTextAPI;
+  private Text statusTextApi;
   @FXML
   private Text addStatus;
   @FXML
@@ -88,7 +113,7 @@ public class TimeMasterController {
     workDayHistoryListenerSetup();
     limitTextFieldToTwoNumbers(inputHour);
     limitTextFieldToTwoNumbers(inputMinutes);
-    setAPIStatus();
+    setApiStatus();
     updateDisplay();
   }
 
@@ -97,7 +122,7 @@ public class TimeMasterController {
    */
   public void setApplicationInTestState() {
     timeMaster.setApplicationInTestState();
-    setAPIStatus();
+    setApiStatus();
   }
 
   /**
@@ -106,7 +131,7 @@ public class TimeMasterController {
    */
   public void setApplicationInProductionState() {
     timeMaster.setApplicationInProductionState();
-    setAPIStatus();
+    setApiStatus();
   }
 
   private void workDayHistoryListenerSetup() {
@@ -134,11 +159,6 @@ public class TimeMasterController {
       });
       return cell;
     });
-
-    workdayHistoryList.setOnMouseClicked(e -> {
-      System.out.println("You clicked on an empty cell");
-    });
-
   }
 
   private void chooseEmployeeListenerSetup() {
@@ -165,10 +185,6 @@ public class TimeMasterController {
         }
       });
       return cell;
-    });
-
-    chooseEmployeeListView.setOnMouseClicked(e -> {
-      System.out.println("You clicked on an empty cell");
     });
   }
 
@@ -199,15 +215,16 @@ public class TimeMasterController {
 
     try {
       timeMaster.clockEmployeeInOut(dateTime);
-
       this.clearTimeInputs();
       updateDisplay();
     } catch (IllegalStateException e) {
       displayError(e.getMessage());
+    } catch (IllegalArgumentException e) {
+      displayError(e.getMessage());
     } catch (Exception e) {
       e.printStackTrace();
       displayError(e.getMessage());
-      setAPIStatus();
+      setApiStatus();
     }
   }
 
@@ -221,7 +238,7 @@ public class TimeMasterController {
     } catch (Exception e) {
       e.printStackTrace();
       displayError(e.getMessage());
-      setAPIStatus();
+      setApiStatus();
     }
   }
 
@@ -254,7 +271,7 @@ public class TimeMasterController {
     setHistoryEmployeeName();
   }
 
-  public void setHistoryEmployeeName() {
+  private void setHistoryEmployeeName() {
     if (timeMaster.employeeIsSet()) {
       this.historyEmployeeName.setText(timeMaster.getChosenEmployee().getName());
     } else {
@@ -262,7 +279,7 @@ public class TimeMasterController {
     }
   }
 
-  public void setStampInEmployeeName() {
+  private void setStampInEmployeeName() {
     if (timeMaster.employeeIsSet()) {
       this.stampInEmployeeName.setText(timeMaster.getChosenEmployee().getName());
     } else {
@@ -323,31 +340,31 @@ public class TimeMasterController {
     observableEmployeeList.setAll(timeMaster.getEmployees());
   }
 
-  public boolean getAPIStatus() {
-    return timeMaster.getAPIStatus();
+  public boolean getApiStatus() {
+    return timeMaster.getApiStatus();
   }
 
-  public boolean getIsUsingAPI() {
-    return timeMaster.isUsingAPI();
+  public boolean getIsUsingApi() {
+    return timeMaster.isUsingApi();
   }
 
-  private void setAPIStatus() {
-    if(this.getAPIStatus() && getIsUsingAPI()) {
+  private void setApiStatus() {
+    if (this.getApiStatus() && getIsUsingApi()) {
       // Online
-      statusIndicatorAPI.setFill(Color.GREEN);
-      statusTextAPI.setText("Online");
-    } else if (this.getAPIStatus() && (!this.getIsUsingAPI())) {
+      statusIndicatorApi.setFill(Color.GREEN);
+      statusTextApi.setText("Online");
+    } else if (this.getApiStatus() && (!this.getIsUsingApi())) {
       // Available
-      statusIndicatorAPI.setFill(Color.BLUE);
-      statusTextAPI.setText("Available");
-    } else if (((!this.getAPIStatus()) && this.getIsUsingAPI())) {
+      statusIndicatorApi.setFill(Color.BLUE);
+      statusTextApi.setText("Available");
+    } else if (((!this.getApiStatus()) && this.getIsUsingApi())) {
       // Using API but API is unavailable
-      statusIndicatorAPI.setFill(Color.RED);
-      statusTextAPI.setText("Error");
+      statusIndicatorApi.setFill(Color.RED);
+      statusTextApi.setText("Error");
     } else {
       // Offline
-      statusIndicatorAPI.setFill(Color.GRAY);
-      statusTextAPI.setText("Offline");
+      statusIndicatorApi.setFill(Color.GRAY);
+      statusTextApi.setText("Offline");
     }
   }
 
@@ -368,7 +385,7 @@ public class TimeMasterController {
     } catch (Exception e) {
       e.printStackTrace();
       displayError(e.getMessage());
-      setAPIStatus();
+      setApiStatus();
     }
   }
 
@@ -376,6 +393,8 @@ public class TimeMasterController {
   private void handleCreateEmployee() {
     try {
       timeMaster.createEmployee(newEmployeeName.getText());
+      addStatus.setText("Created " + newEmployeeName.getText());
+      addStatus.setFill(Color.GREEN);
       newEmployeeName.clear();
       updateEmployeeMenu();
     } catch (IllegalArgumentException e) {
@@ -383,7 +402,7 @@ public class TimeMasterController {
     } catch (Exception e) {
       e.printStackTrace();
       displayError(e.getMessage());
-      setAPIStatus();
+      setApiStatus();
     }
 
   }
@@ -458,47 +477,58 @@ public class TimeMasterController {
 
   private void openWorkdayEditInterface(Workday workday) {
 
-    ButtonType okButtonType = new ButtonType("Ok", ButtonData.APPLY);
-    ButtonType cancelButtonType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-    ButtonType deleteButtonType = new ButtonType("Delete", ButtonData.OTHER);
+    final ButtonType okButtonType = new ButtonType("Ok", ButtonData.APPLY);
+    final ButtonType cancelButtonType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+    final ButtonType deleteButtonType = new ButtonType("Delete", ButtonData.OTHER);
 
     Dialog<ButtonType> dialog = new Dialog<>();
     dialog.setTitle("Edit Workday");
     dialog.setHeaderText("Change workday values...");
-    dialog.getDialogPane().getButtonTypes().addAll(okButtonType, cancelButtonType, deleteButtonType);
+    dialog.getDialogPane().getButtonTypes()
+        .addAll(okButtonType, cancelButtonType, deleteButtonType);
 
     // Time in inputs
-    Label labelIn = new Label("Time in");
+    final Label labelIn = new Label("Time in");
     DatePicker dateIn = new DatePicker();
+    dateIn.setId("editDialogDateIn");
     TextField timeInHour = new TextField();
+    timeInHour.setId("editDialogTimeInHour");
     limitTextFieldToTwoNumbers(timeInHour);
     timeInHour.setPromptText("Hour: 0-23");
     TextField timeInMinute = new TextField();
+    timeInMinute.setId("editDialogTimeInMinute");
     limitTextFieldToTwoNumbers(timeInMinute);
     timeInMinute.setPromptText("Min: 0-59");
 
     // Time out inputs
-    Label labelOut = new Label("Time Out");
+    final Label labelOut = new Label("Time Out");
     DatePicker dateOut = new DatePicker();
+    dateOut.setId("editDialogDateOut");
     TextField timeOutHour = new TextField();
+    timeOutHour.setId("editDialogTimeOutHour");
     limitTextFieldToTwoNumbers(timeOutHour);
     timeOutHour.setPromptText("Hour: 0-23");
     TextField timeOutMinute = new TextField();
+    timeOutMinute.setId("editDialogTimeOutMinute");
     limitTextFieldToTwoNumbers(timeOutMinute);
     timeOutMinute.setPromptText("Min: 0-59");
+
+    // Dialog
     dialog.getDialogPane().setContent(new VBox(8, labelIn, dateIn, timeInHour, timeInMinute,
         labelOut, dateOut, timeOutHour, timeOutMinute));
 
     // AutoFill
     LocalDateTime editingWorkdayTimeIn = workday.getTimeIn();
-    dateIn.setValue(LocalDate.of(editingWorkdayTimeIn.getYear(), editingWorkdayTimeIn.getMonth(),
+    dateIn.setValue(LocalDate.of(editingWorkdayTimeIn.getYear(),
+        editingWorkdayTimeIn.getMonth(),
         editingWorkdayTimeIn.getDayOfMonth()));
     timeInHour.setText(String.valueOf(editingWorkdayTimeIn.getHour()));
     timeInMinute.setText(String.valueOf(editingWorkdayTimeIn.getMinute()));
 
     if (workday.isTimedOut()) {
       LocalDateTime editingWorkdayTimeOut = workday.getTimeOut();
-      dateOut.setValue(LocalDate.of(editingWorkdayTimeOut.getYear(), editingWorkdayTimeOut.getMonth(),
+      dateOut.setValue(LocalDate.of(editingWorkdayTimeOut.getYear(),
+          editingWorkdayTimeOut.getMonth(),
           editingWorkdayTimeOut.getDayOfMonth()));
       timeOutHour.setText(String.valueOf(editingWorkdayTimeOut.getHour()));
       timeOutMinute.setText(String.valueOf(editingWorkdayTimeOut.getMinute()));
@@ -536,7 +566,10 @@ public class TimeMasterController {
             }
 
             // Get confirmation
-            boolean result = confirmationDialog("Are you sure you want to change the workday to these values?");
+            boolean result = confirmationDialog(
+                "Are you sure you want to change the workday to these values?"
+            );
+          
             if (result) {
 
               int parsedTimeInHour = Integer.parseInt(timeInHour.getText());
@@ -564,7 +597,9 @@ public class TimeMasterController {
 
           case OTHER:
             // Get confirmation
-            boolean deleteConfirmation = confirmationDialog("Are you sure you want to delete this workday?");
+            boolean deleteConfirmation = confirmationDialog(
+                "Are you sure you want to delete this workday?"
+            );
             if (deleteConfirmation) {
 
               deleteWorkday(workday);
@@ -589,30 +624,26 @@ public class TimeMasterController {
     } catch (Exception e) {
       e.printStackTrace();
       displayError(e.getMessage());
-      setAPIStatus();
+      setApiStatus();
     }
 
   }
 
   private boolean isValidNumberInput(String input) {
-    if (input.length() <= 0 || 2 < input.length()) {
-      return false;
+    if (0 < input.length() && input.length() < 3) {
+      return true;
     }
-
-    return true;
+    return false;
   }
 
   private boolean isValidHourInput(String input) {
     if (!isValidNumberInput(input)) {
       return false;
     }
-
     int integer = Integer.parseInt(input);
-
     if (integer < 0 || 23 < integer) {
       return false;
     }
-
     return true;
   }
 
@@ -630,7 +661,8 @@ public class TimeMasterController {
     return true;
   }
 
-  private void saveWorkdayEditChoices(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut) {
+  private void saveWorkdayEditChoices(
+      Workday workday, LocalDateTime timeIn, LocalDateTime timeOut) {
     try {
       timeMaster.editWorkday(workday, timeIn, timeOut);
     } catch (IllegalArgumentException e) {
@@ -639,13 +671,14 @@ public class TimeMasterController {
       displayError(e.getMessage());
     } catch (IOException e) {
       displayError(e.getMessage());
-      setAPIStatus();
+      setApiStatus();
     } catch (Exception e) {
       displayError(e.getMessage());
-      setAPIStatus();
+      setApiStatus();
       e.printStackTrace();
     }
     showWorkdayHistory();
+    setEmployeeStatus();
   }
 
   private void deleteWorkday(Workday workday) {
@@ -659,18 +692,13 @@ public class TimeMasterController {
     } catch (Exception e) {
       displayError("Something went wrong!\n" + e.getMessage());
       e.printStackTrace();
-      setAPIStatus();
+      setApiStatus();
     }
 
   }
 
   @FXML
   private void handleDeleteEmployee() {
-    if (!timeMaster.employeeIsSet()) {
-      displayError("Employee is not set.");
-      return;
-    }
-    System.out.println("Deleting " + timeMaster.getChosenEmployee().getName());
     try {
       timeMaster.deleteChosenEmployee();
       updateDisplay();
@@ -680,13 +708,13 @@ public class TimeMasterController {
       setDeleteStatus(false);
     } catch (IOException e) {
       displayError(e.getMessage());
+      e.printStackTrace();
       setDeleteStatus(false);
-      setAPIStatus();
-    } 
-    catch (Exception e) {
+      setApiStatus();
+    } catch (Exception e) {
       displayError(e.getMessage());
       e.printStackTrace();
-      setAPIStatus();
+      setApiStatus();
     }
   }
 

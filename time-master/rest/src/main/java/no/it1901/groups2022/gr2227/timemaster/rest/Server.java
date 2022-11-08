@@ -2,7 +2,6 @@ package no.it1901.groups2022.gr2227.timemaster.rest;
 
 import java.io.IOException;
 import java.net.URI;
-
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -18,7 +17,7 @@ public class Server {
   /**
    * Starts Grizzly HTTP server exposing JAX-RS resources defined in this
    * application.
-   * 
+   *
    * @return Grizzly HTTP server.
    */
   public static HttpServer startServer() {
@@ -35,9 +34,9 @@ public class Server {
 
   /**
    * Main method.
-   * 
-   * @param args
-   * @throws IOException
+   *
+   * @param args arguments for main method, program takes no args
+   * @throws IOException throws IOException if server failed
    */
   public static void main(String[] args) throws IOException {
     final HttpServer server = startServer();

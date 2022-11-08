@@ -627,6 +627,8 @@ public class AppTest extends ApplicationTest {
     TextField timeOutHour;
     TextField timeOutMinute;
 
+
+
     // Initialize employee with two workdays
     addNewEmployee(testName);
     clickOn(LabeledMatchers.hasText("Stamp In"));
@@ -645,17 +647,16 @@ public class AppTest extends ApplicationTest {
     clickOn("#inputHour").write("05");
     clickOn("#inputMinutes").write("00");
     clickOn("#registerTimeButton");
-
     assertTrue(workdaysListView.getItems().size() == 2);
-
     // Workdays
     Workday workday1 = workdaysListView.getItems().get(0);
     Workday workday2 = workdaysListView.getItems().get(1);
 
+
+
     // Open workday 1
     clickOn(LabeledMatchers.hasText("Check Hours Worked"));
     clickOn(LabeledMatchers.hasText(workday1.toString()));
-
     // Verify that all elements are visible
     FxAssert.verifyThat("#editDialogDateIn", NodeMatchers.isVisible());
     FxAssert.verifyThat("#editDialogTimeInHour", NodeMatchers.isVisible());
@@ -666,7 +667,6 @@ public class AppTest extends ApplicationTest {
     FxAssert.verifyThat("Ok", NodeMatchers.isVisible());
     FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
     FxAssert.verifyThat("Delete", NodeMatchers.isVisible());
-
     // Get autofill
     dateIn = lookup("#editDialogDateIn").query();
     timeInHour = lookup("#editDialogTimeInHour").query();
@@ -681,8 +681,50 @@ public class AppTest extends ApplicationTest {
     assertTrue(timeOutHour.getText().equals(Integer.toString(workday1.getTimeOut().getHour())));
     assertTrue(timeOutMinute.getText().equals(Integer.toString(workday1.getTimeOut().getMinute())));
 
-    // TODO: Temporary
+    // Cancel edit
     clickOn(LabeledMatchers.hasText("Cancel"));
+    assertTrue(workdaysListView.getItems().get(0).equals(workday1));
+
+
+
+
+    // Do changes but cancel
+    clickOn(LabeledMatchers.hasText(workday1.toString()));
+    timeInHour = lookup("#editDialogTimeInHour").query();
+    timeInMinute = lookup("#editDialogTimeInMinute").query();
+    timeOutHour = lookup("#editDialogTimeOutHour").query();
+    timeOutMinute = lookup("#editDialogTimeOutMinute").query();
+    // Clear Inputs
+    clickOn("#editDialogTimeInHour").eraseText(2);
+    clickOn("#editDialogTimeInMinute").eraseText(2);
+    clickOn("#editDialogTimeOutHour").eraseText(2);
+    clickOn("#editDialogTimeOutMinute").eraseText(2);
+    // Add values
+    clickOn("#editDialogTimeInHour").write("12");
+    clickOn("#editDialogTimeInMinute").write("00");
+    clickOn("#editDialogTimeOutHour").write("13");
+    clickOn("#editDialogTimeOutMinute").write("00");
+    // Cancel confirmation
+    clickOn(LabeledMatchers.hasText("Ok"));
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    FxAssert.verifyThat("Cancel", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("Cancel"));
+    // Assert that the values reset
+    // Need to retrive these again since the window is new
+    timeInHour = lookup("#editDialogTimeInHour").query();
+    timeInMinute = lookup("#editDialogTimeInMinute").query();
+    timeOutHour = lookup("#editDialogTimeOutHour").query();
+    timeOutMinute = lookup("#editDialogTimeOutMinute").query();
+    assertTrue(dateIn.getValue().equals(workday1.getTimeIn().toLocalDate()));
+    assertTrue(timeInHour.getText().equals(Integer.toString(workday1.getTimeIn().getHour())));
+    assertTrue(timeInMinute.getText().equals(Integer.toString(workday1.getTimeIn().getMinute())));
+    assertTrue(dateOut.getValue().equals(workday1.getTimeOut().toLocalDate()));
+    assertTrue(timeOutHour.getText().equals(Integer.toString(workday1.getTimeOut().getHour())));
+    assertTrue(timeOutMinute.getText().equals(Integer.toString(workday1.getTimeOut().getMinute())));
+    // Exit
+    clickOn(LabeledMatchers.hasText("Cancel"));
+
+
 
     // Test invalid input
     clickOn(LabeledMatchers.hasText(workday1.toString()));
@@ -733,10 +775,30 @@ public class AppTest extends ApplicationTest {
     FxAssert.verifyThat("OK", NodeMatchers.isVisible());
     clickOn(LabeledMatchers.hasText("OK"));
     assertTrue(workdaysListView.getItems().get(0).equals(workday1));
-    
-
-    // TODO: Temporary
+    // Empty inputs
+    // Need to retrive these again since the window is new
+    timeInHour = lookup("#editDialogTimeInHour").query();
+    timeInMinute = lookup("#editDialogTimeInMinute").query();
+    timeOutHour = lookup("#editDialogTimeOutHour").query();
+    timeOutMinute = lookup("#editDialogTimeOutMinute").query();
+    //Clear Inputs
+    clickOn("#editDialogTimeInHour").eraseText(2);
+    clickOn("#editDialogTimeInMinute").eraseText(2);
+    clickOn("#editDialogTimeOutHour").eraseText(2);
+    clickOn("#editDialogTimeOutMinute").eraseText(2);
+    clickOn(LabeledMatchers.hasText("Ok"));
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    assertTrue(workdaysListView.getItems().get(0).equals(workday1));
+    // Close
     clickOn(LabeledMatchers.hasText("Cancel"));
+
 
 
     // Open and edit an open workday and check that the UI updates

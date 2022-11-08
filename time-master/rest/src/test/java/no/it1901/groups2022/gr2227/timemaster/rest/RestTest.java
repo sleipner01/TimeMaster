@@ -41,10 +41,9 @@ public class RestTest extends JerseyTest {
   }
 
   @Test
-  public void helloWorldTest() {
-    file.delete();
-    String res = target("api/test").request().get(String.class);
-    assertEquals("Hello, World!", res);
+  public void systemStatusTest() {
+    Response res = target("api").request().get();
+    assertEquals(Status.OK.getStatusCode(), res.getStatus());
   }
 
   @Test

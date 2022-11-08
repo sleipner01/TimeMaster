@@ -43,12 +43,6 @@ public class Rest {
     }
   }
 
-  @Path("test")
-  @GET
-  public String helloWorld() {
-    return "Hello, World!";
-  }
-
   /**
    * Gets a list of all employees.
    * 

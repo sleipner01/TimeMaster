@@ -292,8 +292,9 @@ public class Employee {
    * @see Workday
    */
   public void addWorkday(Workday workday) throws IllegalArgumentException {
-    this.hasWorkday(workday);
-
+    if (this.workdays.contains(workday)) { 
+      throw new IllegalArgumentException("Workday is already added.");
+    }
     if (!workday.isTimedOut() && 0 < this.workdays.size()) {
       if (!this.getLatestWorkday().isTimedOut()) {
         throw new IllegalArgumentException(

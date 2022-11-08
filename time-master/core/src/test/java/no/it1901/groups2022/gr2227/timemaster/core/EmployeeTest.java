@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 public class EmployeeTest {
 	
-	String testName = "testName";
+	String testName = "Test Name";
 	Employee employee1;
 	Employee employee2;
 	LocalDateTime dateTime1;

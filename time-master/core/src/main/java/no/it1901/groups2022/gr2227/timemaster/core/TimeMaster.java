@@ -153,24 +153,6 @@ public class TimeMaster {
   }
 
   /**
-   * Uses {@link java.time.LocalDate#now()} to get the system clock date.
-   *
-   * @return current date
-   */
-  public LocalDate getCurrentDate() {
-    return LocalDate.now();
-  }
-
-  /**
-   * Uses {@link java.time.LocalTime#now()} to get the system clock time.
-   *
-   * @return current time
-   */
-  public LocalTime getCurrentTime() {
-    return LocalTime.now();
-  }
-
-  /**
    * Uses {@link java.time.LocalDateTime#now()} to get the system clock timestamp.
    *
    * @return current timestamp

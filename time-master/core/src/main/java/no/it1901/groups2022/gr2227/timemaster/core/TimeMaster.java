@@ -530,7 +530,12 @@ public class TimeMaster {
         break;
     
       default:
+<<<<<<< time-master/core/src/main/java/no/it1901/groups2022/gr2227/timemaster/core/TimeMaster.java
         System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT EXECUTION***");
+=======
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
+        this.apiHandler.updateEmployee(this.getChosenEmployee());
+>>>>>>> time-master/core/src/main/java/no/it1901/groups2022/gr2227/timemaster/core/TimeMaster.java
         break;
     }
   }
@@ -621,8 +626,6 @@ public class TimeMaster {
         this.employees.remove(chosenEmployee);
         break;
     }
-
-    this.chosenEmployee = null;
   }
 
 }

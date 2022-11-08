@@ -51,7 +51,7 @@ public class TimeMasterTest {
   public void chooseEmployeeTest() {
     createTestingEmployee();
     assertDoesNotThrow(() -> timeMaster.setChosenEmployee(timeMaster.getEmployees().get(0)));
-    assertEquals("Test Person", timeMaster.getChosenEmployee().getName());
+    assertEquals(testName, timeMaster.getChosenEmployee().getName());
     assertThrows(IllegalArgumentException.class, () -> timeMaster.setChosenEmployee(new Employee()));
   }
 

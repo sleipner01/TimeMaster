@@ -110,12 +110,12 @@ public class Rest {
   @Produces("application/json")
   @GET
   public Response getEmployeeById(@PathParam("id") String id) {
-      for (JsonNode node : fileHandler.readFile()) {
-        if (node.get("id").textValue().equals(id)) {
-          return Response.status(Status.OK).entity(node).build();
-        }
+    for (JsonNode node : fileHandler.readFile()) {
+      if (node.get("id").textValue().equals(id)) {
+        return Response.status(Status.OK).entity(node).build();
       }
-      return Response.status(Status.NOT_FOUND).build();
+    }
+    return Response.status(Status.NOT_FOUND).build();
   }
 
   /**

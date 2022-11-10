@@ -59,8 +59,8 @@ public class TimeMaster {
   /**
    * Constructor to be able to set up a TimeMaster object in testing state.
    *
-   * @param test  if <code>true</code> testing state is initialized,
-   *              else the applicaion will be tried started in production state.
+   * @param test if <code>true</code> testing state is initialized,
+   *             else the application will be tried started in production state.
    * @see TimeMaster#setApplicationInProductionState()
    * @see TimeMaster#setApplicationInLocalState()
    * @see TimeMaster#setApplicationInTestState()
@@ -69,7 +69,7 @@ public class TimeMaster {
     this.employees = new ArrayList<Employee>();
     this.apiHandler = new ApiHandler();
 
-    // Since it's neccessary to check test,
+    // Since it's necessary to check test,
     // it's not possible to use this()
     if (test) {
       this.setApplicationInTestState();
@@ -160,19 +160,46 @@ public class TimeMaster {
   }
 
   /**
-   * Sets an employee to perform methodcalls on.
+   * Sets an employee to perform method calls on.
    * The employee need to exist at the TimeMaster-object.
    *
-   * @param employee                    Employee to be set.
-   * @throws IllegalArgumentException   If it doesn't exist at this TimeMaster-object
-   * @see Employee
+   * @param employee Employee to be set.
+   * @throws IllegalArgumentException If it doesn't exist at this
+   *                                  TimeMaster-object
+   * @throws IOException              If the APU call fails.
+   *
+   * @see ApiHandler#getEmployee(Employee)
+   * @see TimeMaster#getChosenEmployee(Employee)
+   * @see TimeMaster#setApplicationInTestState()
+   * @see TimeMaster#setApplicationInLocalState()
+   * @see TimeMaster#setApplicationInProductionState()
    */
-  public void setChosenEmployee(Employee employee) throws IllegalArgumentException {
+  public void setChosenEmployee(Employee employee) throws IllegalArgumentException, IOException {
     if (!this.employees.contains(employee)) {
       throw new IllegalArgumentException(
           employee.toString() + " does not exist");
     }
-    this.chosenEmployee = employee;
+
+    switch (state) {
+      case TEST:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
+        this.chosenEmployee = employee;
+        break;
+
+      case LOCAL:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
+        this.chosenEmployee = employee;
+        break;
+
+      case PRODUCTION:
+        this.chosenEmployee = this.apiHandler.getEmployee(employee);
+        break;
+
+      default:
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
+        this.chosenEmployee = employee;
+        break;
+    }
   }
 
   /**
@@ -192,22 +219,22 @@ public class TimeMaster {
    * <ul>
    * <li>Production
    * <ul>
-   * <li>Performs an API call to retrive the latest data</li>
+   * <li>Performs an API call to retrieve the latest data</li>
    * </ul>
    * </li>
    * <li>Local
    * <ul>
-   * <li>Retrives data stored in the application</li>
+   * <li>Retrieves data stored in the application</li>
    * </ul>
    * </li>
    * <li>Test
    * <ul>
-   * <li>Retrives data stored in the application</li>
+   * <li>Retrieves data stored in the application</li>
    * </ul>
    * </li>
    * </ul>
    *
-   * @return  List of employees at the TimeMaster-object
+   * @return List of employees at the TimeMaster-object
    * @see Employee
    * @see State
    * @see TimeMaster#setApplicationInTestState()
@@ -266,11 +293,12 @@ public class TimeMaster {
    * </li>
    * </ul>
    *
-   * <p>The name of the employee has to follow spesific rules.
+   * <p>
+   * The name of the employee has to follow specific rules.
    * {@link Employee#Employee(String)}
    *
-   * @throws  IOException               If the API-call fails.
-   * @throws  IllegalArgumentExeption   If the parameter is invalid.
+   * @throws IOException              If the API-call fails.
+   * @throws IllegalArgumentException If the parameter is invalid.
    * @see Employee
    * @see State
    * @see TimeMaster#setApplicationInTestState()
@@ -476,12 +504,37 @@ public class TimeMaster {
   /**
    * Returns the chosen employees list of workdays.
    *
-   * @return                        List of workdays.
-   * @throws IllegalStateException  If no employee is set.
+   * @return List of workdays.
+   * @throws IllegalStateException If no employee is set
+   * @throws IOException           If the APU call fails.
+   *
+   * @see Employee#getWorkdays()
+   * @see TimeMaster#setChosenEmployee(Employee)
+   * @see TimeMaster#getChosenEmployee(Employee)
+   * @see TimeMaster#setApplicationInTestState()
+   * @see TimeMaster#setApplicationInLocalState()
+   * @see TimeMaster#setApplicationInProductionState()
    */
-  public ArrayList<Workday> getEmployeeWorkdayHistory() throws IllegalStateException {
+  public ArrayList<Workday> getEmployeeWorkdayHistory() throws IllegalStateException, IOException {
     if (!this.employeeIsSet()) {
       throw new IllegalStateException("No employee is selected");
+    }
+
+    switch (state) {
+      case TEST:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
+        break;
+
+      case LOCAL:
+        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
+        break;
+
+      case PRODUCTION:
+        return this.apiHandler.getWorkdays(this.getChosenEmployee());
+
+      default:
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
+        break;
     }
 
     return this.getChosenEmployee().getWorkdays();

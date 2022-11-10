@@ -57,28 +57,6 @@ public class TimeMaster {
   }
 
   /**
-   * Constructor to be able to set up a TimeMaster object in testing state.
-   *
-   * @param test if <code>true</code> testing state is initialized,
-   *             else the application will be tried started in production state.
-   * @see TimeMaster#setApplicationInProductionState()
-   * @see TimeMaster#setApplicationInLocalState()
-   * @see TimeMaster#setApplicationInTestState()
-   */
-  public TimeMaster(boolean test) {
-    this.employees = new ArrayList<Employee>();
-    this.apiHandler = new ApiHandler();
-
-    // Since it's necessary to check test,
-    // it's not possible to use this()
-    if (test) {
-      this.setApplicationInTestState();
-    } else {
-      this.setApplicationInProductionState();
-    }
-  }
-
-  /**
    * For testing purposes. Turns off API calls from TimeMaster.
    * IMPORTANT: This methods clears internal lists.
    */

@@ -105,6 +105,17 @@
 				</configuration>
 			</plugin>
 
+			<!-- Javadoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.4.1</version>
+				<configuration>
+					<show>private</show>
+					<nohelp>true</nohelp>
+				</configuration>
+			</plugin>
+
 			<!-- *** CODE TO REMOVE *** -->
 			<!-- However, keeping it for now because it kind of works -->
 			<!-- May be able to start a server automatically -->

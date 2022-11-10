@@ -22,10 +22,18 @@ public class ApiHandler {
   private TimeMasterJsonParser jsonParser;
 
   /**
-   * Creates an ApiHandler object.
+   * Creates an ApiHandler object on port 8080.
    */
   public ApiHandler() {
-    this.baseUrl = "http://localhost:8080/api/";
+    this.baseUrl = "http://localhost:8080/";
+    this.jsonParser = new TimeMasterJsonParser();
+  }
+
+  /**
+   * Creates an ApiHandler object on specified URL.
+   */
+  public ApiHandler(String baseUrl) {
+    this.baseUrl = baseUrl;
     this.jsonParser = new TimeMasterJsonParser();
   }
   
@@ -86,27 +94,27 @@ public class ApiHandler {
   }
 
   public Employee getEmployee(Employee employee) throws IOException {
-    return this.jsonParser.readEmployee(this.getResponse("employees/" + employee.getId()));
+    return this.jsonParser.readEmployee(this.getResponse("api/employees/" + employee.getId()));
   }
 
   public ArrayList<Employee> getEmployees() throws IOException {
-    return this.jsonParser.readEmployees(this.getResponse("employees"));
+    return this.jsonParser.readEmployees(this.getResponse("api/employees"));
   }
 
   public ArrayList<Workday> getWorkdays(Employee employee) throws IOException {
-    return this.jsonParser.readWorkdays(this.getResponse("employees/" + employee.getId()));
+    return this.jsonParser.readWorkdays(this.getResponse("api/employees/" + employee.getId()));
   }
 
   public int createEmployee(Employee employee) throws IOException {
-    return request("employees", this.jsonParser.write(employee), "POST");
+    return request("api/employees", this.jsonParser.write(employee), "POST");
   }
 
   public int updateEmployee(Employee employee) throws IOException {
-    return request("employees/" + employee.getId(), this.jsonParser.write(employee), "PUT");
+    return request("api/employees/" + employee.getId(), this.jsonParser.write(employee), "PUT");
   }
 
   public int deleteEmployee(Employee employee) throws IOException {
-    return request("employees/" + employee.getId(), "", "DELETE");
+    return request("api/employees/" + employee.getId(), "", "DELETE");
   }
 
   /**

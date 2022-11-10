@@ -125,7 +125,7 @@ public class ApiHandler {
    */
   public boolean checkServerStatus() {
     try {
-      HttpURLConnection connection = setConnection("", "GET");
+      HttpURLConnection connection = setConnection("api/", "GET");
       int responseCode = connection.getResponseCode();
       if (200 <= responseCode && responseCode < 300) {
         System.out.println("********************" + "\n");

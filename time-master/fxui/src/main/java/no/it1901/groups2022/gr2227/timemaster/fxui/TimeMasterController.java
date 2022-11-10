@@ -341,8 +341,8 @@ public class TimeMasterController {
   }
 
   /**
-   * Check ApiStatus from TimeMaster
-   * 
+   * Check ApiStatus from TimeMaster.
+   *
    * @return  <code>true</code> if API is online,
    *          else <code>false</code>
    */
@@ -351,8 +351,8 @@ public class TimeMasterController {
   }
 
   /**
-   * Check if TimeMaster is connected and using an API
-   * 
+   * Check if TimeMaster is connected and using an API.
+   *
    * @return  <code>true</code> if API is being used,
    *          else <code>false</code>
    */

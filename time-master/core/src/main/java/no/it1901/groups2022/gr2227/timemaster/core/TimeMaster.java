@@ -16,9 +16,7 @@ import java.util.Objects;
  * ({@link State})
  *
  * <p>TimeMaster is capable of connecting to an API.
- * Currently it is connected to a locally run server.
- * {@link no.it1901.groups2022.gr2227.timemaster.rest.Server}
- *
+ * ({@link ApiHandler})
  *
  * @author Amalie Erdal Mansåker
  * @author Magnus Byrkjeland
@@ -29,8 +27,7 @@ import java.util.Objects;
  * @see TimeMaster#setApplicationInProductionState()
  * @see TimeMaster#setApplicationInLocalState()
  * @see TimeMaster#setApplicationInTestState()
- * @see no.it1901.groups2022.gr2227.timemaster.rest.Rest
- * @see no.it1901.groups2022.gr2227.timemaster.rest.Server
+ * @see ApiHandler
  */
 public class TimeMaster {
 
@@ -151,7 +148,13 @@ public class TimeMaster {
   }
 
   /**
-   * Uses {@link java.time.LocalDateTime#now()} to get the system clock timestamp.
+   * Uses
+   * {@link 
+   * <a href="
+   * https://docs.oracle.com/javase/8/docs/api/java/time/LocalDateTime.html
+   * ">
+   * LocalDateTime#now()
+   * </a>} to get the system clock timestamp.
    *
    * @return current timestamp
    */

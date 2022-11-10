@@ -252,8 +252,6 @@ public class Employee {
   /**
    * Important state for the employee which controls sertain methods.
    *
-   * <p><code>false</code> enables {@link Employee#checkIn(LocalDate, LocalTime)}.
-   *
    * <p><code>true</code> enables {@link Employee#checkOut(LocalTime)}.
    *
    * @return <code>true</code> with the employee is at work.
@@ -362,10 +360,13 @@ public class Employee {
   /**
    * Uses the sorted Workdays-list to retrieve the latest workday.
    *
-   * @return                        clock-in time represented as a string: Date Time
-   * @throws IllegalStateExeption   if there are no workdays.
+   * @return                        clock-in time represented as a string: Date Time.
+   *                                <code>null</code> ff there no workdays
    */
   public String getLatestClockIn() {
+    if(this.workdays.size() == 0) {
+      return null;
+    }
     Workday latest = workdays.get(workdays.size() - 1);
     return latest.getTimeInAsFormattedString();
   }

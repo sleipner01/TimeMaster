@@ -6,13 +6,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>no.it1901.groups2022.gr2227.timemaster</groupId>
   <artifactId>parent</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>${revision}</version>
   <packaging>pom</packaging>
 
   <name>Time Master</name>
   <url>https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2227/gr2227</url>
 
   <properties>
+    <revision>1.0-SNAPSHOT</revision>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
@@ -155,6 +156,35 @@
             <nohelp>true</nohelp>
           </configuration>
         </plugin>
+
+        <!-- Version control -->
+        <!-- Enabling revition to control versions in child poms from this parent pom -->
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>flatten-maven-plugin</artifactId>
+          <!--<version>1.3.0</version>-->
+          <configuration>
+          </configuration>
+          <executions>
+            <!-- enable flattening -->
+            <execution>
+              <id>flatten</id>
+              <phase>process-resources</phase>
+              <goals>
+                <goal>flatten</goal>
+              </goals>
+            </execution>
+            <!-- ensure proper cleanup -->
+            <execution>
+              <id>flatten.clean</id>
+              <phase>clean</phase>
+              <goals>
+                <goal>clean</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
       </plugins>
     </pluginManagement>
   </build>

@@ -269,8 +269,9 @@ public class TimeMaster {
    * <p>The name of the employee has to follow spesific rules.
    * {@link Employee#Employee(String)}
    *
+   * @param name                        Name of employee.
    * @throws  IOException               If the API-call fails.
-   * @throws  IllegalArgumentException   If the parameter is invalid.
+   * @throws  IllegalArgumentException  If the parameter is invalid.
    * @see Employee
    * @see State
    * @see TimeMaster#setApplicationInTestState()

@@ -57,12 +57,6 @@ public class Employee {
     this.name = name;
   }
   
-  // Only for filewriters/readers
-  public Employee(String id, String name) {
-    this.id = id;
-    this.name = name;
-  }
-  
   private String generateId() { 
     return UUID.randomUUID().toString(); 
   }

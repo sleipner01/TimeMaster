@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -112,6 +113,7 @@ public class EmployeeTest {
 	
 	@Test
 	public void getLatestClockInTest() {
+		assertNull(employee1.getLatestClockIn());
 		employee1.checkIn(dateTime1);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E. MMM dd yyyy - HH:mm", Locale.getDefault());
 		assertEquals(dateTime1.format(formatter), employee1.getLatestClockIn());

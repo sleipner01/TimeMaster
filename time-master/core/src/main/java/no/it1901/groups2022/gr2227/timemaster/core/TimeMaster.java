@@ -16,9 +16,7 @@ import java.util.Objects;
  * ({@link State})
  *
  * <p>TimeMaster is capable of connecting to an API.
- * Currently it is connected to a locally run server.
- * {@link no.it1901.groups2022.gr2227.timemaster.rest.Server}
- *
+ * ({@link ApiHandler})
  *
  * @author Amalie Erdal Mansåker
  * @author Magnus Byrkjeland
@@ -29,8 +27,7 @@ import java.util.Objects;
  * @see TimeMaster#setApplicationInProductionState()
  * @see TimeMaster#setApplicationInLocalState()
  * @see TimeMaster#setApplicationInTestState()
- * @see no.it1901.groups2022.gr2227.timemaster.rest.Rest
- * @see no.it1901.groups2022.gr2227.timemaster.rest.Server
+ * @see ApiHandler
  */
 public class TimeMaster {
 
@@ -151,7 +148,10 @@ public class TimeMaster {
   }
 
   /**
-   * Uses {@link java.time.LocalDateTime#now()} to get the system clock timestamp.
+   * Uses
+   * <a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDateTime.html">
+   * LocalDateTime#now()
+   * </a> to get the system clock timestamp.
    *
    * @return current timestamp
    */
@@ -269,8 +269,9 @@ public class TimeMaster {
    * <p>The name of the employee has to follow spesific rules.
    * {@link Employee#Employee(String)}
    *
+   * @param name                        Name of employee.
    * @throws  IOException               If the API-call fails.
-   * @throws  IllegalArgumentExeption   If the parameter is invalid.
+   * @throws  IllegalArgumentException  If the parameter is invalid.
    * @see Employee
    * @see State
    * @see TimeMaster#setApplicationInTestState()
@@ -503,7 +504,7 @@ public class TimeMaster {
    *
    * @see Employee#editWorkday(Workday, LocalDateTime, LocalDateTime)
    * @see TimeMaster#setChosenEmployee(Employee)
-   * @see TimeMaster#getChosenEmployee(Employee)
+   * @see TimeMaster#getChosenEmployee()
    * @see TimeMaster#setApplicationInTestState()
    * @see TimeMaster#setApplicationInLocalState()
    * @see TimeMaster#setApplicationInProductionState()
@@ -546,7 +547,7 @@ public class TimeMaster {
    * @throws IOException                If API call fails
    *
    * @see TimeMaster#setChosenEmployee(Employee)
-   * @see TimeMaster#getChosenEmployee(Employee)
+   * @see TimeMaster#getChosenEmployee()
    * @see TimeMaster#setApplicationInTestState()
    * @see TimeMaster#setApplicationInLocalState()
    * @see TimeMaster#setApplicationInProductionState()
@@ -590,7 +591,7 @@ public class TimeMaster {
    * @throws IOException            if the API fails
    *
    * @see TimeMaster#setChosenEmployee(Employee)
-   * @see TimeMaster#getChosenEmployee(Employee)
+   * @see TimeMaster#getChosenEmployee()
    * @see TimeMaster#setApplicationInTestState()
    * @see TimeMaster#setApplicationInLocalState()
    * @see TimeMaster#setApplicationInProductionState()

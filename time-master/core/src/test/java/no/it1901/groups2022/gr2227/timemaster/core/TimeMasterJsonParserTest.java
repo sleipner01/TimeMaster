@@ -32,9 +32,9 @@ public class TimeMasterJsonParserTest {
   
   @Test
   public void readEmployeeTest() {
-    employees.add(new Employee("0", "Anna"));
-    employees.add(new Employee("0", "Bernt"));
-    employees.add(new Employee("0", "Claus"));
+    employees.add(new Employee("Anna"));
+    employees.add(new Employee("Bernt"));
+    employees.add(new Employee("Claus"));
 
     for (Employee employee : employees) {
       assertDoesNotThrow(() -> jsonParser.readEmployee(jsonParser.write(employee)));
@@ -43,17 +43,17 @@ public class TimeMasterJsonParserTest {
 
   @Test
   public void readEmployeesTest() {
-    employees.add(new Employee("0", "Anna"));
-    employees.add(new Employee("0", "Bernt"));
-    employees.add(new Employee("0", "Claus"));
+    employees.add(new Employee("Anna"));
+    employees.add(new Employee("Bernt"));
+    employees.add(new Employee("Claus"));
     assertDoesNotThrow(() -> jsonParser.readEmployees(jsonParser.write(employees)));
   }
 
   @Test
   public void readWorkdaysTest() {
-    employees.add(new Employee("0", "Anna"));
-    employees.add(new Employee("0", "Bernt"));
-    employees.add(new Employee("0", "Claus"));
+    employees.add(new Employee("Anna"));
+    employees.add(new Employee("Bernt"));
+    employees.add(new Employee("Claus"));
 
     for (Employee employee : employees) {
       assertDoesNotThrow(() -> jsonParser.readWorkdays(jsonParser.write(employee.getWorkdays())));

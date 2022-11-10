@@ -340,10 +340,22 @@ public class TimeMasterController {
     observableEmployeeList.setAll(timeMaster.getEmployees());
   }
 
+  /**
+   * Check ApiStatus from TimeMaster.
+   *
+   * @return  <code>true</code> if API is online,
+   *          else <code>false</code>
+   */
   public boolean getApiStatus() {
     return timeMaster.getApiStatus();
   }
 
+  /**
+   * Check if TimeMaster is connected and using an API.
+   *
+   * @return  <code>true</code> if API is being used,
+   *          else <code>false</code>
+   */
   public boolean getIsUsingApi() {
     return timeMaster.isUsingApi();
   }

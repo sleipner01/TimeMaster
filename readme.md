@@ -51,8 +51,13 @@ NOTE: The server must run for this to work. Follow instructions 3 and 4 in [deve
 
 ### Code Quality
 
-After running the application and test, a report over the code quality can be made with `mvn site`. It can be found at [`time-master/coverage/target/site/checkstyle-aggregate.html`](time-master/coverage/target/site/).
+After running the application and test, a report over the code quality can be made with `mvn site`. It can be found at [`time-master/coverage/target/site/checkstyle-aggregate.html`](time-master/coverage/target/site/checkstyle-aggregate.html).
 A report over detected bugs is made as well. It can be found at each of the modules in `time-master/{module}/target/site/spotbugs.html`.
+
+### Javadocs
+
+HTML pages with documentation for every public or protected class/method can be generated with `mvn site`. Main HTML-file can be found at [`time-master/coverage/target/site/javadocs/index.html`](time-master/coverage/target/site/javadocs/index.html).
+To generate javadoc for all methods in a module (including private methods), start a terminal in the respective module and execute `mvn javadoc:javadoc`.
 
 
 <!-- ## Git conventions

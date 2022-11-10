@@ -3,6 +3,7 @@ package no.it1901.groups2022.gr2227.timemaster.core;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -153,10 +154,15 @@ public class TimeMaster {
    * @see TimeMaster#setApplicationInProductionState()
    */
   public void setChosenEmployee(Employee employee) throws IllegalArgumentException, IOException {
-    if (!this.employees.contains(employee)) {
+    List<String> tempList = this.employees.stream().map(e -> e.getId()).toList();
+    if (!tempList.contains(employee.getId())) {
       throw new IllegalArgumentException(
           employee.toString() + " does not exist");
     }
+    // if (!this.employees.contains(employee)) {
+    // throw new IllegalArgumentException(
+    // employee.toString() + " does not exist");
+    // }
 
     switch (state) {
       case TEST:
@@ -171,6 +177,13 @@ public class TimeMaster {
 
       case PRODUCTION:
         this.chosenEmployee = this.apiHandler.getEmployee(employee);
+        for (Employee e : this.employees) {
+          if (e.getId() == employee.getId()) {
+            this.employees.remove(employee);
+            this.employees.add(this.chosenEmployee);
+            break;
+          }
+        }
         break;
 
       default:
@@ -319,7 +332,7 @@ public class TimeMaster {
    *
    * @throws IOException  If API-call fails
    */
-  public void readEmployees() throws IOException {
+  private void readEmployees() throws IOException {
     this.employees = this.apiHandler.getEmployees();
   }
 

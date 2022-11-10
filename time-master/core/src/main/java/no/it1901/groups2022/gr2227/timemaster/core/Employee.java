@@ -73,7 +73,7 @@ public class Employee {
       Workday tempWorkday = workdays.get(i);
 
       // If the last workday isn't checked out - Error
-      if (i == this.workdays.size()-1 
+      if (i == this.workdays.size() - 1 
           && !tempWorkday.isTimedOut()
           && input.isAfter(tempWorkday.getTimeIn())) {
         throw new IllegalArgumentException(
@@ -139,7 +139,8 @@ public class Employee {
       // the new workday must be before the latest workday.
       if (tempWorkday.equals(this.getLatestWorkday())) {
         if (!tempWorkday.isTimedOut()) {
-          if (workday.getTimeIn().isAfter(tempWorkday.getTimeIn()) || input.isAfter(tempWorkday.getTimeIn())) {
+          if (workday.getTimeIn().isAfter(tempWorkday.getTimeIn()) 
+              || input.isAfter(tempWorkday.getTimeIn())) {
             throw new IllegalArgumentException(
               "** Input comes in conflict with the following workday **\n"
               + "Check in: " + tempWorkday.getTimeIn().toString() + "\n"
@@ -267,8 +268,8 @@ public class Employee {
   /**
    * Stores the workday in the Employee-object.
    *
-   * @param workday
-   * @throws IllegalStateException If the Workday-object is already added
+   * @param workday                Workday ot be stored.
+   * @throws IllegalStateException If the Workday-object is already added.
    * @see Workday
    */
   public void addWorkday(Workday workday) throws IllegalArgumentException {
@@ -364,7 +365,7 @@ public class Employee {
    *                                <code>null</code> ff there no workdays
    */
   public String getLatestClockIn() {
-    if(this.workdays.size() == 0) {
+    if (this.workdays.size() == 0) {
       return null;
     }
     Workday latest = workdays.get(workdays.size() - 1);

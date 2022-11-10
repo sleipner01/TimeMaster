@@ -149,12 +149,9 @@ public class TimeMaster {
 
   /**
    * Uses
-   * {@link 
-   * <a href="
-   * https://docs.oracle.com/javase/8/docs/api/java/time/LocalDateTime.html
-   * ">
+   * <a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDateTime.html">
    * LocalDateTime#now()
-   * </a>} to get the system clock timestamp.
+   * </a> to get the system clock timestamp.
    *
    * @return current timestamp
    */
@@ -273,7 +270,7 @@ public class TimeMaster {
    * {@link Employee#Employee(String)}
    *
    * @throws  IOException               If the API-call fails.
-   * @throws  IllegalArgumentExeption   If the parameter is invalid.
+   * @throws  IllegalArgumentException   If the parameter is invalid.
    * @see Employee
    * @see State
    * @see TimeMaster#setApplicationInTestState()
@@ -506,7 +503,7 @@ public class TimeMaster {
    *
    * @see Employee#editWorkday(Workday, LocalDateTime, LocalDateTime)
    * @see TimeMaster#setChosenEmployee(Employee)
-   * @see TimeMaster#getChosenEmployee(Employee)
+   * @see TimeMaster#getChosenEmployee()
    * @see TimeMaster#setApplicationInTestState()
    * @see TimeMaster#setApplicationInLocalState()
    * @see TimeMaster#setApplicationInProductionState()
@@ -549,7 +546,7 @@ public class TimeMaster {
    * @throws IOException                If API call fails
    *
    * @see TimeMaster#setChosenEmployee(Employee)
-   * @see TimeMaster#getChosenEmployee(Employee)
+   * @see TimeMaster#getChosenEmployee()
    * @see TimeMaster#setApplicationInTestState()
    * @see TimeMaster#setApplicationInLocalState()
    * @see TimeMaster#setApplicationInProductionState()
@@ -593,7 +590,7 @@ public class TimeMaster {
    * @throws IOException            if the API fails
    *
    * @see TimeMaster#setChosenEmployee(Employee)
-   * @see TimeMaster#getChosenEmployee(Employee)
+   * @see TimeMaster#getChosenEmployee()
    * @see TimeMaster#setApplicationInTestState()
    * @see TimeMaster#setApplicationInLocalState()
    * @see TimeMaster#setApplicationInProductionState()

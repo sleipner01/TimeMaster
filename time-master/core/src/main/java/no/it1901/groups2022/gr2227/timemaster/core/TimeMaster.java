@@ -133,12 +133,6 @@ public class TimeMaster {
    */
   public boolean isUsingApi() {
     switch (state) {
-      case TEST:
-        return false;
-
-      case LOCAL:
-        return false;
-
       case PRODUCTION:
         return true;
       

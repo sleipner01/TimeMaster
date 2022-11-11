@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>no.it1901.groups2022.gr2227.timemaster</groupId>
 		<artifactId>parent</artifactId>
-		<version>${revision}</version>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>mixin</artifactId>

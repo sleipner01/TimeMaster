@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>no.it1901.groups2022.gr2227.timemaster</groupId>
 		<artifactId>parent</artifactId>
-		<version>${revision}</version>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>core</artifactId>
@@ -20,7 +20,7 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>mixin</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- JUnit -->

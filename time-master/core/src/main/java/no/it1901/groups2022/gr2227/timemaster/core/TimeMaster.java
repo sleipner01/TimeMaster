@@ -162,11 +162,31 @@ public class TimeMaster {
    * @see Employee
    */
   public void setChosenEmployee(Employee employee) throws IllegalArgumentException {
-    if (!this.employees.contains(employee)) {
-      throw new IllegalArgumentException(
-          employee.toString() + " does not exist");
-    }
-    this.chosenEmployee = employee;
+
+    switch (state) {
+      case PRODUCTION:
+        try {
+          Employee apiEmployee = this.apiHandler.getEmployee(employee);
+          
+          if (apiEmployee == null) {
+            throw new IllegalArgumentException("This employee doesn't exist");
+          }
+          this.chosenEmployee = apiEmployee;
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+        break;
+    
+      default:
+        if (!this.employees.contains(employee)) {
+          throw new IllegalArgumentException(
+              employee.toString() + " does not exist");
+        }
+        this.chosenEmployee = employee;
+        break;
+      }
+      
+
   }
 
   /**
@@ -218,7 +238,7 @@ public class TimeMaster {
         return new ArrayList<>(this.employees);
       case PRODUCTION:
         // In case the Application have been started and need to refresh
-        if (this.employees.size() == 0) {
+        // if (this.employees.size() == 0) {
           try {
             this.readEmployees();
           } catch (IOException e) {
@@ -229,7 +249,7 @@ public class TimeMaster {
           } catch (Exception e) {
             e.printStackTrace();
           }
-        }
+        // }
         return new ArrayList<>(this.employees);
       default:
         System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");

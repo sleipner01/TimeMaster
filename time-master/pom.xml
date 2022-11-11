@@ -133,14 +133,15 @@
           <version>4.7.2.1</version>
           <configuration>
             <xmlOutput>false</xmlOutput>
+            <htmlOutput>true</htmlOutput>
             <!--<excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>-->
           </configuration>
           <executions>
             <execution>
-              <id>spotbugs-spotbugs</id>
-              <phase>install</phase>
+              <id>spotbugs</id>
+              <phase>verify</phase>
               <goals>
-                <goal>spotbugs</goal>
+                <goal>check</goal>
               </goals>
             </execution>
           </executions>

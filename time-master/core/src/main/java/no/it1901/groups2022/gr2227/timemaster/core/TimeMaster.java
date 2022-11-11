@@ -311,9 +311,6 @@ public class TimeMaster {
         break;
 
       case PRODUCTION:
-        // Adding locally in case something goes wrong within the API implementation.
-        this.employees.add(employee);
-
         this.apiHandler.createEmployee(employee);
         this.readEmployees();
         break;

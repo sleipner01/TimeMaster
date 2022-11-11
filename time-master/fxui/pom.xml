@@ -115,41 +115,15 @@
 				</configuration>
 			</plugin>
 
-			<!-- *** CODE TO REMOVE *** -->
-			<!-- However, keeping it for now because it kind of works -->
-			<!-- May be able to start a server automatically -->
-			<!-- <plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.3.2</version>
-				<executions>
-					<execution>
-						<id>Rest API run</id>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<phase>initialize</phase>
-						<configuration>
-							<executable>mvn</executable>
-							<arguments>
-								<argument>exec:java</argument>
-							</arguments>
-							<workingDirectory>../rest</workingDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin> -->
-
 		</plugins>
 	</build>
 
 	<reporting>
 		<plugins>
-			<!-- Spotbugs -->
+		 <!-- Spotbugs -->
 			<plugin>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>4.7.2.1</version>
 			</plugin>
 		</plugins>
 	</reporting>

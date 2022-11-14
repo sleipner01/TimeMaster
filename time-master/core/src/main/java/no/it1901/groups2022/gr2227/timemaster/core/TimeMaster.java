@@ -494,28 +494,19 @@ public class TimeMaster {
    */
   public void editWorkday(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut)
       throws IllegalStateException, IllegalArgumentException, IOException {
-    if (this.chosenEmployee == null) {
+    if (!this.employeeIsSet()) {
       throw new IllegalStateException("No employee is selected");
     }
 
     this.getChosenEmployee().editWorkday(workday, timeIn, timeOut);
 
     switch (state) {
-      case TEST:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
-        break;
-
-      case LOCAL:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
-        break;
-
       case PRODUCTION:
         this.apiHandler.updateEmployee(this.getChosenEmployee());
         break;
     
       default:
-        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
-        this.apiHandler.updateEmployee(this.getChosenEmployee());
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT EXECUTION***");
         break;
     }
   }

@@ -230,26 +230,16 @@ public class TimeMaster {
    */
   public ArrayList<Employee> getEmployees() {
     switch (state) {
-      case TEST:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
-        return new ArrayList<>(this.employees);
-      case LOCAL:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
-        return new ArrayList<>(this.employees);
       case PRODUCTION:
-        // In case the Application have been started and need to refresh
-        // if (this.employees.size() == 0) {
           try {
             this.readEmployees();
           } catch (IOException e) {
             System.out.println("Could not connect to the API");
             e.printStackTrace();
             this.setApplicationInLocalState();
-
           } catch (Exception e) {
             e.printStackTrace();
           }
-        // }
         return new ArrayList<>(this.employees);
       default:
         System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");

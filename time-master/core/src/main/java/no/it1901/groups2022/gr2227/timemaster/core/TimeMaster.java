@@ -550,6 +550,7 @@ public class TimeMaster {
   /**
    * Deleting the chosen employee.
    * Conditional executions based on which state the application is set in.
+   * After executing this method, the chosen employee will be <code>null</code>.
    *
    * @throws IllegalStateException  if no employee is set.
    * @throws IOException            if the API fails
@@ -568,14 +569,17 @@ public class TimeMaster {
     switch (state) {
       case PRODUCTION:
         this.apiHandler.deleteEmployee(chosenEmployee);
+        this.chosenEmployee = null;
         this.readEmployees();
         break;
 
       default:
-        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT EXECUTION***");
         this.employees.remove(chosenEmployee);
+        this.chosenEmployee = null;
         break;
     }
+
   }
 
 }

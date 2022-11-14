@@ -103,8 +103,17 @@ public class TimeMasterJsonParser {
    * @see <a href="https://github.com/FasterXML/jackson">com.fasterxml.jackson</a>
    */
   public ArrayList<Workday> readWorkdays(String input) {
+
     try {
-      return this.mapper.readValue(input, new TypeReference<ArrayList<Workday>>() {});
+      // System.out.println("Object: " + input);
+      // System.out.println("Tree: " + this.mapper.readTree(input).toString());
+      // System.out.println("Workdays: " + this.mapper.readTree(input).get("workdays").toString());
+      // System.out.println("Workdays: " + this.mapper.readTree(input).get("workdays"));
+      // String workdays = "{" + this.mapper.readTree(input).get("workdays").asText() + "}";
+      // return this.mapper.readValue(workdays, new TypeReference<ArrayList<Workday>>() {});
+
+      Employee employee = this.mapper.readValue(input, Employee.class);
+      return employee.getWorkdays();
     } catch (Exception e) {
       e.printStackTrace();
       return null;

@@ -438,8 +438,7 @@ public class TimeMasterController {
     } catch (IllegalStateException e) {
       e.printStackTrace();
       displayError(e.getMessage());
-    } 
-    catch (IOException e) {
+    } catch (IOException e) {
       e.printStackTrace();
       displayError(e.getMessage());
       emptyWorkdayHistory();

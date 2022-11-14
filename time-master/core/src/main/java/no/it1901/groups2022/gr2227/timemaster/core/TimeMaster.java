@@ -347,11 +347,11 @@ public class TimeMaster {
    * </li>
    * </ul>
    *
-   * @param dateTimeInput           Timestamp of clock in or out.
-   * @return                        {@link Employee#isAtWork()}
-   * @throws IllegalStateException  If an employee isn't set.
-   * @throws IllegalArgumentException  If the timestamp is invalid.
-   * @throws IOException            If the API-call fails.
+   * @param dateTimeInput               Timestamp of clock in or out.
+   * @return                            {@link Employee#isAtWork()}
+   * @throws IllegalStateException      If an employee isn't set.
+   * @throws IllegalArgumentException   If the timestamp is invalid.
+   * @throws IOException                If the API-call fails.
    * @see Employee
    * @see State
    * @see Employee#checkIn(LocalDateTime)
@@ -375,21 +375,12 @@ public class TimeMaster {
     }
 
     switch (state) {
-      case TEST:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
-        break;
-
-      case LOCAL:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
-        break;
-
       case PRODUCTION:
         this.apiHandler.updateEmployee(this.getChosenEmployee());
         break;
 
       default:
         System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
-
         break;
     }
 

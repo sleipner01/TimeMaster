@@ -234,7 +234,7 @@ public class TimeMaster {
           try {
             this.readEmployees();
           } catch (IOException e) {
-            System.out.println("Could not connect to the API");
+            System.err.println("Could not connect to the API");
             e.printStackTrace();
             this.setApplicationInLocalState();
           } catch (Exception e) {
@@ -283,23 +283,13 @@ public class TimeMaster {
    * @see TimeMaster#setApplicationInProductionState()
    */
   public void createEmployee(String name) throws IllegalArgumentException, IOException {
-    // TODO: Validate name with Regex. Maybe split into first and sur name
     if (name.equals("")) {
       throw new IllegalArgumentException("Input required, please enter name");
     }
+
     Employee employee = new Employee(name);
 
     switch (state) {
-      case TEST:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
-        this.employees.add(employee);
-        break;
-
-      case LOCAL:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
-        this.employees.add(employee);
-        break;
-
       case PRODUCTION:
         this.apiHandler.createEmployee(employee);
         this.readEmployees();

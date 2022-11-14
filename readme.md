@@ -60,6 +60,22 @@ HTML pages with documentation for every public or protected class/method can be 
 To generate javadoc for all methods in a module (including private methods), start a terminal in the respective module and execute `mvn javadoc:javadoc`.
 
 
+
+### Packaging
+
+The project can be packaged to make distribution easier.
+
+#### Windows
+1. Make sure to have .NET 3.5 installed. ([Microsoft download here...](https://www.microsoft.com/nb-no/download/details.aspx?id=21))
+2. Make sure to have WiX Toolset v3 installed. ([Github download here...](https://github.com/wixtoolset/wix3/releases/tag/wix3112rtm))
+3. Navigate to ```fxui```-directory with: `cd fxui`
+4. Execute ```mvn clean compile javafx:jlink jpackage:japackage```
+#### MacOS
+To be explained...
+#### Linux
+To be explained...
+
+
 <!-- ## Git conventions
 
 [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)

@@ -432,7 +432,18 @@ public class TimeMasterController {
       this.emptyWorkdayHistory();
       return;
     }
-    observableWorkdayList.setAll(timeMaster.getEmployeeWorkdayHistory());
+
+    try {
+      observableWorkdayList.setAll(timeMaster.getEmployeeWorkdayHistory());
+    } catch (IllegalStateException e) {
+      e.printStackTrace();
+      displayError(e.getMessage());
+    } 
+    catch (IOException e) {
+      e.printStackTrace();
+      displayError(e.getMessage());
+      emptyWorkdayHistory();
+    }
   }
 
   private void emptyWorkdayHistory() {

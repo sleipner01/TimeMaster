@@ -230,26 +230,16 @@ public class TimeMaster {
    */
   public ArrayList<Employee> getEmployees() {
     switch (state) {
-      case TEST:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
-        return new ArrayList<>(this.employees);
-      case LOCAL:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
-        return new ArrayList<>(this.employees);
       case PRODUCTION:
-        // In case the Application have been started and need to refresh
-        // if (this.employees.size() == 0) {
           try {
             this.readEmployees();
           } catch (IOException e) {
-            System.out.println("Could not connect to the API");
+            System.err.println("Could not connect to the API");
             e.printStackTrace();
             this.setApplicationInLocalState();
-
           } catch (Exception e) {
             e.printStackTrace();
           }
-        // }
         return new ArrayList<>(this.employees);
       default:
         System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
@@ -293,23 +283,13 @@ public class TimeMaster {
    * @see TimeMaster#setApplicationInProductionState()
    */
   public void createEmployee(String name) throws IllegalArgumentException, IOException {
-    // TODO: Validate name with Regex. Maybe split into first and sur name
     if (name.equals("")) {
       throw new IllegalArgumentException("Input required, please enter name");
     }
+
     Employee employee = new Employee(name);
 
     switch (state) {
-      case TEST:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
-        this.employees.add(employee);
-        break;
-
-      case LOCAL:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
-        this.employees.add(employee);
-        break;
-
       case PRODUCTION:
         this.apiHandler.createEmployee(employee);
         this.readEmployees();
@@ -367,11 +347,11 @@ public class TimeMaster {
    * </li>
    * </ul>
    *
-   * @param dateTimeInput           Timestamp of clock in or out.
-   * @return                        {@link Employee#isAtWork()}
-   * @throws IllegalStateException  If an employee isn't set.
-   * @throws IllegalArgumentException  If the timestamp is invalid.
-   * @throws IOException            If the API-call fails.
+   * @param dateTimeInput               Timestamp of clock in or out.
+   * @return                            {@link Employee#isAtWork()}
+   * @throws IllegalStateException      If an employee isn't set.
+   * @throws IllegalArgumentException   If the timestamp is invalid.
+   * @throws IOException                If the API-call fails.
    * @see Employee
    * @see State
    * @see Employee#checkIn(LocalDateTime)
@@ -395,21 +375,12 @@ public class TimeMaster {
     }
 
     switch (state) {
-      case TEST:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
-        break;
-
-      case LOCAL:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
-        break;
-
       case PRODUCTION:
         this.apiHandler.updateEmployee(this.getChosenEmployee());
         break;
 
       default:
         System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
-
         break;
     }
 
@@ -465,14 +436,6 @@ public class TimeMaster {
     }
 
     switch (state) {
-      case TEST:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
-        break;
-
-      case LOCAL:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
-        break;
-
       case PRODUCTION:
         this.apiHandler.updateEmployee(this.getChosenEmployee());
         break;
@@ -491,12 +454,21 @@ public class TimeMaster {
    * @return                        List of workdays.
    * @throws IllegalStateException  If no employee is set.
    */
-  public ArrayList<Workday> getEmployeeWorkdayHistory() throws IllegalStateException {
+  public ArrayList<Workday> getEmployeeWorkdayHistory() throws IllegalStateException, IOException {
     if (!this.employeeIsSet()) {
       throw new IllegalStateException("No employee is selected");
     }
 
-    return this.getChosenEmployee().getWorkdays();
+    switch (state) {
+      case PRODUCTION:
+        return this.apiHandler.getWorkdays(this.getChosenEmployee());
+
+      default:
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
+        return this.getChosenEmployee().getWorkdays();
+    }
+
+
   }
 
 
@@ -522,28 +494,19 @@ public class TimeMaster {
    */
   public void editWorkday(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut)
       throws IllegalStateException, IllegalArgumentException, IOException {
-    if (this.chosenEmployee == null) {
+    if (!this.employeeIsSet()) {
       throw new IllegalStateException("No employee is selected");
     }
 
     this.getChosenEmployee().editWorkday(workday, timeIn, timeOut);
 
     switch (state) {
-      case TEST:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
-        break;
-
-      case LOCAL:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
-        break;
-
       case PRODUCTION:
         this.apiHandler.updateEmployee(this.getChosenEmployee());
         break;
     
       default:
-        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
-        this.apiHandler.updateEmployee(this.getChosenEmployee());
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT EXECUTION***");
         break;
     }
   }
@@ -570,16 +533,6 @@ public class TimeMaster {
     }
 
     switch (state) {
-      case TEST:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
-        this.getChosenEmployee().deleteWorkday(workday);
-        break;
-    
-      case LOCAL:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
-        this.getChosenEmployee().deleteWorkday(workday);
-        break;
-
       case PRODUCTION:
         this.getChosenEmployee().deleteWorkday(workday);
         this.apiHandler.updateEmployee(this.getChosenEmployee());
@@ -597,6 +550,7 @@ public class TimeMaster {
   /**
    * Deleting the chosen employee.
    * Conditional executions based on which state the application is set in.
+   * After executing this method, the chosen employee will be <code>null</code>.
    *
    * @throws IllegalStateException  if no employee is set.
    * @throws IOException            if the API fails
@@ -613,27 +567,19 @@ public class TimeMaster {
     }
 
     switch (state) {
-
-      case TEST:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN TESTING STATE***");
-        this.employees.remove(chosenEmployee);
-        break;
-
-      case LOCAL:
-        System.out.println("***API CALL TURNED OFF. APPLICATION IN LOCAL STATE***");
-        this.employees.remove(chosenEmployee);
-        break;
-
       case PRODUCTION:
         this.apiHandler.deleteEmployee(chosenEmployee);
+        this.chosenEmployee = null;
         this.readEmployees();
         break;
 
       default:
-        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
+        System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT EXECUTION***");
         this.employees.remove(chosenEmployee);
+        this.chosenEmployee = null;
         break;
     }
+
   }
 
 }

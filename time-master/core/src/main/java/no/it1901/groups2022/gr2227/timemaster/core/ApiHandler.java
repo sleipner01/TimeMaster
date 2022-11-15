@@ -56,7 +56,7 @@ public class ApiHandler {
     int responseCode = connection.getResponseCode();
     String response = "";
     if (responseCode == HttpURLConnection.HTTP_OK) {
-      Scanner scanner = new Scanner(connection.getInputStream());
+      Scanner scanner = new Scanner(connection.getInputStream(), "UTF-8");
       while (scanner.hasNextLine()) {
         response += scanner.nextLine();
         response += "\n";
@@ -71,10 +71,10 @@ public class ApiHandler {
     HttpURLConnection connection = setConnection(path, reqMethod);
     connection.setDoOutput(true);
     connection.setRequestProperty("Content-Type", "application/json");
-    OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+    OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
     writer.write(req);
     System.out.println(req);
-    writer.flush();
+    writer.close();
 
     int responseCode = connection.getResponseCode();
     System.out.println(responseCode);
@@ -186,7 +186,7 @@ public class ApiHandler {
       if (200 <= responseCode && responseCode < 300) {
         System.out.println("********************" + "\n");
         String response = "";
-        Scanner scanner = new Scanner(connection.getInputStream());
+        Scanner scanner = new Scanner(connection.getInputStream(), "UTF-8");
         while (scanner.hasNextLine()) {
           response += scanner.nextLine();
           response += "\n";

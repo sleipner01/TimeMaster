@@ -104,7 +104,8 @@ public class TimeMasterJsonParser {
    */
   public ArrayList<Workday> readWorkdays(String input) {
     try {
-      return this.mapper.readValue(input, new TypeReference<ArrayList<Workday>>() {});
+      Employee employee = this.mapper.readValue(input, Employee.class);
+      return employee.getWorkdays();
     } catch (Exception e) {
       e.printStackTrace();
       return null;

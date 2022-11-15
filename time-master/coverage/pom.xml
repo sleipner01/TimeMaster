@@ -11,7 +11,6 @@
 
     <artifactId>coverage</artifactId>
     <name>Coverage</name>
-    <version>${project.parent.version}</version>
     <description>Compute aggregated test code coverage</description>
     <packaging>rar</packaging>
 
@@ -23,19 +22,19 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>core</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>rest</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>fxui</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
       <!-- <scope>test</scope> -->
     </dependency>
   </dependencies>

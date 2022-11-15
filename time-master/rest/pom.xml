@@ -11,7 +11,6 @@
 
   <artifactId>rest</artifactId>
   <name>API</name>
-  <version>${project.parent.version}</version>
   <description>Module containing REST-API</description>
   <packaging>jar</packaging>
 
@@ -166,6 +165,17 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
       </plugin>
+
+      <!-- Javadoc -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.4.1</version>
+        <configuration>
+          <show>private</show>
+          <nohelp>true</nohelp>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -174,7 +184,6 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.7.2.1</version>
       </plugin>
     </plugins>
   </reporting>

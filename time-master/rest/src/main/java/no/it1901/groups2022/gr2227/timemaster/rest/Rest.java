@@ -26,7 +26,7 @@ import java.time.format.DateTimeFormatter;
 @Path("api")
 public class Rest {
 
-  FileHandler fileHandler;
+  private FileHandler fileHandler;
 
   /**
    * Creates a Rest object.

@@ -41,11 +41,8 @@ public class ApiHandler {
    * Creates the connection needed for requests.
    *
    * @param path          the path to set the connection
-   *
    * @param requestMethod the type of request
-   *
    * @return              a HttpURL Connection
-   *
    * @throws IOException  throws exception if can't connect to server
    */
   private HttpURLConnection setConnection(String path, String requestMethod) throws IOException { 
@@ -93,26 +90,85 @@ public class ApiHandler {
     return responseCode;
   }
 
+  /**
+   * Creates an HTTP-request with method "GET" to endpoint "employees/".
+   *
+   * @param employee      Employee to retrieve from the API.
+   * @return              The employee stored at the API.
+   * @throws IOException  If API-call failed.
+   * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/net/HttpURLConnection.html">
+   *      java.net.HttpURLConnection
+   *      </a>
+   */
   public Employee getEmployee(Employee employee) throws IOException {
     return this.jsonParser.readEmployee(this.getResponse("api/employees/" + employee.getId()));
   }
 
+  /**
+   * Creates an HTTP-request with method "GET" to endpoint "employees".
+   *
+   * @return              List of employees.
+   * @throws IOException  If API-call failed.
+   * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/net/HttpURLConnection.html">
+   *      java.net.HttpURLConnection
+   *      </a>
+   */
   public ArrayList<Employee> getEmployees() throws IOException {
     return this.jsonParser.readEmployees(this.getResponse("api/employees"));
   }
 
+  /**
+   * Creates an HTTP-request with method "GET" to endpoint "employees/".
+   *
+   * @param employee      Employee to retrieve workdays from.
+   * @return              List of workdays.
+   * @throws IOException  If API-call failed.
+   * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/net/HttpURLConnection.html">
+   *      java.net.HttpURLConnection
+   *      </a>
+   */
   public ArrayList<Workday> getWorkdays(Employee employee) throws IOException {
     return this.jsonParser.readWorkdays(this.getResponse("api/employees/" + employee.getId()));
   }
 
+  /**
+   * Creates an HTTP-request with method "POST" to endpoint "employees".
+   *
+   * @param employee      Employee to be created and stored.
+   * @return              Responsecode.
+   * @throws IOException  If API-call failed.
+   * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/net/HttpURLConnection.html">
+   *      java.net.HttpURLConnection
+   *      </a>
+   */
   public int createEmployee(Employee employee) throws IOException {
     return request("api/employees", this.jsonParser.write(employee), "POST");
   }
 
+  /**
+   * Creates an HTTP-request with method "PUT to endpoint "employees/".
+   *
+   * @param employee      Employee to be updated.
+   * @return              Responsecode.
+   * @throws IOException  If API-call failed.
+   * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/net/HttpURLConnection.html">
+   *      java.net.HttpURLConnection
+   *      </a>
+   */
   public int updateEmployee(Employee employee) throws IOException {
     return request("api/employees/" + employee.getId(), this.jsonParser.write(employee), "PUT");
   }
 
+  /**
+   * Creates an HTTP-request with method "DELETE" to endpoint "employees/".
+   *
+   * @param employee      Employee to be deleted.
+   * @return              Responsecode.
+   * @throws IOException  If API-call failed.
+   * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/net/HttpURLConnection.html">
+   *      java.net.HttpURLConnection
+   *      </a>
+   */
   public int deleteEmployee(Employee employee) throws IOException {
     return request("api/employees/" + employee.getId(), "", "DELETE");
   }
@@ -125,7 +181,7 @@ public class ApiHandler {
    */
   public boolean checkServerStatus() {
     try {
-      HttpURLConnection connection = setConnection("", "GET");
+      HttpURLConnection connection = setConnection("api/", "GET");
       int responseCode = connection.getResponseCode();
       if (200 <= responseCode && responseCode < 300) {
         System.out.println("********************" + "\n");

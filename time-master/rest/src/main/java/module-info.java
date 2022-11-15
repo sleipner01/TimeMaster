@@ -1,3 +1,10 @@
+/**
+ * Rest Module. Local server to run the application as if it was connected to an external API.
+ *
+ * @author Magnus Byrkjeland
+ * @since 1.0
+ * @version 1.0
+ */
 module no.it1901.groups2022.gr2227.timemaster.rest {
   requires jakarta.ws.rs;
   requires jakarta.json;

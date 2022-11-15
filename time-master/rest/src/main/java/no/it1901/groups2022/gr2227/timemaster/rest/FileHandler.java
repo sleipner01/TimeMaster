@@ -33,7 +33,7 @@ public class FileHandler {
     this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
     this.fileName = name;
     this.dir = Paths.get(System.getProperty("user.dir"), "../rest/timeMasterSaveFiles").toString();
-    File file = new File(Paths.get(this.dir.toString(), this.fileName).toString());
+    File file = new File(Paths.get(this.dir, this.fileName).toString());
     try {
       file.createNewFile();
       if (file.length() == 0) {
@@ -52,7 +52,7 @@ public class FileHandler {
   public JsonNode readFile() {
     try {
       return this.mapper.readTree(
-          new File(Paths.get(this.dir.toString(),
+          new File(Paths.get(this.dir,
               this.fileName).toString()));
     } catch (Exception e) {
       e.printStackTrace();
@@ -84,9 +84,11 @@ public class FileHandler {
   public void write(Object val) {
     try {
       this.mapper.writeValue(
-          new File(Paths.get(this.dir.toString(),
+          new File(Paths.get(this.dir,
               this.fileName).toString()),
           val);
+    } catch (RuntimeException e) {
+        e.printStackTrace();
     } catch (Exception e) {
       e.printStackTrace();
     }

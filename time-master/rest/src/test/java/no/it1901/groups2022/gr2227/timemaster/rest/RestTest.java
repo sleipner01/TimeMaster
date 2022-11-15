@@ -33,7 +33,7 @@ public class RestTest extends JerseyTest {
   public void init() {
     fileHandler = new FileHandler("employeesTest.json");
     employeeJson = "{\"id\":\"0\",\"name\":\"Anne\",\"workdays\":[],\"atWork\":false}";
-    file = new File(Paths.get(System.getProperty("user.dir"), "../rest/timeMasterSaveFiles").toString(), "employeesTest.json");
+    file = new File(Paths.get(System.getProperty("user.dir"), "../timeMasterSaveFiles").toString(), "employeesTest.json");
   }
 
   @AfterEach

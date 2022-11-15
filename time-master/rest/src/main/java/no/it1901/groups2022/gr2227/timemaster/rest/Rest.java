@@ -36,7 +36,7 @@ public class Rest {
    */
   public Rest() {
     if (new File(Paths.get(System.getProperty("user.dir"),
-        "../rest/timeMasterSaveFiles").toString(),
+        "../timeMasterSaveFiles").toString(),
         "employeesTest.json").exists()) {
       fileHandler = new FileHandler("employeesTest.json");
     } else {

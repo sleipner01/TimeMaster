@@ -35,7 +35,12 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>fxui</artifactId>
       <version>${project.version}</version>
-      <!-- <scope>test</scope> -->
+    </dependency>
+
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>persistence</artifactId>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 

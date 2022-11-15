@@ -1,5 +1,6 @@
 @startuml Time Master
 
+title Package diagram for Time-Master
 package "no.it1901.groups2022.gr2227.timemaster.core" as "core" {
   component ApiHandler
   component Employee

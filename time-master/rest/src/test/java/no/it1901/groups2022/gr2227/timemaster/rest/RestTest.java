@@ -16,6 +16,7 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
+import no.it1901.groups2022.gr2227.timemaster.persistence.FileHandler;
 
 public class RestTest extends JerseyTest {
 

@@ -6,6 +6,8 @@
  * @version 1.0
  */
 module no.it1901.groups2022.gr2227.timemaster.rest {
+  requires no.it1901.groups2022.gr2227.timemaster.persistence;
+
   requires jakarta.ws.rs;
   requires jakarta.json;
 

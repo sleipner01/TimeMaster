@@ -1,4 +1,4 @@
-package no.it1901.groups2022.gr2227.timemaster.rest;
+package no.it1901.groups2022.gr2227.timemaster.persistence;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,7 +32,7 @@ public class FileHandler {
     this.mapper = new ObjectMapper();
     this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
     this.fileName = name;
-    this.dir = Paths.get(System.getProperty("user.dir"), "../rest/timeMasterSaveFiles").toString();
+    this.dir = Paths.get(System.getProperty("user.dir"), "../timeMasterSaveFiles").toString();
     File file = new File(Paths.get(this.dir, this.fileName).toString());
     try {
       file.createNewFile();

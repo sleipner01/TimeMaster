@@ -8,9 +8,11 @@ tasks:
     command: |
       cd time-master
       mvn clean install -Dmaven.test.skip=true
+      gp sync-done installation
   - name: REST API Server
     command: |
       cd time-master/rest
+      gp sync-await installation
       mvn exec:java
     openMode: split-right
   - name: Build

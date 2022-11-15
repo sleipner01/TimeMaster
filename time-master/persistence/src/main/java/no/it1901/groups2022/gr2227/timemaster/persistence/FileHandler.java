@@ -17,7 +17,7 @@ import java.util.ArrayList;
  *  <li> String fileName name of the file that is read or written.
  * </ul>
  */
-public class FileHandler {
+public class FileHandler implements TimeMasterFileHandler {
 
   private final ObjectMapper mapper;
   private final String dir;
@@ -44,11 +44,8 @@ public class FileHandler {
     }
   }
 
-  /**
-   * Reads from a file.
-   *
-   * @return JsonNode of the information from mapper
-   */
+
+  @Override
   public JsonNode readFile() {
     try {
       return this.mapper.readTree(
@@ -76,11 +73,7 @@ public class FileHandler {
     }
   }
 
-  /**
-   * Writes an object to the file.
-   *
-   * @param val the object being written to file.
-   */
+  @Override
   public void write(Object val) {
     try {
       this.mapper.writeValue(

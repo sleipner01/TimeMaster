@@ -89,9 +89,7 @@ public class FileHandler {
           val);
     } catch (RuntimeException e) {
         e.printStackTrace();
-    } 
-    
-    catch (Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }

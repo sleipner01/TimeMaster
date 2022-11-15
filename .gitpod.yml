@@ -4,6 +4,10 @@ image:
 # List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
 tasks:
   - init: sdk use java 17.0.4-tem
+  - name: Install
+    command: |
+      cd time-master
+      mvn clean install -Dmaven.test.skip=true
   - name: REST API Server
     command: |
       cd time-master/rest
@@ -13,7 +17,7 @@ tasks:
     command: |
       cd time-master
       gp ports await 8080
-      mvn clean install
+      mvn test
 
 # List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
 ports:

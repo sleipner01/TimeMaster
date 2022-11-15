@@ -721,22 +721,28 @@ public class TimeMasterController {
 
   @FXML
   private void handleDeleteEmployee() {
-    try {
-      timeMaster.deleteChosenEmployee();
-      updateDisplay();
-      setDeleteStatus(true);
-    } catch (IllegalStateException e) {
-      displayError(e.getMessage());
-      setDeleteStatus(false);
-    } catch (IOException e) {
-      displayError(e.getMessage());
-      e.printStackTrace();
-      setDeleteStatus(false);
-      setApiStatus();
-    } catch (Exception e) {
-      displayError(e.getMessage());
-      e.printStackTrace();
-      setApiStatus();
+    boolean result = confirmationDialog(
+      "Are you sure you want to delete the employee?"
+    );
+
+    if(result) {
+      try {
+        timeMaster.deleteChosenEmployee();
+        updateDisplay();
+        setDeleteStatus(true);
+      } catch (IllegalStateException e) {
+        displayError(e.getMessage());
+        setDeleteStatus(false);
+      } catch (IOException e) {
+        displayError(e.getMessage());
+        e.printStackTrace();
+        setDeleteStatus(false);
+        setApiStatus();
+      } catch (Exception e) {
+        displayError(e.getMessage());
+        e.printStackTrace();
+        setApiStatus();
+      }
     }
   }
 

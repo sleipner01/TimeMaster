@@ -28,11 +28,18 @@ public class TimeMasterTest {
   @Test
   public void createEmployeeTest() {
     assertThrows(IllegalArgumentException.class, () -> timeMaster.createEmployee(""));
+    assertDoesNotThrow(() -> timeMaster.createEmployee(testName));
+    assertEquals(1, timeMaster.getEmployees().size());
+    assertEquals(testName, timeMaster.getEmployees().get(0).getName());
   }
 
   @Test
   public void getEmployeesTest() {
     assertDoesNotThrow(() -> timeMaster.getEmployees());
+    assertEquals(0, timeMaster.getEmployees().size());
+    createTestingEmployee();
+    assertEquals(1, timeMaster.getEmployees().size());
+    assertEquals(testName, timeMaster.getEmployees().get(0).getName());
   }
 
   @Test

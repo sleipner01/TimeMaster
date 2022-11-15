@@ -454,7 +454,8 @@ public class TimeMaster {
    * @return                        List of workdays.
    * @throws IllegalStateException  If no employee is set.
    */
-  public ArrayList<Workday> getEmployeeWorkdayHistory() throws IllegalStateException, IOException {
+  public ArrayList<Workday> getEmployeeWorkdayHistory() 
+      throws IllegalStateException, IOException {
     if (!this.employeeIsSet()) {
       throw new IllegalStateException("No employee is selected");
     }

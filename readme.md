@@ -65,6 +65,11 @@ To generate javadoc for all methods in a module (including private methods), sta
 
 The project can be packaged to make distribution easier. The following guide will generate both a compressed folder, and a system-spesific executable file.
 
+#### Jar
+1. Navigate to ```fxui```-directory with: `cd fxui`
+2. Execute ```mvn package```
+
+The .jar file can be found at `time-master/fxui/target/`.
 #### Windows
 1. Make sure to have .NET 3.5 installed. ([Microsoft download here...](https://www.microsoft.com/nb-no/download/details.aspx?id=21))
 2. Make sure to have WiX Toolset v3 installed. ([Github download here...](https://github.com/wixtoolset/wix3/releases/tag/wix3112rtm))

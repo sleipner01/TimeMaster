@@ -26,6 +26,7 @@
     <module>coverage</module>
     <module>mixin</module>
     <module>rest</module>
+    <module>persistence</module>
   </modules>
 
   <build>

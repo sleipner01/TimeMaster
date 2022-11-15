@@ -35,8 +35,7 @@ public class FileHandler implements TimeMasterFileHandler {
     this.dir = Paths.get(System.getProperty("user.dir"), "../timeMasterSaveFiles").toString();
     File file = new File(Paths.get(this.dir, this.fileName).toString());
     try {
-      file.createNewFile();
-      if (file.length() == 0) {
+      if (file.createNewFile() && file.length() == 0) {
         this.mapper.writeValue(file, new ArrayList<>());
       }
     } catch (IOException e) {

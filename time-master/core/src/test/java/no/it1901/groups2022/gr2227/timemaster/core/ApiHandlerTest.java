@@ -3,8 +3,10 @@ package no.it1901.groups2022.gr2227.timemaster.core;
 import org.junit.jupiter.api.Test;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,10 +47,13 @@ public class ApiHandlerTest {
 
   @Test
   public void testGetEmployees() throws IOException {
+    ArrayList<Employee> employees = new ArrayList<>();
+    employees.add(testEmployee1);
     stubFor(get(urlEqualTo("/api/employees"))
-        .willReturn(okJson("[]")));
+        .willReturn(okJson(jsonParser.write(employees))));
 
-    assertEquals(apiHandler.getEmployees(), new ArrayList<>());
+    assertEquals(1, apiHandler.getEmployees().size());
+    assertEquals(testEmployee1.getId(), apiHandler.getEmployees().get(0).getId());
   }
 
   @Test
@@ -61,12 +66,12 @@ public class ApiHandlerTest {
   }
 
   @Test
-  public void testGetWorkdays() throws IOException {
+  public void testGetWorkdays() throws IOException {    
+    testEmployee1.checkIn(LocalDateTime.MIN);
     stubFor(get(urlEqualTo("/api/employees/" + testEmployee1.getId()))
-        .willReturn(okJson("[]")));
+        .willReturn(okJson(jsonParser.write(testEmployee1))));
 
-    // assertEquals(apiHandler.getWorkdays(testEmployee1), new ArrayList<>());
-
+    assertTrue(apiHandler.getWorkdays(testEmployee1).get(0).getTimeIn().isEqual(testEmployee1.getWorkdays().get(0).getTimeIn()));
   }
 
   @Test
@@ -84,7 +89,6 @@ public class ApiHandlerTest {
         .willReturn(status(STATUSOK)));
     
     assertEquals(STATUSOK, apiHandler.updateEmployee(testEmployee1));
-
   }
 
 }

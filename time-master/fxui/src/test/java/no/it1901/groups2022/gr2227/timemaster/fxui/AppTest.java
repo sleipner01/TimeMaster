@@ -608,9 +608,10 @@ public class AppTest extends ApplicationTest {
     clickOn("#inputMinutes").write("00");
     clickOn("#registerTimeButton");
     assertTrue(workdaysListView.getItems().size() == 2);
-
-    // TODO: Assert that new newest element is the first element in the list
-    // Issue: #112
+    // Assert that new newest element is the first element in the list
+    Workday workday1p3 = workdaysListView.getItems().get(0);
+    assertTrue(workday1p3.toString().contains("03:00"));
+    assertTrue(workday1p3.toString().contains("04:00"));
 
     // Workdaylist employee1
     clickOn(LabeledMatchers.hasText(testName));
@@ -841,7 +842,7 @@ public class AppTest extends ApplicationTest {
     clickOn(LabeledMatchers.hasText("Ok"));
     clickOn(LabeledMatchers.hasText("OK"));
     // Assertions
-    Workday workday2p2 = workdaysListView.getItems().get(1);
+    Workday workday2p2 = workdaysListView.getItems().get(0);
     assertFalse(workday2p2.equals(workday2));
     assertTrue(workday2p2.toString().contains("06:00"));
     assertTrue(workday2p2.toString().contains("07:00"));
@@ -868,7 +869,7 @@ public class AppTest extends ApplicationTest {
     clickOn(LabeledMatchers.hasText("Ok"));
     clickOn(LabeledMatchers.hasText("OK"));
     // Assertions
-    Workday workday1p2 = workdaysListView.getItems().get(0);
+    Workday workday1p2 = workdaysListView.getItems().get(1);
     assertFalse(workday1p2.equals(workday2));
     assertTrue(workday1p2.toString().contains("01:15"));
     assertTrue(workday1p2.toString().contains("01:45"));
@@ -893,7 +894,7 @@ public class AppTest extends ApplicationTest {
     // Confirm Error
     clickOn(LabeledMatchers.hasText("OK"));
     // Assertions
-    Workday workday1p3 = workdaysListView.getItems().get(0);
+    Workday workday1p3 = workdaysListView.getItems().get(1);
     assertTrue(workday1p2.toString().equals(workday1p3.toString()));
  
 
@@ -920,7 +921,7 @@ public class AppTest extends ApplicationTest {
     // Confirm Error
     clickOn(LabeledMatchers.hasText("OK"));
     // Assertions
-    Workday workday1p4 = workdaysListView.getItems().get(0);
+    Workday workday1p4 = workdaysListView.getItems().get(1);
     assertTrue(workday1p3.toString().equals(workday1p4.toString()));
 
 
@@ -947,7 +948,7 @@ public class AppTest extends ApplicationTest {
     // Confirm Error
     clickOn(LabeledMatchers.hasText("OK"));
     // Assertions
-    Workday workday1p5 = workdaysListView.getItems().get(0);
+    Workday workday1p5 = workdaysListView.getItems().get(1);
     assertTrue(workday1p4.toString().equals(workday1p5.toString()));
     
 
@@ -959,7 +960,7 @@ public class AppTest extends ApplicationTest {
     clickOn("#inputMinutes").write("00");
     clickOn("#registerTimeButton");
     clickOn(LabeledMatchers.hasText("Check Hours Worked"));
-    Workday workday3 = workdaysListView.getItems().get(2);
+    Workday workday3 = workdaysListView.getItems().get(0);
     clickOn(LabeledMatchers.hasText(workday3.toString()));
     dateOut = lookup("#editDialogDateOut").query();
     timeOutHour = lookup("#editDialogTimeOutHour").query();

@@ -261,10 +261,6 @@ public class TimeMaster {
    * @see TimeMaster#setApplicationInProductionState()
    */
   public void createEmployee(String name) throws IllegalArgumentException, IOException {
-    if (name.equals("")) {
-      throw new IllegalArgumentException("Input required, please enter name");
-    }
-
     Employee employee = new Employee(name);
 
     switch (state) {

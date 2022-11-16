@@ -63,7 +63,11 @@ public class EmployeeTest {
 	
 	@Test
 	public void nameTest() {
-		assertTrue(employee1.getName().equals(testName));
+		assertThrows(IllegalArgumentException.class, () -> new Employee(""));
+		assertThrows(IllegalArgumentException.class, () -> new Employee("Test@"));
+		assertThrows(IllegalArgumentException.class, () -> new Employee("Test*"));
+		assertThrows(IllegalArgumentException.class, () -> new Employee("Test1"));
+		assertEquals(testName, employee1.getName());
 	} 
 	
 	@Test

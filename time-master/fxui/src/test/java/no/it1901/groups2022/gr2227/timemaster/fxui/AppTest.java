@@ -172,6 +172,11 @@ public class AppTest extends ApplicationTest {
     // Add invalid employee
     clickOn("#addNewEmployeeButton");
     FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    clickOn("#newEmployeeName").write("Will@");
+    clickOn("#addNewEmployeeButton");
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
   }
 
 

@@ -177,15 +177,13 @@ public class TimeMasterController {
           } else {
             setText(item.getName());
             if(item.isAtWork()) {
-              setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
+              setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, null)));
             } else {
               setBackground(new Background(new BackgroundFill(null, null, null)));
             }
             if(timeMaster.employeeIsSet()) {
               if(item.equals(timeMaster.getChosenEmployee())) {
                 setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
-              } else {
-                setBackground(new Background(new BackgroundFill(null, null, null)));
               }
             }
           }

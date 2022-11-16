@@ -1,10 +1,32 @@
 @startuml Time Master
 
-actor User
+title Sequence diagram for employee clock in, perfect run
+actor Employee
 
-User --> TimeMaster : Inserts name and clicks add new emloyee
-TimeMaster --> employees.json: handleCreateEmployee()
-employees.json --> TimeMaster : handleCreateEmployee()
-TimeMaster --> User : employee created
+Employee --> TimeMasterUI : Clicks "Check in"
+TimeMasterUI --> TimeMasterController.java : autoClockInOut()
+TimeMasterController.java --> TimeMaster.java : autoClockEmployeeInOut()
+TimeMaster.java --> Employee.java : checkIn(dateTime)
+Employee.java --> Employee.java : addWorkday(new Workday(dateTime))
+TimeMaster.java --> ApiHandler.java : updateEmployee(employee)
+ApiHandler.java --> Server.java : PUT api/employees/:id HTTP/1.1
+Server.java --> ApiHandler.java : Status: 200
+
+TimeMasterController.java --> TimeMasterController.java : updateDisplay()
+activate TimeMasterController.java
+
+TimeMasterController.java --> TimeMaster.java : getEmployees()
+TimeMaster.java --> ApiHandler.java : getEmployees()
+ApiHandler.java --> Server.java : GET api/employees HTTP/1.1
+Server.java --> ApiHandler.java : Status: 200 application/json
+ApiHandler.java --> TimeMaster.java : ArrayList<Employee>()
+TimeMaster.java --> TimeMasterController.java : ArrayList<Employee>()
+TimeMasterController.java --> TimeMasterController.java : setEmployeeStatus()
+
+
+
+TimeMasterController.java --> TimeMasterUI : Update employee objects
+deactivate TimeMasterController.java
+TimeMasterUI --> Employee : Status active
 
 @enduml

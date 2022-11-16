@@ -8,37 +8,75 @@ class TimeMaster {
 
   + void setApplicationInProductionState()
   + void setApplicationInTestState()
-  + void setApplicationInLocalState
+  + void setApplicationInLocalState()
   + boolean getApiStatus()
   + boolean isusingApi()
   + LocalDateTime getNow()
   + void setChosenEmployee(Employee)
   + Employee getChosenEmployee()
-  
-
-
-  - saveData()
-  - loadData()
-  - getEmployees()
-  - setEmployee()
-
+  + ArrayList<Employee> getEmployees()
+  + void createEmployee(String name)
+  + void readEmployees()
+  + boolean employeeIsSet()
+  + boolean clockEmployeeInOut(LocalDateTime dateTimeInput) 
+  + boolean autoClockEmployeeInOut() 
+  + ArrayList<Workday> getEmployeeWorkdayHistory() 
+  + void editWorkday(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut)
+  + void deleteWorkdayFromEmployee(Workday workday)
+  + void deleteChosenEmployee()
 }
 
 class Employee{
-
+  - UUID id
+  - String name
+  - ArrayList<Workday> workdays
+  - String {final} regexPattern
 }
 
 class Workday{
+  - LocalDateTime timeIn;
+  - LocalDateTime timeOut;
 
+  + Workday()
+  - String formatDateTime(LocalDateTime dateTime)
+  + LocalDateTime getTimeIn()
+  + String getTimeInAsFormattedString() 
+  + LocalDateTime getTimeOut()
+  + String getTimeOutAsFormattedString()
+  + boolean isTimedOut()
+  - boolean isValidInput(LocalDateTime input)
+  + void setTimeOut(LocalDateTime timeOut)
+  + String toString()
 }
 
 
 class APIHandler{
+  - final String baseUrl;
+  - TimeMasterJsonParser jsonParser;
+
+  + ApiHandler()
+  + ApiHandler(String baseUrl) 
+  - HttpURLConnection setConnection(String path, String requestMethod)
+  - String getResponse(String path)
+  - int request(String path, String req, String reqMethod)
+  + Employee getEmployee(Employee employee)
+  + ArrayList<Employee> getEmployees()
+  + ArrayList<Workday> getWorkdays(Employee employee)
+  + int createEmployee(Employee employee)
+  + int updateEmployee(Employee employee)
+  + int deleteEmployee(Employee employee)
+  + boolean checkServerStatus()
 
 }
 
 class TimeMasterJsonParser{
+  - final ObjectMapper mapper;
 
+  + TimeMasterJsonParser()
+  + String write(Object value)
+  + Employee readEmployee(String input)
+  + ArrayList<Employee> readEmployees(String input) 
+  + ArrayList<Workday> readWorkdays(String input) 
 }
 
 enum State {
@@ -48,11 +86,11 @@ enum State {
 }
 
 
-TimeMaster --> "*" Employee
-TimeMaster --> "1" State
-Employee --> "*" Workday 
-TimeMaster --> "1" APIHandler
-APIHandler -- "1" TimeMasterJsonParser
+TimeMaster -- "employees: *" Employee
+TimeMaster -- "State: 1" State
+Employee -- "workdays: *" Workday 
+TimeMaster -- "apiHandler: 1" APIHandler
+APIHandler -- "jsonParser: 1" TimeMasterJsonParser
 
 
 @enduml

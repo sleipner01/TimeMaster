@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -434,7 +435,9 @@ public class TimeMasterController {
     }
 
     try {
-      observableWorkdayList.setAll(timeMaster.getEmployeeWorkdayHistory());
+      List<Workday> workdays = timeMaster.getEmployeeWorkdayHistory();
+      workdays.sort((a, b) -> { return b.getTimeIn().compareTo(a.getTimeIn());});
+      observableWorkdayList.setAll(workdays);
     } catch (IllegalStateException e) {
       e.printStackTrace();
       displayError(e.getMessage());

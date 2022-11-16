@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+  <Match>
+    <Class name="no.it1901.groups2022.gr2227.timemaster.core.TimeMaster" />
+    <Or>
+      <Bug pattern="EI_EXPOSE_REP" />
+      <Bug pattern="EI_EXPOSE_REP2" />
+    </Or>
+  </Match>
+  <Match>
+    <Class name="no.it1901.groups2022.gr2227.timemaster.core.ApiHandler" />
+    <Bug pattern="SBSC_USE_STRINGBUFFER_CONCATENATION" />
+  </Match>
+</FindBugsFilter>

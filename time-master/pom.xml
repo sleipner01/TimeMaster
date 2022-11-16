@@ -133,7 +133,7 @@
           <version>4.7.2.1</version>
           <configuration>
             <effort>Max</effort>
-            <threshold>Low</threshold>
+            <threshold>Medium</threshold>
             <xmlOutput>false</xmlOutput>
             <htmlOutput>true</htmlOutput>
             <!--<excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>-->

@@ -256,10 +256,10 @@ public class TimeMasterController {
   }
 
   private void updateDisplay() {
+    updateEmployeeMenu();
     setTimeRegisterInputs();
     setDeleteButtonStatus();
     setEmployeeStatus();
-    updateEmployeeMenu();
     addStatus.setText(null);
     deleteStatus.setText(null);
   }

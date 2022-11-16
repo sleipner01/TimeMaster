@@ -1,0 +1,58 @@
+@startuml Time Master
+
+class TimeMaster {
+  - Employee chosenEmployee;
+  - ArrayList<Employee> employees;
+  - ApiHandler apiHandler;
+  - State state;
+
+  + void setApplicationInProductionState()
+  + void setApplicationInTestState()
+  + void setApplicationInLocalState
+  + boolean getApiStatus()
+  + boolean isusingApi()
+  + LocalDateTime getNow()
+  + void setChosenEmployee(Employee)
+  + Employee getChosenEmployee()
+  
+
+
+  - saveData()
+  - loadData()
+  - getEmployees()
+  - setEmployee()
+
+}
+
+class Employee{
+
+}
+
+class Workday{
+
+}
+
+
+class APIHandler{
+
+}
+
+class TimeMasterJsonParser{
+
+}
+
+enum State {
+  + PRODUCTION
+  + LOCAL
+  + TEST
+}
+
+
+TimeMaster --> "*" Employee
+TimeMaster --> "1" State
+Employee --> "*" Workday 
+TimeMaster --> "1" APIHandler
+APIHandler -- "1" TimeMasterJsonParser
+
+
+@enduml

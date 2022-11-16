@@ -22,6 +22,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -174,6 +176,13 @@ public class TimeMasterController {
             setText(null);
           } else {
             setText(item.getName());
+            if(timeMaster.employeeIsSet()) {
+              if(item.equals(timeMaster.getChosenEmployee())) {
+                this.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
+              } else {
+                this.setBackground(new Background(new BackgroundFill(null, null, null)));
+              }
+            }
           }
         }
       };

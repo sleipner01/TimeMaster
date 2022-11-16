@@ -162,7 +162,7 @@ public class TimeMaster {
         }
         this.chosenEmployee = employee;
         break;
-      }
+    }
       
 
   }
@@ -209,15 +209,15 @@ public class TimeMaster {
   public ArrayList<Employee> getEmployees() {
     switch (state) {
       case PRODUCTION:
-          try {
-            this.readEmployees();
-          } catch (IOException e) {
-            System.err.println("Could not connect to the API");
-            e.printStackTrace();
-            this.setApplicationInLocalState();
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
+        try {
+          this.readEmployees();
+        } catch (IOException e) {
+          System.err.println("Could not connect to the API");
+          e.printStackTrace();
+          this.setApplicationInLocalState();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
         return new ArrayList<>(this.employees);
       default:
         System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");

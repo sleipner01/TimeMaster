@@ -73,4 +73,8 @@ All members of the group have made tests in the different modules, and we have p
 
 ## Package diagram
 
+![Package diagram](../img/packageDiagram.png)
+
 ## Sequence Diagram
+
+![Sequence diagram](../img/sequenceDiagram.png)

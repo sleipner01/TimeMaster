@@ -1,0 +1,54 @@
+@startuml Time Master
+
+title Package diagram for Time-Master
+package "no.it1901.groups2022.gr2227.timemaster.core" as "core" {
+  component ApiHandler
+  component Employee
+  component TimeMasterJsonPaser
+  component State
+  component TimeMaster
+  component Workday
+}
+
+package "no.it1901.groups2022.gr2227.timemaster.fxui" as "fxui" {
+  component App
+  component TimeMasterController
+}
+
+package "no.it1901.groups2022.gr2227.timemaster.mixin" as "mixin" {
+  component EmployeeMixin
+  component WorkdayMixin
+}
+
+package "no.it1901.groups2022.gr2227.timemaster.persistence" as "pers" {
+  interface TimeMasterFileHandler as TFH
+  component FileHandler
+  FileHandler -- TFH
+}
+
+package "no.it1901.groups2022.gr2227.timemaster.rest" as "rest" {
+  component Rest
+  component Server
+}
+
+
+component javafx 
+component jakarta
+component jackson
+component jersey
+
+fxui --> javafx
+TimeMasterController --> TimeMaster
+Rest --> jakarta
+FileHandler --> jackson
+TimeMasterJsonPaser --> jackson
+mixin --> TimeMasterJsonPaser
+mixin --> jackson
+Server --> jersey
+
+
+
+
+
+
+@enduml

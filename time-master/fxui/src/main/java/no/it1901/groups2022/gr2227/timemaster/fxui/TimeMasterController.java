@@ -177,13 +177,13 @@ public class TimeMasterController {
             setText(null);
           } else {
             setText(item.getName());
-            if(item.isAtWork()) {
+            if (item.isAtWork()) {
               setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, null)));
             } else {
               setBackground(new Background(new BackgroundFill(null, null, null)));
             }
-            if(timeMaster.employeeIsSet()) {
-              if(item.equals(timeMaster.getChosenEmployee())) {
+            if (timeMaster.employeeIsSet()) {
+              if (item.equals(timeMaster.getChosenEmployee())) {
                 setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
               }
             }
@@ -448,7 +448,9 @@ public class TimeMasterController {
 
     try {
       List<Workday> workdays = timeMaster.getEmployeeWorkdayHistory();
-      workdays.sort((a, b) -> { return b.getTimeIn().compareTo(a.getTimeIn());});
+      workdays.sort((a, b) -> {
+        return b.getTimeIn().compareTo(a.getTimeIn());
+      });
       observableWorkdayList.setAll(workdays);
     } catch (IllegalStateException e) {
       e.printStackTrace();
@@ -729,10 +731,10 @@ public class TimeMasterController {
   @FXML
   private void handleDeleteEmployee() {
     boolean result = confirmationDialog(
-      "Are you sure you want to delete the employee?"
+        "Are you sure you want to delete the employee?"
     );
 
-    if(result) {
+    if (result) {
       try {
         timeMaster.deleteChosenEmployee();
         updateDisplay();

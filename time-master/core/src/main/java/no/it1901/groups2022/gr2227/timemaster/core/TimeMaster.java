@@ -50,7 +50,7 @@ public class TimeMaster {
     this.employees = new ArrayList<Employee>();
     this.apiHandler = new ApiHandler();
 
-    this.setApplicationInProductionState();      
+    this.setApplicationInProductionState();
   }
 
   /**

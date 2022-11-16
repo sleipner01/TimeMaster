@@ -233,7 +233,8 @@ public class AppTest extends ApplicationTest {
     // Delete one
     clickOn(LabeledMatchers.hasText(testName));
     clickOn("#deleteEmployeeButton");
-    // TODO: Confirmation to come here
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
     assertTrue(employeeListView.getItems().size() == 1);
     assertTrue(employeeListView.getItems().get(0).getName().equals(testName2));
     FxAssert.verifyThat(deleteStatus, d -> d.getText().length() > 0);
@@ -245,11 +246,20 @@ public class AppTest extends ApplicationTest {
     clickOn(LabeledMatchers.hasText(testName2));
     FxAssert.verifyThat(deleteStatus, d -> d.getText().length() == 0);
     clickOn("#deleteEmployeeButton");
-    // TODO: Confirmation to come here
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
     assertTrue(employeeListView.getItems().size() == 1);
     assertTrue(employeeListView.getItems().get(0).getName().equals(testName));
     FxAssert.verifyThat(deleteStatus, d -> d.getText().length() > 0);
     FxAssert.verifyThat(deleteStatus, d -> d.getFill().equals(Color.GREEN));
+
+    // Cancel deletion
+    clickOn(LabeledMatchers.hasText(testName));
+    clickOn("#deleteEmployeeButton");
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("Cancel"));
+    assertTrue(employeeListView.getItems().size() == 1);
+    FxAssert.verifyThat(deleteStatus, d -> d.getText().length() == 0);
   }
 
 
@@ -262,6 +272,10 @@ public class AppTest extends ApplicationTest {
     clickOn(LabeledMatchers.hasText("Add New Employee"));
     button.setDisable(false);
     clickOn("#deleteEmployeeButton");
+    // Confirmation
+    FxAssert.verifyThat("OK", NodeMatchers.isVisible());
+    clickOn(LabeledMatchers.hasText("OK"));
+    // Alert
     FxAssert.verifyThat("OK", NodeMatchers.isVisible());
     clickOn(LabeledMatchers.hasText("OK"));
     FxAssert.verifyThat(deleteStatus, d -> d.getText().length() > 0);

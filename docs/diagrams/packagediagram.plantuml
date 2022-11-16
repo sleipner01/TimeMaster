@@ -21,7 +21,7 @@ package "no.it1901.groups2022.gr2227.timemaster.mixin" as "mixin" {
 }
 
 package "no.it1901.groups2022.gr2227.timemaster.persistence" as "pers" {
-  interface TimeMasterFieHandler as TFH
+  interface TimeMasterFileHandler as TFH
   component FileHandler
   FileHandler -- TFH
 }
@@ -31,16 +31,24 @@ package "no.it1901.groups2022.gr2227.timemaster.rest" as "rest" {
   component Server
 }
 
+
 component javafx 
 component jakarta
 component jackson
+component jersey
 
-fxui --> javafx : "use"
+fxui --> javafx
 TimeMasterController --> TimeMaster
 Rest --> jakarta
 FileHandler --> jackson
 TimeMasterJsonPaser --> jackson
 mixin --> TimeMasterJsonPaser
+mixin --> jackson
+Server --> jersey
+
+
+
+
 
 
 @enduml

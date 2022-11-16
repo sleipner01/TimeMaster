@@ -6,6 +6,8 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
+import no.it1901.groups2022.gr2227.timemaster.persistence.FileHandler;
+
 /**
  * Main class.
  *

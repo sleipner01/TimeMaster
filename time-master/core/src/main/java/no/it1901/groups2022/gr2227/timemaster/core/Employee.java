@@ -3,6 +3,7 @@ package no.it1901.groups2022.gr2227.timemaster.core;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * Employee is a class to store data about employees in the application.
@@ -18,8 +19,8 @@ import java.util.UUID;
  *
  * <p>The id is generated with java.util.UUID
  *
- * <p>The name is supplied through the constructor as has to follow spesific rules.
- * //TODO: Insert regex rule
+ * <p>The name is supplied through the constructor and has to follow spesific rules.
+ * Regex pattern: ^[a-zA-ZæøåÆØÅ ]*
  * 
  * <p>An employees Workdays are stored in an ArrayList.
  * This makes it easy to access all listed workdays as the data
@@ -36,9 +37,10 @@ import java.util.UUID;
  */
 public class Employee {
   
-  private String id;
+  private UUID id;
   private String name;
   private ArrayList<Workday> workdays = new ArrayList<>();
+  private final String regexPattern = "^[a-zA-ZæøåÆØÅ ]*";
   
   /**
    * Used for JSON-parser.
@@ -49,16 +51,30 @@ public class Employee {
    * Creates an Employee object.
    * An employee-id is automatically created using java.util.UUID.
    *
-   * @param name Has to follow regex rule: //TODO: insert regex rule
+   * @param name Has to follow regex rule: ^[a-zA-ZæøåÆØÅ ]*
    */
+  public Employee(String name) throws IllegalArgumentException {
+    this.validateName(name);
 
-  public Employee(String name) {
     this.id = generateId();
     this.name = name;
   }
+
+  private void validateName(String name) {
+    if (name.equals("")) {
+      throw new IllegalArgumentException(
+        "The name cannot be an empty string"
+      );
+    }
+    if (!Pattern.matches(regexPattern, name)) {
+      throw new IllegalArgumentException(
+        name + " - does not match regex-pattern: " + regexPattern
+      );
+    }
+  }
   
-  private String generateId() { 
-    return UUID.randomUUID().toString(); 
+  private UUID generateId() { 
+    return UUID.randomUUID(); 
   }
 
   private void validateCheckInTimestamp(LocalDateTime input) throws IllegalArgumentException {
@@ -224,7 +240,7 @@ public class Employee {
    * @see java.util.UUID
    */
   public String getId() { 
-    return this.id; 
+    return this.id.toString(); 
   }
   
   /**

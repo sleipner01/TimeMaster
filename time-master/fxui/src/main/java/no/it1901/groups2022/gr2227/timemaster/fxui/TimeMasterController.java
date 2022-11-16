@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,6 +23,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -174,6 +177,16 @@ public class TimeMasterController {
             setText(null);
           } else {
             setText(item.getName());
+            if(item.isAtWork()) {
+              setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, null, null)));
+            } else {
+              setBackground(new Background(new BackgroundFill(null, null, null)));
+            }
+            if(timeMaster.employeeIsSet()) {
+              if(item.equals(timeMaster.getChosenEmployee())) {
+                setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
+              }
+            }
           }
         }
       };
@@ -434,7 +447,9 @@ public class TimeMasterController {
     }
 
     try {
-      observableWorkdayList.setAll(timeMaster.getEmployeeWorkdayHistory());
+      List<Workday> workdays = timeMaster.getEmployeeWorkdayHistory();
+      workdays.sort((a, b) -> { return b.getTimeIn().compareTo(a.getTimeIn());});
+      observableWorkdayList.setAll(workdays);
     } catch (IllegalStateException e) {
       e.printStackTrace();
       displayError(e.getMessage());
@@ -557,96 +572,88 @@ public class TimeMasterController {
     }
 
     // Show interface
-    try {
-      Optional<ButtonType> choice = dialog.showAndWait();
-      if (choice.isPresent()) {
-        switch (choice.get().getButtonData()) {
+    Optional<ButtonType> choice = dialog.showAndWait();
+    if (choice.isPresent()) {
+      switch (choice.get().getButtonData()) {
 
-          case APPLY:
+        case APPLY:
 
-            // Creating a main boolean variable to be able to show all validation-errors.
-            boolean validationFailure = false;
-            if (!isValidMinuteInput(timeInMinute.getText())) {
-              warningDialog(timeInMinute.getText() + " is not a valid input for minute-in.");
-              validationFailure = true;
-            }
-            if (!isValidMinuteInput(timeOutMinute.getText())) {
-              warningDialog(timeOutMinute.getText() + " is not a valid input for minute-out.");
-              validationFailure = true;
-            }
-            if (!isValidHourInput(timeInHour.getText())) {
-              warningDialog(timeInHour.getText() + " is not a valid input for hour-in.");
-              validationFailure = true;
-            }
-            if (!isValidHourInput(timeOutHour.getText())) {
-              warningDialog(timeOutHour.getText() + " is not a valid input for hour-out.");
-              validationFailure = true;
-            }
-            if (validationFailure) {
-              openWorkdayEditInterface(workday);
-              break;
-            }
-
-            // Get confirmation
-            boolean result = confirmationDialog(
-                "Are you sure you want to change the workday to these values?"
-            );
-          
-            if (result) {
-
-              int parsedTimeInHour = Integer.parseInt(timeInHour.getText());
-              int parsedTimeInMinute = Integer.parseInt(timeInMinute.getText());
-              int parsedTimeOutHour = Integer.parseInt(timeOutHour.getText());
-              int parsedTimeOutMinute = Integer.parseInt(timeOutMinute.getText());
-
-              // DateTime in
-              LocalDate date = dateIn.getValue();
-              LocalTime time = LocalTime.of(parsedTimeInHour, parsedTimeInMinute);
-              LocalDateTime dateTimeIn = LocalDateTime.of(date, time);
-
-              // DateTime out
-              LocalDate date2 = dateOut.getValue();
-              LocalTime time2 = LocalTime.of(parsedTimeOutHour, parsedTimeOutMinute);
-              LocalDateTime dateTimeOut = LocalDateTime.of(date2, time2);
-
-              saveWorkdayEditChoices(workday, dateTimeIn, dateTimeOut);
-
-            } else {
-              openWorkdayEditInterface(workday);
-            }
-
+          // Creating a main boolean variable to be able to show all validation-errors.
+          boolean validationFailure = false;
+          if (!isValidMinuteInput(timeInMinute.getText())) {
+            warningDialog(timeInMinute.getText() + " is not a valid input for minute-in.");
+            validationFailure = true;
+          }
+          if (!isValidMinuteInput(timeOutMinute.getText())) {
+            warningDialog(timeOutMinute.getText() + " is not a valid input for minute-out.");
+            validationFailure = true;
+          }
+          if (!isValidHourInput(timeInHour.getText())) {
+            warningDialog(timeInHour.getText() + " is not a valid input for hour-in.");
+            validationFailure = true;
+          }
+          if (!isValidHourInput(timeOutHour.getText())) {
+            warningDialog(timeOutHour.getText() + " is not a valid input for hour-out.");
+            validationFailure = true;
+          }
+          if (validationFailure) {
+            openWorkdayEditInterface(workday);
             break;
+          }
 
-          case OTHER:
-            // Get confirmation
-            boolean deleteConfirmation = confirmationDialog(
-                "Are you sure you want to delete this workday?"
-            );
-            if (deleteConfirmation) {
+          // Get confirmation
+          boolean result = confirmationDialog(
+              "Are you sure you want to change the workday to these values?");
 
-              deleteWorkday(workday);
+          if (result) {
 
-            } else {
-              openWorkdayEditInterface(workday);
-            }
+            int parsedTimeInHour = Integer.parseInt(timeInHour.getText());
+            int parsedTimeInMinute = Integer.parseInt(timeInMinute.getText());
+            int parsedTimeOutHour = Integer.parseInt(timeOutHour.getText());
+            int parsedTimeOutMinute = Integer.parseInt(timeOutMinute.getText());
 
-            break;
+            // DateTime in
+            LocalDate date = dateIn.getValue();
+            LocalTime time = LocalTime.of(parsedTimeInHour, parsedTimeInMinute);
+            LocalDateTime dateTimeIn = LocalDateTime.of(date, time);
 
-          case CANCEL_CLOSE:
-            System.out.println("Workday editing cancelled");
-            break;
+            // DateTime out
+            LocalDate date2 = dateOut.getValue();
+            LocalTime time2 = LocalTime.of(parsedTimeOutHour, parsedTimeOutMinute);
+            LocalDateTime dateTimeOut = LocalDateTime.of(date2, time2);
 
-          default:
-            System.err.println("The window wasn't closed properly");
-            break;
-        }
-      } else {
-        System.out.println("The window wasn't closed properly");
+            saveWorkdayEditChoices(workday, dateTimeIn, dateTimeOut);
+
+          } else {
+            openWorkdayEditInterface(workday);
+          }
+
+          break;
+
+        case OTHER:
+          // Get confirmation
+          boolean deleteConfirmation = confirmationDialog(
+              "Are you sure you want to delete this workday?");
+          if (deleteConfirmation) {
+
+            deleteWorkday(workday);
+
+          } else {
+            openWorkdayEditInterface(workday);
+          }
+
+          break;
+
+        case CANCEL_CLOSE:
+          System.out.println("Workday editing cancelled");
+          break;
+
+        default:
+          System.err.println("The window wasn't closed properly");
+          break;
       }
-    } catch (Exception e) {
-      e.printStackTrace();
-      displayError(e.getMessage());
-      setApiStatus();
+    } else {
+      System.out.println("The window wasn't closed properly");
     }
 
   }
@@ -721,22 +728,28 @@ public class TimeMasterController {
 
   @FXML
   private void handleDeleteEmployee() {
-    try {
-      timeMaster.deleteChosenEmployee();
-      updateDisplay();
-      setDeleteStatus(true);
-    } catch (IllegalStateException e) {
-      displayError(e.getMessage());
-      setDeleteStatus(false);
-    } catch (IOException e) {
-      displayError(e.getMessage());
-      e.printStackTrace();
-      setDeleteStatus(false);
-      setApiStatus();
-    } catch (Exception e) {
-      displayError(e.getMessage());
-      e.printStackTrace();
-      setApiStatus();
+    boolean result = confirmationDialog(
+      "Are you sure you want to delete the employee?"
+    );
+
+    if(result) {
+      try {
+        timeMaster.deleteChosenEmployee();
+        updateDisplay();
+        setDeleteStatus(true);
+      } catch (IllegalStateException e) {
+        displayError(e.getMessage());
+        setDeleteStatus(false);
+      } catch (IOException e) {
+        displayError(e.getMessage());
+        e.printStackTrace();
+        setDeleteStatus(false);
+        setApiStatus();
+      } catch (Exception e) {
+        displayError(e.getMessage());
+        e.printStackTrace();
+        setApiStatus();
+      }
     }
   }
 

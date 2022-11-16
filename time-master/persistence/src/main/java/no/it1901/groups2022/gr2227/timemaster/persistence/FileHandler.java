@@ -1,4 +1,4 @@
-package no.it1901.groups2022.gr2227.timemaster.rest;
+package no.it1901.groups2022.gr2227.timemaster.persistence;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
  *  <li> String fileName name of the file that is read or written.
  * </ul>
  */
-public class FileHandler {
+public class FileHandler implements TimeMasterFileHandler {
 
   private final ObjectMapper mapper;
   private final String dir;
@@ -32,11 +32,10 @@ public class FileHandler {
     this.mapper = new ObjectMapper();
     this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
     this.fileName = name;
-    this.dir = Paths.get(System.getProperty("user.dir"), "../rest/timeMasterSaveFiles").toString();
+    this.dir = Paths.get(System.getProperty("user.dir"), "../timeMasterSaveFiles").toString();
     File file = new File(Paths.get(this.dir, this.fileName).toString());
     try {
-      file.createNewFile();
-      if (file.length() == 0) {
+      if (file.createNewFile() && file.length() == 0) {
         this.mapper.writeValue(file, new ArrayList<>());
       }
     } catch (IOException e) {
@@ -44,11 +43,8 @@ public class FileHandler {
     }
   }
 
-  /**
-   * Reads from a file.
-   *
-   * @return JsonNode of the information from mapper
-   */
+
+  @Override
   public JsonNode readFile() {
     try {
       return this.mapper.readTree(
@@ -76,11 +72,7 @@ public class FileHandler {
     }
   }
 
-  /**
-   * Writes an object to the file.
-   *
-   * @param val the object being written to file.
-   */
+  @Override
   public void write(Object val) {
     try {
       this.mapper.writeValue(

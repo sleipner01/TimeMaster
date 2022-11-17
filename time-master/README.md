@@ -7,7 +7,7 @@ Employees have the opportunity to look at their previous hours. If there is some
 
 ## User stories 
 
-The user stories we have used when developing the application can be found [here](../docs/userStories.md).
+The user stories we have used when developing the application can be found [here](../docs/userstories/userstory1.md).
 
 
 ## The application

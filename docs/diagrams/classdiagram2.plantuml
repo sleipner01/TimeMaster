@@ -6,23 +6,26 @@ class TimeMaster {
   - ApiHandler apiHandler;
   - State state;
 
+  __State Methods__
   + void setApplicationInProductionState()
   + void setApplicationInTestState()
   + void setApplicationInLocalState()
+  __Getters and Setters__
   + boolean getApiStatus()
-  + boolean isusingApi()
   + LocalDateTime getNow()
   + void setChosenEmployee(Employee)
   + Employee getChosenEmployee()
   + ArrayList<Employee> getEmployees()
-  + void createEmployee(String name)
+  __Public Methods__
+  + boolean isusingApi()
+  + void createEmployee(String)
   + void readEmployees()
   + boolean employeeIsSet()
-  + boolean clockEmployeeInOut(LocalDateTime dateTimeInput) 
+  + boolean clockEmployeeInOut(LocalDateTime) 
   + boolean autoClockEmployeeInOut() 
   + ArrayList<Workday> getEmployeeWorkdayHistory() 
-  + void editWorkday(Workday workday, LocalDateTime timeIn, LocalDateTime timeOut)
-  + void deleteWorkdayFromEmployee(Workday workday)
+  + void editWorkday(Workday, LocalDateTime, LocalDateTime)
+  + void deleteWorkdayFromEmployee(Workday)
   + void deleteChosenEmployee()
 }
 
@@ -31,40 +34,68 @@ class Employee{
   - String name
   - ArrayList<Workday> workdays
   - String {final} regexPattern
+
+  __Constructor__
+  + Employee(String)
+  __Private Methods__
+  - void validateName()
+  - UUID generateUUID()
+  - void hasWorkday()
+  - void validateCheckInTimeStamp(LocalDateTime)
+  - void validateCheckOutTimeStamp(LocalDateTime, Workday)
+  - void sortWorkdaysAscending()
+  __Getters and Setters__
+  + String getId()
+  + String getName()
+  + Workday getLatestWorkday()
+  + String getLatestClockIn()
+  + ArrayList<Workday> getWorkdays()
+  __Public Methods__
+  + boolean isAtWork()
+  + void checkIn(LocalDateTime)
+  + void checkOut(LocalDateTime)
+  + void addWorkday(Workday)
+  + void editWorkday(Workday, LocalDateTime, LocalDateTime)
+  + void deleteWorkday(Workday)
+  + String toString()
 }
 
 class Workday{
   - LocalDateTime timeIn;
   - LocalDateTime timeOut;
 
-  + Workday()
-  - String formatDateTime(LocalDateTime dateTime)
+  __Private methods__
+  - String formatDateTime(LocalDateTime)
+  - boolean isValidInput(LocalDateTime)
+  __Getters and Setters__
   + LocalDateTime getTimeIn()
   + String getTimeInAsFormattedString() 
   + LocalDateTime getTimeOut()
   + String getTimeOutAsFormattedString()
+  + void setTimeOut(LocalDateTime)
+  __Public Methods__
   + boolean isTimedOut()
-  - boolean isValidInput(LocalDateTime input)
-  + void setTimeOut(LocalDateTime timeOut)
   + String toString()
 }
 
 
 class APIHandler{
-  - final String baseUrl;
+  - String baseUrl;
   - TimeMasterJsonParser jsonParser;
 
-  + ApiHandler()
+  __Constructor__
   + ApiHandler(String baseUrl) 
-  - HttpURLConnection setConnection(String path, String requestMethod)
-  - String getResponse(String path)
-  - int request(String path, String req, String reqMethod)
-  + Employee getEmployee(Employee employee)
+  __Private Methods__
+  - HttpURLConnection setConnection(String, String)
+  - String getResponse(String)
+  - int request(String, String, String)
+  __Public Methods__
+  + Employee getEmployee(Employee)
   + ArrayList<Employee> getEmployees()
-  + ArrayList<Workday> getWorkdays(Employee employee)
-  + int createEmployee(Employee employee)
-  + int updateEmployee(Employee employee)
-  + int deleteEmployee(Employee employee)
+  + ArrayList<Workday> getWorkdays(Employee)
+  + int createEmployee(Employee)
+  + int updateEmployee(Employee)
+  + int deleteEmployee(Employee)
   + boolean checkServerStatus()
 
 }
@@ -72,11 +103,10 @@ class APIHandler{
 class TimeMasterJsonParser{
   - final ObjectMapper mapper;
 
-  + TimeMasterJsonParser()
-  + String write(Object value)
-  + Employee readEmployee(String input)
-  + ArrayList<Employee> readEmployees(String input) 
-  + ArrayList<Workday> readWorkdays(String input) 
+  + String write(Object)
+  + Employee readEmployee(String)
+  + ArrayList<Employee> readEmployees(String) 
+  + ArrayList<Workday> readWorkdays(String) 
 }
 
 enum State {
@@ -86,11 +116,11 @@ enum State {
 }
 
 
-TimeMaster -- "employees: *" Employee
-TimeMaster -- "State: 1" State
-Employee -- "workdays: *" Workday 
-TimeMaster -- "apiHandler: 1" APIHandler
-APIHandler -- "jsonParser: 1" TimeMasterJsonParser
+TimeMaster --> "employees: *" Employee : Manages
+TimeMaster --> "state: 1" State : States the application can be set in
+Employee --> "workdays: *" Workday : Stores
+TimeMaster --> "apiHandler: 1" APIHandler : Handle API calls
+APIHandler --> "jsonParser: 1" TimeMasterJsonParser : Read and write JSON
 
 
 @enduml

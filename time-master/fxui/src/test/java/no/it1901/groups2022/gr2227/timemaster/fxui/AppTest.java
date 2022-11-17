@@ -79,7 +79,7 @@ public class AppTest extends ApplicationTest {
 
   // Private methods
   private void addNewEmployee(String name) {
-    clickOn(LabeledMatchers.hasText("Add New Employee"));
+    clickOn(LabeledMatchers.hasText("Manage Employee"));
     clickOn("#newEmployeeName").write(name);
     clickOn("#addNewEmployeeButton");
   }
@@ -144,7 +144,7 @@ public class AppTest extends ApplicationTest {
   }
 
   private static Stream<String> testTabs() {
-      return Stream.of("Stamp In", "Check Hours Worked", "Add New Employee");
+    return Stream.of("Stamp In", "Check Hours Worked", "Manage Employee");
   }
 
 
@@ -269,7 +269,7 @@ public class AppTest extends ApplicationTest {
     final Button button = lookup("#deleteEmployeeButton").query();
     final Text deleteStatus = lookup("#deleteStatus").query();
     
-    clickOn(LabeledMatchers.hasText("Add New Employee"));
+    clickOn(LabeledMatchers.hasText("Manage Employee"));
     button.setDisable(false);
     clickOn("#deleteEmployeeButton");
     // Confirmation

@@ -140,7 +140,7 @@
                            <Font size="20.0" />
                         </font>
                      </Text>
-                     <ListView fx:id="workdayHistoryList" editable="true" layoutY="75.0" minHeight="279.0" minWidth="372.0" prefHeight="280.0" prefWidth="372.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="74.0" />
+                     <ListView fx:id="workdayHistoryList" editable="true" layoutY="75.0" minHeight="271.0" minWidth="372.0" prefHeight="271.0" prefWidth="372.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="74.0" />
                      <Text layoutX="14.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" wrappingWidth="58.21630859375" AnchorPane.topAnchor="50.0">
                         <font>
                            <Font size="16.0" />
@@ -159,7 +159,7 @@
                   </children></AnchorPane>
          </content>
        </Tab>
-         <Tab text="Add New Employee">
+         <Tab text="Manage Employee">
            <content>
              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>

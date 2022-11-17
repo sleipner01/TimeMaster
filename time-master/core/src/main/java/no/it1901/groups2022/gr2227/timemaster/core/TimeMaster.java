@@ -162,7 +162,7 @@ public class TimeMaster {
         }
         this.chosenEmployee = employee;
         break;
-      }
+    }
       
 
   }
@@ -209,15 +209,15 @@ public class TimeMaster {
   public ArrayList<Employee> getEmployees() {
     switch (state) {
       case PRODUCTION:
-          try {
-            this.readEmployees();
-          } catch (IOException e) {
-            System.err.println("Could not connect to the API");
-            e.printStackTrace();
-            this.setApplicationInLocalState();
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
+        try {
+          this.readEmployees();
+        } catch (IOException e) {
+          System.err.println("Could not connect to the API");
+          e.printStackTrace();
+          this.setApplicationInLocalState();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
         return new ArrayList<>(this.employees);
       default:
         System.out.println("***API CALL TURNED OFF. NO STATE SET. DEFAULT RETURN***");
@@ -427,6 +427,7 @@ public class TimeMaster {
    *
    * @return                        List of workdays.
    * @throws IllegalStateException  If no employee is set.
+   * @throws IOException            If API call fails.
    */
   public ArrayList<Workday> getEmployeeWorkdayHistory() 
       throws IllegalStateException, IOException {
@@ -458,7 +459,7 @@ public class TimeMaster {
    * @throws IllegalArgumentException   If the workday does not exist at the employee.
    *                                    If the timestamps comes in conflict with some other
    *                                    workdays at the employee or is not valid.
-   * @throws IOException                If the APU call fails.
+   * @throws IOException                If the API call fails.
    *
    * @see Employee#editWorkday(Workday, LocalDateTime, LocalDateTime)
    * @see TimeMaster#setChosenEmployee(Employee)

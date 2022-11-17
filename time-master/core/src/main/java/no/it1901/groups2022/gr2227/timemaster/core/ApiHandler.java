@@ -31,6 +31,8 @@ public class ApiHandler {
 
   /**
    * Creates an ApiHandler object on specified URL.
+   *
+   * @param baseUrl url to the api.
    */
   public ApiHandler(String baseUrl) {
     this.baseUrl = baseUrl;

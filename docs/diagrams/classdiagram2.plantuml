@@ -1,5 +1,7 @@
 @startuml Time Master
 
+title Class diagram for Time-Master, the most essenital parts
+
 class TimeMaster {
   - Employee chosenEmployee;
   - ArrayList<Employee> employees;

@@ -1,0 +1,129 @@
+@startuml Time Master
+
+class TimeMaster {
+  - Employee chosenEmployee;
+  - ArrayList<Employee> employees;
+  - ApiHandler apiHandler;
+  - State state;
+
+  __State Methods__
+  + void setApplicationInProductionState()
+  + void setApplicationInTestState()
+  + void setApplicationInLocalState()
+  __Getters and Setters__
+  + boolean getApiStatus()
+  + LocalDateTime getNow()
+  + void setChosenEmployee(Employee)
+  + Employee getChosenEmployee()
+  + ArrayList<Employee> getEmployees()
+  __Public Methods__
+  + boolean isusingApi()
+  + void createEmployee(String)
+  + void readEmployees()
+  + boolean employeeIsSet()
+  + boolean clockEmployeeInOut(LocalDateTime) 
+  + boolean autoClockEmployeeInOut() 
+  + ArrayList<Workday> getEmployeeWorkdayHistory() 
+  + void editWorkday(Workday, LocalDateTime, LocalDateTime)
+  + void deleteWorkdayFromEmployee(Workday)
+  + void deleteChosenEmployee()
+}
+note left: Combines core classes to make out the system and encapsulate the logic.\nDelegates work.
+
+class Employee{
+  - UUID id
+  - String name
+  - ArrayList<Workday> workdays
+  - String {final} regexPattern
+
+  __Constructor__
+  + Employee(String)
+  __Private Methods__
+  - void validateName()
+  - UUID generateUUID()
+  - void hasWorkday()
+  - void validateCheckInTimeStamp(LocalDateTime)
+  - void validateCheckOutTimeStamp(LocalDateTime, Workday)
+  - void sortWorkdaysAscending()
+  __Getters and Setters__
+  + String getId()
+  + String getName()
+  + Workday getLatestWorkday()
+  + String getLatestClockIn()
+  + ArrayList<Workday> getWorkdays()
+  __Public Methods__
+  + boolean isAtWork()
+  + void checkIn(LocalDateTime)
+  + void checkOut(LocalDateTime)
+  + void addWorkday(Workday)
+  + void editWorkday(Workday, LocalDateTime, LocalDateTime)
+  + void deleteWorkday(Workday)
+  + String toString()
+}
+
+class Workday{
+  - LocalDateTime timeIn;
+  - LocalDateTime timeOut;
+
+  __Private methods__
+  - String formatDateTime(LocalDateTime)
+  - boolean isValidInput(LocalDateTime)
+  __Getters and Setters__
+  + LocalDateTime getTimeIn()
+  + String getTimeInAsFormattedString() 
+  + LocalDateTime getTimeOut()
+  + String getTimeOutAsFormattedString()
+  + void setTimeOut(LocalDateTime)
+  __Public Methods__
+  + boolean isTimedOut()
+  + String toString()
+}
+
+
+class APIHandler{
+  - String baseUrl;
+  - TimeMasterJsonParser jsonParser;
+
+  __Constructor__
+  + ApiHandler(String baseUrl) 
+  __Private Methods__
+  - HttpURLConnection setConnection(String, String)
+  - String getResponse(String)
+  - int request(String, String, String)
+  __Public Methods__
+  + Employee getEmployee(Employee)
+  + ArrayList<Employee> getEmployees()
+  + ArrayList<Workday> getWorkdays(Employee)
+  + int createEmployee(Employee)
+  + int updateEmployee(Employee)
+  + int deleteEmployee(Employee)
+  + boolean checkServerStatus()
+}
+note right: Class to connect to an API.\nDefault URL is localhost:8080.\nContructor can take a String argument with another url.
+
+
+class TimeMasterJsonParser{
+  - final ObjectMapper mapper;
+
+  + String write(Object)
+  + Employee readEmployee(String)
+  + ArrayList<Employee> readEmployees(String) 
+  + ArrayList<Workday> readWorkdays(String) 
+}
+note right: Converts to and from Json format
+
+enum State {
+  + PRODUCTION
+  + LOCAL
+  + TEST
+} 
+
+
+TimeMaster --> "employees: *" Employee : Manages
+TimeMaster --> "state: 1" State : States the application can be set in
+Employee --> "workdays: *" Workday : Stores
+TimeMaster --> "apiHandler: 1" APIHandler : Handle API calls
+APIHandler --> "jsonParser: 1" TimeMasterJsonParser : Read and write JSON
+
+
+@enduml

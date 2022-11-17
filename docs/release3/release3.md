@@ -85,6 +85,8 @@ All members of the group have made tests in the different modules, and we have p
 
 ### Class diagram
 
+![Class diagram](../img/classDiagram.png)
+
 ### Package diagram
 
 ![Package diagram](../img/packageDiagram.png)

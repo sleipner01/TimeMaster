@@ -10,7 +10,7 @@ class TimeMaster {
   + void setApplicationInProductionState()
   + void setApplicationInTestState()
   + void setApplicationInLocalState()
-  __Getters and Setters__ 
+  __Getters and Setters__
   + boolean getApiStatus()
   + LocalDateTime getNow()
   + void setChosenEmployee(Employee)
@@ -28,6 +28,7 @@ class TimeMaster {
   + void deleteWorkdayFromEmployee(Workday)
   + void deleteChosenEmployee()
 }
+note left: Combines core classes to make out the system and encapsulate the logic.\nDelegates work.
 
 class Employee{
   - UUID id
@@ -97,8 +98,9 @@ class APIHandler{
   + int updateEmployee(Employee)
   + int deleteEmployee(Employee)
   + boolean checkServerStatus()
-
 }
+note right: Class to connect to an API.\nDefault URL is localhost:8080.\nContructor can take a String argument with another url.
+
 
 class TimeMasterJsonParser{
   - final ObjectMapper mapper;
@@ -108,12 +110,13 @@ class TimeMasterJsonParser{
   + ArrayList<Employee> readEmployees(String) 
   + ArrayList<Workday> readWorkdays(String) 
 }
+note right: Converts to and from Json format
 
 enum State {
   + PRODUCTION
   + LOCAL
   + TEST
-}
+} 
 
 
 TimeMaster --> "employees: *" Employee : Manages

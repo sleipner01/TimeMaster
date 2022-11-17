@@ -63,9 +63,7 @@ A report over detected bugs is made as well. It can be found in each of the modu
 HTML pages with documentation for every public or protected class/method can be generated with `mvn site`. Main HTML-file can be found at `time-master/coverage/target/site/javadocs/index.html`.
 To generate javadoc for all methods in a module (including private methods), start a terminal in the respective module and execute `mvn javadoc:javadoc`.
 
-
-
-### Packaging
+## Packaging
 
 The project can be packaged to make distribution easier. The following guide will generate both a compressed folder, and a system-spesific executable file.
 
@@ -78,20 +76,17 @@ The .jar file can be found at `time-master/fxui/target/`.
 1. Make sure to have .NET 3.5 installed. ([Microsoft download here...](https://www.microsoft.com/nb-no/download/details.aspx?id=21))
 2. Make sure to have WiX Toolset v3 installed. ([Github download here...](https://github.com/wixtoolset/wix3/releases/tag/wix3112rtm))
 3. Navigate to `fxui`-directory with: `cd fxui`
-4. Execute `mvn clean compile javafx:jlink jpackage:japackage`
+4. Execute `mvn clean compile javafx:jlink jpackage:jpackage`
 
 The .zip file can be found at `time-master/fxui/target/`.
 
 The .exe file can be found at `time-master/fxui/target/dist/`.
 #### MacOS
 1. Navigate to `fxui`-directory with: `cd fxui`
-2. Execute `mvn clean compile javafx:jlink jpackage:japackage`
+2. Execute `mvn clean compile javafx:jlink jpackage:jpackage`
 
 The .zip file can be found at `time-master/fxui/target/`
 The .dmg file can be found at `time-master/fxui/target/dist/`.
-#### Linux
-To be explained...
-
 
 <!-- ## Git conventions
 

@@ -10,7 +10,7 @@ class TimeMaster {
   + void setApplicationInProductionState()
   + void setApplicationInTestState()
   + void setApplicationInLocalState()
-  __Getters and Setters__
+  __Getters and Setters__ 
   + boolean getApiStatus()
   + LocalDateTime getNow()
   + void setChosenEmployee(Employee)

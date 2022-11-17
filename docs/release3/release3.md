@@ -58,7 +58,11 @@ We made more detailed user stories after feedback from our teaching assistant. W
 
 These user stories were the basis for improvements and further development of the application.  
 
-[User stories](../userstories/)
+- [User story 1](../userstories/userstory1.md)
+- [User story 2](../userstories/userstory2.md)
+- [User story 3](../userstories/userstory3.md)
+- [User story 4](../userstories/userstory4.md)
+  
 
 ## REST API
 

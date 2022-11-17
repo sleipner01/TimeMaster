@@ -44,14 +44,14 @@ The project is set up for Gitpod.
 
 ## Integrations
 
-The application is built to support and run with `javafx:run`. See [developer installation](./readme.md#developer-installation) above for detailed description on how to run the application.
+The application is built to support and run with `javafx:run`. See [developer installation](#developer-installation) above for detailed description on how to run the application.
 
 ### Testing
 
 The test can be run with `mvn test` from the `time-master`-directory. This will generate a report with test coverage. The report is stored as an index.html file at `time-master/coverage/target/site/jacoco-aggregate/index.html`, and can be opened in the browser. 
 
 It is possible to run the tests both with and without the server running.
-Follow instructions 3 and 4 in [developer installation](./readme.md#developer-installation) to start the server.
+Follow instructions 3 and 4 in [developer installation](#developer-installation) to start the server.
 
 ### Code Quality
 

@@ -30,7 +30,7 @@ We have:
 - Added functionality in application
   - Implemented workday history
   - Made it possible to delete employees
-- Made three [diagrams](##Diagrams)
+- Made three [diagrams](#diagrams)
   - Classdiagram
   - Packagediagram
   - Sequencediagram

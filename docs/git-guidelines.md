@@ -1,8 +1,8 @@
-# git guidelines
+# Git Guidelines
 
 Guidelines and standard for commits, issues, branching og merge requests.
 
-## commits
+## Commits
 
 A commit shall:
 
@@ -17,12 +17,12 @@ A commit can:
 - describe the content in more detail, but not its functionality 
 
 
-<img src="/docs/bilder/commit.png" width="500px"/>
+Example on a good and a bad commit below...
+<img src="./img/commit.png" width="500px"/>
 
-Example on a good and a bad commit.
 
 
-## issues
+## Issues
 
 An issue shall:
 
@@ -32,13 +32,13 @@ An issue shall:
 - be marked with a tag
 
 
-## branching
+## Branching
 
-All work shall be done on a seperate branch, "master" shall not be used. This ensures a working "master" at all times. 
+All work shall be done on a seperate branch, "master" shall not be used. This helps retaining a working "master"-branch.
 
 The work done on a branch shall be within the same task/area. This means that if we change tasks, we change branches. 
 
-## merge requests
+## Merge requests
 
 When the work is completed, the branch is to be merged into "master". They will be compared, and merge conflicts are to be resolved. 
 
